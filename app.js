@@ -8,6 +8,7 @@ var parcelRoutes = require('./routes/parcelRoutes'); //for individual parcels
 
 
 //Define app routes
+app.use(express.static('public'));
 app.use('/parcels', parcelsRoutes); //for all parcels
 app.use('/parcel', parcelRoutes); //for individual parcels
 
