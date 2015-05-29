@@ -1,0 +1,34 @@
+html,body,h1,h2,h3,h4,p,div,a,img,span{
+	margin:0;
+	padding:0;
+}
+
+html,body{
+	height:100%;
+	position:relative;
+}
+body{
+	background:rgb(250,250,250);
+}
+
+.top{
+	width:100%;
+	height:60px;
+}
+.content{
+	position:absolute;
+	width:100%;
+	top:60px;
+	bottom:0px;
+}
+	.content .module{
+		width:100%;
+		height:100%;
+		float:left;
+	}
+
+/*Map module*/
+.content .map .map-inner{
+	width:100%;
+	height:100%;
+}

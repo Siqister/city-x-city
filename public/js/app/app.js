@@ -1,13 +1,19 @@
 define([
 	'backbone',
 	'underscore',
-	'marionette'
+	'marionette',
+
+	'app/views/layoutView'
 ],function(
 	Backbone,
 	_,
-	Marionette
+	Marionette,
+
+	appLayoutView
 ){
-	var app = new Marionette.Application();
+	var app = new Marionette.Application({
+		rootView: appLayoutView
+	});
 
 	//much more lightweight now
 	//http://marionettejs.com/docs/v2.4.1/marionette.application.html#getting-started
@@ -15,7 +21,7 @@ define([
 		console.log('app:before:start');
 	});
 	app.on('start',function(){
-		console.log('app:start');
+		app.rootView.render();
 
 		if(Backbone.history){
 			Backbone.history.start();
