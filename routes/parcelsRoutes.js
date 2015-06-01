@@ -10,7 +10,7 @@ router
 .get('/',function(req,res){
 
 	cartodbClient.query(
-		"SELECT * FROM {table} LIMIT 10",
+		"SELECT * FROM {table}",
 		{ 
 			table:"pittsfield"
 		},

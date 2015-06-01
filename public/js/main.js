@@ -5,7 +5,9 @@ require.config({
 		'marionette':'lib/marionette/backbone.marionette.min',
 		'backbone':'lib/backbone/backbone-min',
 		'leaflet':'lib/leaflet/leaflet',
-		'd3':'lib/d3/d3.min'
+		'd3':'lib/d3/d3.min',
+
+		'vent':'app/vent'
 	},
 	shim:{
 		'leaflet':{
@@ -22,7 +24,8 @@ require([
 		'leaflet',
 		'd3',
 
-		'app/app'
+		'app/app',
+		'app/ui'
 	],function(
 		$,
 		_,
@@ -31,8 +34,9 @@ require([
 		L,
 		d3,
 
-		app
+		app,
+		ui
 	){
-
+		ui.pos.init();
 		app.start();
 	})
