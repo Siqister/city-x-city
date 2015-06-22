@@ -1,0 +1,27 @@
+<h2>
+	<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 
+	<%= site_addr %>, <%= city %>
+</h2>
+<ul class="attr">
+	<li>
+		<span>Owner</span>
+		<div class="value"><%= owner1 %></div>
+	</li>
+	<li>
+		<span>Area</span>
+		<div class="value"><%= shape_area %></div>
+	</li>
+	<li>
+		<span>Zoning</span>
+		<div class="value"><%= zoning %></div>
+	</li>	
+	<li>
+		<span>Year Built</span>
+		<div class="value"><%= year_built %></div>
+	</li>
+	<div class="form-group comment">
+		<label for="comment">Comments</label>
+		<input type="text" class="form-control" id="comment" placeholder=<%= comment %> >
+	</div>
+</ul>
+<a class="btn btn-default save" href="#" role="button">Save</a>

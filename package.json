@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.13.1",
     "cartodb": "^0.2.1",
-    "express": "^4.12.2"
+    "express": "^4.12.2",
+    "multer": "^0.1.8"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "MassDev CartoDB",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Siqister/cartodb_test_app",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

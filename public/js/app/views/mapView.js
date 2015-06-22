@@ -94,7 +94,7 @@ define([
 			function onParcelClick(d){
 				var parcelModel = new ParcelModel(d.properties);
 
-				vent.trigger('parcel:click',parcelModel);
+				vent.trigger('parcel:detail:show',parcelModel);
 				vent.trigger('ui:pos:detail');
 			}
 			

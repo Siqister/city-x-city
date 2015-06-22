@@ -6,6 +6,7 @@ require.config({
 		'backbone':'lib/backbone/backbone-min',
 		'leaflet':'lib/leaflet/leaflet',
 		'd3':'lib/d3/d3.min',
+		'text':'lib/require/text',
 
 		'vent':'app/vent'
 	},

@@ -1,11 +1,17 @@
 define([
 	'marionette',
 
-	'app/views/mapView'
+	'vent',
+
+	'app/views/mapView',
+	'app/views/parcelView',
 ],function(
 	Marionette,
 
-	mapView
+	vent,
+
+	mapView,
+	ParcelView
 ){
 	var AppLayoutView = Marionette.LayoutView.extend({
 		el:'body', //render view without template
@@ -13,6 +19,7 @@ define([
 
 		regions:{
 			top:".top",
+			detail:'.content .detail',
 			map:'.content .map',
 			viz:'.content .viz'
 		},
@@ -24,5 +31,11 @@ define([
 		}
 	});
 
-	return new AppLayoutView();
+	var appLayoutView = new AppLayoutView();
+
+	vent.on('parcel:detail:show',function(model){
+		appLayoutView.detail.show(new ParcelView({model:model}));
+	})
+
+	return appLayoutView;
 })

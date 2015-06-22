@@ -1,6 +1,7 @@
-html,body,h1,h2,h3,h4,p,div,a,img,span{
+html,body,h1,h2,h3,h4,p,div,a,img,span,ul,li{
 	margin:0;
 	padding:0;
+	list-style:none;
 }
 
 html,body{
@@ -8,17 +9,17 @@ html,body{
 	position:relative;
 }
 body{
-	background:rgb(250,250,250);
+	background:rgb(240,240,235);
 }
 
 .top{
 	width:100%;
-	height:100px;
+	height:60px;
 }
 .content{
 	position:absolute;
 	width:100%;
-	top:100px;
+	top:60px;
 	bottom:0px;
 	overflow:hidden;
 }
@@ -32,8 +33,27 @@ body{
 			background:green;
 		}
 		.content .detail{
-			background:red;
+			background:#2fdf9e;
 		}
+
+/*Global*/
+body{
+	font-family:GravurRegular, sans-serif;
+	color:rgb(240,240,235);
+	font-size:16px;
+}
+h1{
+	font-size:2em;
+}
+h2{
+	font-size:1.6em;
+}
+
+@font-face{
+	src:url('assets/fonts/Gravur Condensed-Regular.otf');
+	font-family:GravurRegular;
+	font-weight:normal;
+}
 
 /*Map module*/
 .content .map .map-inner{
@@ -41,9 +61,25 @@ body{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:red;
+	fill:#1d4a69;
 	fill-opacity:.5;
 	stroke:white;
 	stroke-width:.5px;
 }
 	.content .map .map-inner svg .parcel:hover{ fill-opacity:1; }
+
+/*Detail module*/
+.content .detail .detail-inner{
+	padding:30px 15px;
+}
+	.detail-inner .attr{
+		margin:20px 0;
+	}
+		.detail-inner .attr li{
+			margin:5px 0;
+			padding:3px 0;
+			border-bottom:1px solid rgba(255,255,255,.5);
+		}
+			.detail-inner .attr li .value{
+				font-size:1.3em;
+			}
