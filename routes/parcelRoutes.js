@@ -13,7 +13,10 @@ router
 		"SELECT * FROM {table} WHERE cartodb_id=" + req.params.id,
 		{ table:"pittsfield" },
 		function(err,data){
-			res.json(data);
+			if(err){ res.send(err); }
+			else{
+				res.json(data.features[0].properties);
+			}
 		}
 	);
 
@@ -29,8 +32,11 @@ router
 		query,
 		{table:"pittsfield"},
 		function(err,data){
-			if(err){ res.send(err);}
-			else{ res.json({message:"Parcel updated"})};
+			if(err){ 
+				console.log("Update error");
+				res.send(err);
+			}
+			else{ res.json(req.body)};
 		}
 	)
 });

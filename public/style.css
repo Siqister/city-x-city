@@ -61,7 +61,7 @@ h2{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:#1d4a69;
+	fill:#2fdf9e;
 	fill-opacity:.5;
 	stroke:white;
 	stroke-width:.5px;
@@ -72,14 +72,30 @@ h2{
 .content .detail .detail-inner{
 	padding:30px 15px;
 }
-	.detail-inner .attr{
+	.detail-inner .attr-list{
 		margin:20px 0;
 	}
-		.detail-inner .attr li{
+		.detail-inner .attr-list .attr-list-item{
 			margin:5px 0;
 			padding:3px 0;
 			border-bottom:1px solid rgba(255,255,255,.5);
 		}
-			.detail-inner .attr li .value{
+		.detail-inner .attr-list .attr-list-item:last-child{
+			border:none;
+		}
+			.detail-inner .attr-list .attr-list-item .value{
 				font-size:1.3em;
+			}
+			.detail-inner .attr-list .attr-list-item .form-control{
+				border:none;
+				background:#2fdf9e;
+				color:white;
+				font-size:1em;
+				box-shadow:none;
+				padding:0;
+				-web-kit-transition: background 1s;
+				transition:background 1s;
+			}
+			.detail-inner.modified .attr-list .attr-list-item .form-control{
+				background:#5bbb90;
 			}

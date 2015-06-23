@@ -17,5 +17,10 @@ define([
 
 	var parcelsCollection = new ParcelsCollection();
 
+	vent.on('parcel:update',function(){
+		console.log('parcelsCollection:fetch');
+		parcelsCollection.fetch();
+	})
+
 	return parcelsCollection;
 })

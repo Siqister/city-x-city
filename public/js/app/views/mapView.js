@@ -43,12 +43,18 @@ define([
 		},
 
 		onShow:function(){
+			var that = this;
 			console.log('mapView:show');
 
 			//upon mapView:show, initialize leaflet map
 			map = L.map(this.el).setView([42.3, -71.8], 9);
 			L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.map-8r4ecoz0/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
+
+			svg = d3.select(map.getPanes().overlayPane).append('svg');
+			g = svg.append('g').attr('class','leaflet-zoom-hide');
+
+
 
 			//ask parcels collection to sync
 			this.collection.fetch();
@@ -58,46 +64,45 @@ define([
 			console.log('mapView:drawParcels')
 			var that = this;
 
-			svg = d3.select(map.getPanes().overlayPane).append('svg');
-			g = svg.append('g').attr('class','leaflet-zoom-hide');
+			features = g.selectAll('.parcel')
+				.data(that.collection.toJSON(),function(d){return d.properties.cartodb_id});
 
-			features = g.selectAll('path')
-				.data(that.collection.toJSON())
+			var featuresEnter = features
 				.enter()
 				.append('path')
-				.attr('class','parcel');
+				.attr('class','parcel')
+				.on('click', function(d){
+					//a parcel is clicked on
 
-			features
-				.on('click', onParcelClick);
-
-			map.on('viewreset', reset);
-			reset();
-
-			function reset(){
-				//position svg and g
-				var bounds = path.bounds({
-					type:'FeatureCollection',
-					features: that.collection.toJSON()
+					var parcelModel = new ParcelModel(d.properties);
+					vent.trigger('parcel:detail:show',parcelModel);
+					vent.trigger('ui:pos:detail');
 				});
-				var tl = bounds[0],
-					br = bounds[1];
-				svg.attr('width',br[0]-tl[0])
-					.attr('height',br[1]-tl[1])
-					.style('left',tl[0]+'px')
-					.style('top',tl[1]+'px');
-				g
-					.attr('transform','translate('+ -tl[0] +','+ -tl[1] + ')');
 
-				features.attr('d',path);
-			}
+			map.off('viewreset', that.mapViewReset, that);
+			map.on('viewreset', that.mapViewReset, that); //context is MapView
 
-			function onParcelClick(d){
-				var parcelModel = new ParcelModel(d.properties);
+			that.mapViewReset(); //position svg and generate shapes for parcel features			
+		},
 
-				vent.trigger('parcel:detail:show',parcelModel);
-				vent.trigger('ui:pos:detail');
-			}
-			
+		mapViewReset:function(){
+			var that = this;
+
+			//position svg and g
+			var bounds = path.bounds({
+				type:'FeatureCollection',
+				features: that.collection.toJSON()
+			});
+			var tl = bounds[0],
+				br = bounds[1];
+			svg.attr('width',br[0]-tl[0])
+				.attr('height',br[1]-tl[1])
+				.style('left',tl[0]+'px')
+				.style('top',tl[1]+'px');
+			g
+				.attr('transform','translate('+ -tl[0] +','+ -tl[1] + ')');
+
+			features.attr('d',path);
 		}
 
 	});
