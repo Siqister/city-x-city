@@ -5,14 +5,18 @@ define([
 
 	'app/views/mapView',
 	'app/views/parcelView',
+	'app/views/cityCollectionView',
 ],function(
 	Marionette,
 
 	vent,
 
 	mapView,
-	ParcelView
+	ParcelView,
+	cityCollectionView
 ){
+
+	console.log(cityCollectionView);
 	var AppLayoutView = Marionette.LayoutView.extend({
 		el:'body', //render view without template
 		template:false,
@@ -21,13 +25,16 @@ define([
 			top:".top",
 			detail:'.content .detail',
 			map:'.content .map',
-			viz:'.content .viz'
+			viz:'.content .viz',
+			city:'.content .city',
+			parcels:'.content .parcels'
 		},
 
 		onRender:function(){
 			console.log('appLayoutView:render');
 
 			this.map.show(mapView);
+			this.city.show(cityCollectionView);
 		}
 	});
 

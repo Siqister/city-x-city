@@ -5,7 +5,9 @@ define([
 
 	'vent',
 
-	'text!app/templates/parcelView.html'
+	'text!app/templates/parcelView.html',
+
+	'bootstrap-switch'
 ],function(
 	Backbone,
 	Marionette,
@@ -22,27 +24,42 @@ define([
 
 		ui:{
 			comment: '.comment textarea',
+			marked: '.marked input',
 			save: '.save'
 		},
 		events:{
-			'input @ui.comment':'commentChanged',
-			'click @ui.save':'saveChanges'
+			'input @ui.comment':'attrModified',
+			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
+			'click @ui.save':'saveChanges',
 		},
 
 		initialize:function(){
 			this.listenTo(this.model,'sync',this.onSync);
+
+			console.log(this.model);
 		},
 		onShow:function(){
+			//customize initial appearance
 			this.ui.save.hide();
+			this.ui.marked.bootstrapSwitch({
+				size:'small',
+				onText:'Marked',
+				offText:'Mark'
+			});
 		},
 		onBeforeDestroy:function(){
 			this.stopListening();
 		},
-		commentChanged:function(e){
+		attrModified:function(e,state){
+			console.log('parcelDetail:attrModified');
+
 			this.model.set({
-				comment:$(e.target).val(),
+				comment:this.ui.comment.val(),
+				marked: this.ui.marked.bootstrapSwitch('state'),
 				modified:true
 			});
+
+			console.log(this.model);
 
 			this.$el.addClass('modified');
 			this.ui.save.fadeIn();

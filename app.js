@@ -6,8 +6,8 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 
 //Load express routers
-var parcelsRoutes = require('./routes/parcelsRoutes');
 var parcelRoutes = require('./routes/parcelRoutes'); //for individual parcels
+var cityRoutes = require('./routes/cityRoutes');
 
 
 //Middleware
@@ -16,8 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(multer());
 //Routes
-app.use('/parcels', parcelsRoutes); //for all parcels
-app.use('/parcel', parcelRoutes); //for individual parcels
+app.use('/parcel', parcelRoutes); //for parcels
+app.use('/city', cityRoutes);
 
 
 //Connect to CartoDB via client

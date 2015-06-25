@@ -21,6 +21,18 @@ define([
 	//module internal variables for keeping leaflet+d3
 	var map, svg, g, features;
 
+	var cityIcon = L.icon({
+		iconUrl:'../style/assets/pin-02.png',
+		iconSize:[30,70],
+		iconAnchor:[15,70]
+	});
+	var cityIconHighlight = L.icon({
+		iconUrl:'../style/assets/pin-03.png',
+		iconSize:[30,70],
+		iconAnchor:[15,70]
+	});
+	var cityIconHash = {};
+
 	function projectPoint(x,y){
 		var point = map.latLngToLayerPoint(new L.LatLng(y,x));
 		this.stream.point(point.x,point.y);
@@ -39,7 +51,9 @@ define([
 		collection:parcelsCollection, //use itemView to render a collection
 
 		initialize:function(){
-			this.listenTo(this.collection, 'update', this.drawParcels);
+			this.listenTo(this.collection, 'sync', this.drawParcels);
+
+			vent.on('cityCollection:update',this.drawCityMarkers);
 		},
 
 		onShow:function(){
@@ -48,7 +62,7 @@ define([
 
 			//upon mapView:show, initialize leaflet map
 			map = L.map(this.el).setView([42.3, -71.8], 9);
-			L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.map-8r4ecoz0/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+			L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
 			svg = d3.select(map.getPanes().overlayPane).append('svg');
@@ -61,11 +75,12 @@ define([
 		},
 
 		drawParcels:function(){
-			console.log('mapView:drawParcels')
+			console.log('parcelCollection:updated');
+			console.log('mapView:redrawParcels');
 			var that = this;
 
 			features = g.selectAll('.parcel')
-				.data(that.collection.toJSON(),function(d){return d.properties.cartodb_id});
+				.data(that.collection.toJSON(),function(d){return d.cartodb_id});
 
 			var featuresEnter = features
 				.enter()
@@ -73,11 +88,17 @@ define([
 				.attr('class','parcel')
 				.on('click', function(d){
 					//a parcel is clicked on
-
-					var parcelModel = new ParcelModel(d.properties);
+					console.log(d);
+					var parcelModel = new ParcelModel(d);
 					vent.trigger('parcel:detail:show',parcelModel);
-					vent.trigger('ui:pos:detail');
+					vent.trigger('ui:show:detail');
 				});
+
+			features
+				.transition()
+				.style('fill',function(d){
+					return d.marked==true?'#ef4136':null;
+				})
 
 			map.off('viewreset', that.mapViewReset, that);
 			map.on('viewreset', that.mapViewReset, that); //context is MapView
@@ -103,9 +124,54 @@ define([
 				.attr('transform','translate('+ -tl[0] +','+ -tl[1] + ')');
 
 			features.attr('d',path);
+		},
+
+		drawCityMarkers:function(cityCollection){
+			var cities = cityCollection.toJSON();
+
+			cities.forEach(function(city){
+				var marker = L.marker([
+					city.geometry.coordinates[1],
+					city.geometry.coordinates[0]
+				],{icon:cityIcon})
+					.addTo(map)
+					.on('mouseover',function(){
+						vent.trigger('city:hover',city.city);
+					})
+					.on('mouseout',function(){
+						vent.trigger('city:unhover',city.city);
+					})
+					.on('click',function(){
+						vent.trigger('city:click',city);
+					})
+
+				cityIconHash[city.city] = marker;
+			});
+		},
+		highlightMarker:function(name){
+			cityIconHash[name].setIcon(cityIconHighlight);
+		},
+		unHighlightMarker:function(name){
+			cityIconHash[name].setIcon(cityIcon);
+		},
+		cityClick:function(city){
+			//parse box extent
+			/*var ext = city.extent;
+			ext = ext.substring(ext.indexOf('(')+1, ext.indexOf(')'));
+			ext = ext.split(',');
+			var tl = L.LatLng(+(ext[0].split(' '))[1], +(ext[0].split(' '))[0]),
+				br = L.LatLng(+(ext[1].split(' '))[1], +(ext[1].split(' '))[0]);
+			L.marker(tl).addTo(map);
+			L.marker(br).addTo(map);*/
 		}
 
 	});
+
+	var mapView = new MapView();
+
+	vent.on('city:hover', mapView.highlightMarker);
+	vent.on('city:unhover',mapView.unHighlightMarker);
+	vent.on('city:click',mapView.cityClick);
 
 	return new MapView();
 })

@@ -8,8 +8,8 @@
 		<div class="value"><%= owner1 %></div>
 	</li>
 	<li class="attr-list-item">
-		<span>Area</span>
-		<div class="value"><%= shape_area %></div>
+		<span>Parcel area</span>
+		<div class="value"><%= Math.round(shape_area)+'sqft' %></div>
 	</li>
 	<li class="attr-list-item">
 		<span>Zoning</span>
@@ -22,6 +22,10 @@
 	<div class="form-group comment attr-list-item">
 		<label for="comment">Comments</label>
 		<textarea type="text" class="form-control" id="comment" placeholder="Add a comment" ><%= comment %></textarea>
+	</div>
+	<div class="form-group marked attr-list-item">
+		<label for="marked">Mark this parcel</label>
+		<input type="checkbox" name="marked" id="marked" <% if(marked==true){ %>checked<% } %>>
 	</div>
 </ul>
 <a class="btn btn-default save" href="#" role="button">Save</a>

@@ -7,6 +7,29 @@ router
 .all(function(req,res,next){
 	next();
 })
+.get('/',function(req,res){
+	console.log('Query collection');
+
+	cartodbClient.query(
+		"SELECT * FROM {table}",
+		{ 
+			table:"pittsfield"
+		},
+		function(err,data){
+			if(err){ res.send(err); }
+
+			data.features.forEach(function(feature){
+				for(var key in feature.properties){
+					feature[key] = feature.properties[key];
+				}
+
+				delete feature.properties;
+			});
+			res.json(data.features);
+		}
+	);
+
+})
 .get('/:id',function(req,res){
 
 	cartodbClient.query(
@@ -15,7 +38,15 @@ router
 		function(err,data){
 			if(err){ res.send(err); }
 			else{
-				res.json(data.features[0].properties);
+
+			//data returns a feature collection
+				var feature = data.features[0];
+				for(var key in feature.properties){
+					feature[key] = feature.properties[key];
+				}
+				delete feature.properties;
+				
+				res.json(feature);
 			}
 		}
 	);
@@ -26,14 +57,20 @@ router
 	console.log("UPDATE to parcel "+req.params.id);
 	
 	//Construct query string
-	var query = "UPDATE {table} SET comment='" + req.body.comment + "', modified=" + req.body.modified + " WHERE cartodb_id=" + req.params.id;
+	var query = "UPDATE {table} SET comment='" 
+		+ req.body.comment + 
+		"', modified="
+		+ req.body.modified + 
+		", marked="
+		+ req.body.marked +
+		" WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(
 		query,
 		{table:"pittsfield"},
 		function(err,data){
 			if(err){ 
-				console.log("Update error");
+				console.log(err);
 				res.send(err);
 			}
 			else{ res.json(req.body)};

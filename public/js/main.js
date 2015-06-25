@@ -8,11 +8,16 @@ require.config({
 		'd3':'lib/d3/d3.min',
 		'text':'lib/require/text',
 
-		'vent':'app/vent'
+		'vent':'app/vent',
+
+		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min'
 	},
 	shim:{
 		'leaflet':{
 			exports:'L'
+		},
+		'bootstrap-switch':{
+			deps:['jquery']
 		}
 	}
 });
@@ -38,6 +43,5 @@ require([
 		app,
 		ui
 	){
-		ui.pos.init();
 		app.start();
 	})

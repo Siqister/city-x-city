@@ -15,26 +15,48 @@ body{
 .top{
 	width:100%;
 	height:60px;
+	background:rgb(80,80,80);
 }
 .content{
 	position:absolute;
 	width:100%;
-	top:60px;
+	top:0px;
 	bottom:0px;
 	overflow:hidden;
 }
-	.content .modules{
+	.content .map{
+		width:100%;
 		height:100%;
-		position:absolute;
+		float:left;
+		background:green;
 	}
-		.content .module{
-			height:100%;
-			float:left;
-			background:green;
-		}
-		.content .detail{
-			background:#2fdf9e;
-		}
+	.content .detail{
+		background:#2fdf9e;
+		position:absolute;
+		left:250px;
+		top:50px;
+		opacity:0;
+		width:20%;
+		z-index:999;
+	}
+	.content .city{
+		background:#333d47;
+		position:absolute;
+		top:0;
+		left:0;
+		width:250px;
+		height:300px;
+		z-index:10000;
+	}
+	.content .parcels{
+		background:#e6e8ec;
+		position:absolute;
+		bottom:0;
+		left:0;
+		top:300px;
+		width:250px;
+		z-index:10001;
+	}
 
 /*Global*/
 body{
@@ -61,17 +83,54 @@ h2{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:#2fdf9e;
-	fill-opacity:.5;
-	stroke:white;
-	stroke-width:.5px;
+	fill:rgba(220,220,220,.5);
+	stroke:rgba(150,150,150,.6);
+	stroke-width:1px;
 }
-	.content .map .map-inner svg .parcel:hover{ fill-opacity:1; }
+	.content .map .map-inner svg .parcel:hover{ 
+		fill-opacity:.7; 
+		fill:#2fdf9e;
+	}
+
+/*City module*/
+.content .city .city-list{
+	padding:30px 0;
+}
+	.content .city .city-list-item{
+		font-size:1.3em;
+		padding:5px 15px;
+		border-bottom:1px #485763 solid;
+	}
+	.content .city .city-list-item.highlight{
+		background:#485763;
+	}
+		.content .city .city-list-item .marked{
+			background:#ef4136;
+		}
 
 /*Detail module*/
+
+	/* Global override for bootstrap-switch */
+	.content .detail .bootstrap-switch-wrapper{
+		display:block;
+		border:none;
+	}
+		.content .detail .bootstrap-switch-handle-on{
+			background:#ef4136;
+		}
+		.content .detail .bootstrap-switch-handle-off{
+			background:#5bbb90;
+			color:white;
+		}
+
 .content .detail .detail-inner{
 	padding:30px 15px;
 }
+	.detail-inner .save{
+		border-color:white;
+		background:none;
+		color:white;
+	}
 	.detail-inner .attr-list{
 		margin:20px 0;
 	}

@@ -1,18 +1,17 @@
 define([
 	'backbone',
+	'app/models/parcelModel',
 
 	'vent'
 ],function(
 	Backbone,
+	ParcelModel,
 
 	vent
 ){
 	var ParcelsCollection = Backbone.Collection.extend({
-		url:'/parcels',
-
-		parse:function(res){
-			return res.features;
-		}
+		url:'/parcel',
+		model:ParcelModel
 	});
 
 	var parcelsCollection = new ParcelsCollection();
