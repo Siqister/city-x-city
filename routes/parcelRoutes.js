@@ -13,7 +13,7 @@ router
 	cartodbClient.query(
 		"SELECT * FROM {table}",
 		{ 
-			table:"pittsfield"
+			table:"tdi_parcels"
 		},
 		function(err,data){
 			if(err){ res.send(err); }
@@ -34,7 +34,7 @@ router
 
 	cartodbClient.query(
 		"SELECT * FROM {table} WHERE cartodb_id=" + req.params.id,
-		{ table:"pittsfield" },
+		{ table:"tdi_parcels" },
 		function(err,data){
 			if(err){ res.send(err); }
 			else{
@@ -67,7 +67,7 @@ router
 
 	cartodbClient.query(
 		query,
-		{table:"pittsfield"},
+		{table:"tdi_parcels"},
 		function(err,data){
 			if(err){ 
 				console.log(err);

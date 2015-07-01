@@ -112,8 +112,9 @@ h2{
 
 	/* Global override for bootstrap-switch */
 	.content .detail .bootstrap-switch-wrapper{
-		display:block;
+		display:inline-block;
 		border:none;
+		float:right;
 	}
 		.content .detail .bootstrap-switch-handle-on{
 			background:#ef4136;
@@ -137,7 +138,7 @@ h2{
 		.detail-inner .attr-list .attr-list-item{
 			margin:5px 0;
 			padding:3px 0;
-			border-bottom:1px solid rgba(255,255,255,.5);
+			/*border-bottom:1px solid rgba(255,255,255,.5);*/
 		}
 		.detail-inner .attr-list .attr-list-item:last-child{
 			border:none;

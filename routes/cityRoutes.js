@@ -9,7 +9,7 @@ router
 .get('/',function(req,res,next){
 	cartodbClient.query(
 		'SELECT city, COUNT(cartodb_id) AS numOfParcels, COUNT(marked=true) as marked, ST_EXTENT(the_geom) as extent, ST_CENTROID(ST_COLLECT(the_geom)) as the_geom FROM {table} GROUP BY city',
-		{ table:'pittsfield'},
+		{ table:'tdi_parcels'},
 		function(err,data){
 			if(err){ res.send(err); }
 

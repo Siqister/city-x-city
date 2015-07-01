@@ -27,5 +27,13 @@
 		<label for="marked">Mark this parcel</label>
 		<input type="checkbox" name="marked" id="marked" <% if(marked==true){ %>checked<% } %>>
 	</div>
+	<div class="form-group city-owned attr-list-item">
+		<label for="city-owned">City-owned</label>
+		<input type="checkbox" name="marked" id="city-owned" class='city-owned' <% if(marked==true){ %>checked<% } %>>
+	</div>
+	<div class="form-group partner-owned attr-list-item">
+		<label for="partner-owned">Partner-controlled</label>
+		<input type="checkbox" name="marked" id="partner-owned" class='partner-owned' <% if(marked==true){ %>checked<% } %>>
+	</div>
 </ul>
 <a class="btn btn-default save" href="#" role="button">Save</a>

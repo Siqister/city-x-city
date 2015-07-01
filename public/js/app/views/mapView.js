@@ -155,14 +155,8 @@ define([
 			cityIconHash[name].setIcon(cityIcon);
 		},
 		cityClick:function(city){
-			//parse box extent
-			/*var ext = city.extent;
-			ext = ext.substring(ext.indexOf('(')+1, ext.indexOf(')'));
-			ext = ext.split(',');
-			var tl = L.LatLng(+(ext[0].split(' '))[1], +(ext[0].split(' '))[0]),
-				br = L.LatLng(+(ext[1].split(' '))[1], +(ext[1].split(' '))[0]);
-			L.marker(tl).addTo(map);
-			L.marker(br).addTo(map);*/
+			var lngLat = city.get('geometry').coordinates;
+			map.panTo(new L.LatLng(lngLat[1],lngLat[0]), {animate:true});
 		}
 
 	});

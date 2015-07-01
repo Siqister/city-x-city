@@ -39,6 +39,9 @@ define([
 			this.$el.on('mouseleave',function(){
 				vent.trigger('city:unhover', that.model.get('city'));
 			})
+			this.$el.on('click',function(){
+				vent.trigger('city:click', that.model);
+			})
 		},
 		onHover:function(){
 			this.$el.addClass('highlight');
