@@ -54,7 +54,6 @@ router
 })
 .put('/:id',function(req,res){
 	//HTTP PUT request assumes req.body contains the entire resource representation
-	console.log("UPDATE to parcel "+req.params.id);
 	
 	//Construct query string
 	var query = "UPDATE {table} SET comment='" 
@@ -63,6 +62,10 @@ router
 		+ req.body.modified + 
 		", marked="
 		+ req.body.marked +
+		", city_owned="
+		+ req.body.cityOwned +
+		", partner_owned="
+		+ req.body.partnerOwned +
 		" WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(
@@ -73,7 +76,10 @@ router
 				console.log(err);
 				res.send(err);
 			}
-			else{ res.json(req.body)};
+			else{ 
+				console.log("UPDATE to parcel "+req.params.id);
+				res.json(req.body)
+			};
 		}
 	)
 });

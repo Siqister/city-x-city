@@ -33,19 +33,18 @@ body{
 	.content .detail{
 		background:#2fdf9e;
 		position:absolute;
-		left:250px;
+		left:280px;
 		top:50px;
 		opacity:0;
-		width:20%;
+		width:280px;
 		z-index:999;
 	}
 	.content .city{
-		background:#333d47;
 		position:absolute;
 		top:0;
 		left:0;
-		width:250px;
-		height:300px;
+		width:280px;
+		height:100%;
 		z-index:10000;
 	}
 	.content .parcels{
@@ -53,8 +52,8 @@ body{
 		position:absolute;
 		bottom:0;
 		left:0;
-		top:300px;
-		width:250px;
+		top:400px;
+		width:280px;
 		z-index:10001;
 	}
 
@@ -65,10 +64,10 @@ body{
 	font-size:16px;
 }
 h1{
-	font-size:2em;
+	font-size:1.8em;
 }
 h2{
-	font-size:1.6em;
+	font-size:1.4em;
 }
 
 @font-face{
@@ -95,14 +94,20 @@ h2{
 /*City module*/
 .content .city .city-list{
 	padding:30px 0;
+	height:100%;
 }
 	.content .city .city-list-item{
-		font-size:1.3em;
-		padding:5px 15px;
-		border-bottom:1px #485763 solid;
+		color:rgb(100,100,100);
+		font-size:1.1em;
+		padding:10px 15px;
+		background:white;
+		position:absolute;
+		width:100%;
+		box-shadow:0px 1px 12px rgba(100,100,100,.2);
 	}
 	.content .city .city-list-item.highlight{
-		background:#485763;
+		background:rgb(245,245,245);
+		box-shadow:0px 1px 12px rgba(100,100,100,.4);
 	}
 		.content .city .city-list-item .marked{
 			background:#ef4136;
@@ -144,7 +149,7 @@ h2{
 			border:none;
 		}
 			.detail-inner .attr-list .attr-list-item .value{
-				font-size:1.3em;
+				font-size:1.1em;
 			}
 			.detail-inner .attr-list .attr-list-item .form-control{
 				border:none;

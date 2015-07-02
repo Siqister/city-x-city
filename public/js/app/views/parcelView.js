@@ -39,8 +39,6 @@ define([
 
 		initialize:function(){
 			this.listenTo(this.model,'sync',this.onSync);
-
-			console.log(this.model);
 		},
 		onShow:function(){
 			//customize initial appearance
@@ -91,8 +89,6 @@ define([
 				modified:true
 			});
 
-			console.log(this.model);
-
 			this.$el.addClass('modified');
 			this.ui.save.fadeIn();
 		},
@@ -100,10 +96,11 @@ define([
 			this.model.save(); //issues HTTP PUT request
 		},
 		onSync:function(){
+			//parcel model is sync'ed up with server
 			this.ui.save.fadeOut();
 			this.$el.removeClass('modified');
 
-			vent.trigger('parcel:update');
+			vent.trigger('parcel:update'); //trippers mapView.drawParcels
 		}
 	})
 

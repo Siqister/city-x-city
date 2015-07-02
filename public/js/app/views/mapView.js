@@ -6,7 +6,8 @@ define([
 	'vent',
 
 	'app/collections/parcelsCollection',
-	'app/models/parcelModel'
+	'app/models/parcelModel',
+	'app/collections/cityCollection'
 ],function(
 	Marionette,
 	L,
@@ -15,7 +16,8 @@ define([
 	vent,
 
 	parcelsCollection,
-	ParcelModel
+	ParcelModel,
+	cityCollection
 ){
 
 	//module internal variables for keeping leaflet+d3
@@ -75,7 +77,6 @@ define([
 		},
 
 		drawParcels:function(){
-			console.log('parcelCollection:updated');
 			console.log('mapView:redrawParcels');
 			var that = this;
 
@@ -88,8 +89,7 @@ define([
 				.attr('class','parcel')
 				.on('click', function(d){
 					//a parcel is clicked on
-					console.log(d);
-					var parcelModel = new ParcelModel(d);
+					var parcelModel = that.collection.get(d.cartodb_id);
 					vent.trigger('parcel:detail:show',parcelModel);
 					vent.trigger('ui:show:detail');
 				});
@@ -166,6 +166,13 @@ define([
 	vent.on('city:hover', mapView.highlightMarker);
 	vent.on('city:unhover',mapView.unHighlightMarker);
 	vent.on('city:click',mapView.cityClick);
+	vent.on('parcel:update',function(){
+		//data for individual parcel model is sync'ed with server
+		//update and redraw mapView
+		mapView.drawParcels(); 
+		//update cityCollectionView
+		cityCollection.fetch();
+	});
 
 	return new MapView();
 })

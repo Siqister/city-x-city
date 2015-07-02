@@ -29,6 +29,7 @@ define([
 		initialize:function(){
 			this.listenTo(this.model,'hover',this.onHover,this);
 			this.listenTo(this.model,'unhover',this.onUnhover,this);
+			this.listenTo(this.model,'change',this.onModelAttrChange,this);
 		},
 		onRender:function(){
 			var that = this;
@@ -48,6 +49,10 @@ define([
 		},
 		onUnhover:function(){
 			this.$el.removeClass('highlight');
+		},
+		onModelAttrChange:function(){
+			var that = this;
+			that.$el.find('.marked').html(that.model.get('marked'));
 		}
 	})
 
@@ -56,10 +61,55 @@ define([
 		tagName:'ul',
 		childView:CityItemView,
 
+
 		initialize:function(){
 			console.log('cityCollectionView:init');
 
-			this.collection.fetch();
+			this.collection.fetch({reset:true});
+		},
+		onRender:function(){
+			var that = this,
+				top = 0, spacing = 45;
+
+			//Position .city-list-item
+			that.children.forEach(function(childView){
+				childView.$el.css({
+					height:'100px',
+					top:top+'px'
+				});
+
+				top += spacing;
+			});
+		},
+		showCityDetail:function(cityModel){
+			//Find particular childView 
+			var cityDetailView = this.children.findByModel(cityModel);
+			var that = this,
+				top = 0, spacing = 45, z = 999;
+
+			//reshuffle .city-list-item and reset z-index
+			this.children.forEach(function(childView){
+				if(childView.cid == cityDetailView.cid){
+					return;
+				}
+
+				childView.$el
+					.css('z-index',z)
+					.animate({
+						top:top+'px'
+					});
+				top += spacing;
+				z += 1;
+			},'fast');
+
+			cityDetailView.$el
+				.css({
+					'z-index':9999
+				})
+				.animate({
+					top:top+'px',
+					height:(that.$el.height()-top+100)+'px'
+				})
 		}
 	});
 
@@ -78,6 +128,9 @@ define([
 
 		cityModel.trigger('unhover');
 	});
+	vent.on('city:click',function(cityModel){
+		cityCollectionView.showCityDetail(cityModel);
+	})
 
 
 	return cityCollectionView;
