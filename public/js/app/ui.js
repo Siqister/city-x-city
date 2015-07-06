@@ -24,7 +24,8 @@ define([
 		}
 	};
 
-	vent.on('ui:show:detail',ui.detail.show)
+	vent.on('ui:show:detail',ui.detail.show);
+	vent.on('ui:hide:detail',ui.detail.hide);
 
 	return ui;
 

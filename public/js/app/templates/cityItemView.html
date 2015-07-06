@@ -1,1 +1,12 @@
-<span class="name"><%= city %></span><span class='label pull-right marked'><%= marked %></span>
+<div class="city-info">
+	<span class="name"><%= city %></span>
+	<span class='label pull-right marked'><%= marked %></span>
+	<span class='label pull-right city-owned'><%= city_owned %></span>
+	<span class='label pull-right partner-owned'><%= partner_owned %></span>
+</div>
+<div class="city-action-menu">
+	<div class='btn-group add-action'>
+		<a href="#" class='btn add-asset' id="asset">New asset</a>
+		<a href="#" class='btn add-investment' id="investment">New investment</a>
+	</div>
+</div>

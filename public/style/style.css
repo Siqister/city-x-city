@@ -11,6 +11,9 @@ html,body{
 body{
 	background:rgb(240,240,235);
 }
+body .btn{
+	line-height:1; !IMPORTANT
+}
 
 .top{
 	width:100%;
@@ -104,13 +107,38 @@ h2{
 		position:absolute;
 		width:100%;
 		box-shadow:0px 1px 12px rgba(100,100,100,.2);
+		cursor:pointer;
 	}
 	.content .city .city-list-item.highlight{
 		background:rgb(245,245,245);
 		box-shadow:0px 1px 12px rgba(100,100,100,.4);
 	}
+		.content .city .city-list-item .label{
+			margin:0 0 0 5px;
+		}
 		.content .city .city-list-item .marked{
 			background:#ef4136;
+		}
+		.content .city .city-list-item .city-owned{
+			background:#d6d4ea;
+		}
+		.content .city .city-list-item .partner-owned{
+			background:#96d5cf;
+		}
+	.city .city-list-item .city-action-menu{
+		margin: 15px 0;
+	}
+		.city .city-list-item .add-action .btn{
+			color:rgb(100,100,100);
+			border:1px solid rgba(100,100,100,.5);
+		}
+		.city .city-list-item .add-action .btn:hover{
+			color:rgb(0,0,0);
+		}
+		.city .city-list-item .add-action .btn.active{
+			color:white;
+			border:1px solid rgba(100,100,100,.5);
+			background:rgba(100,100,100,.5);
 		}
 
 /*Detail module*/
@@ -132,10 +160,21 @@ h2{
 .content .detail .detail-inner{
 	padding:30px 15px;
 }
+	.detail-inner .address{
+		color:rgb(240,240,235);
+	}
 	.detail-inner .save{
 		border-color:white;
 		background:none;
 		color:white;
+	}
+	.detail-inner .close{
+		border-color:white;
+		background:none;
+		color:white;
+		font-size:14px;
+		opacity:1;
+		text-shadow:none;
 	}
 	.detail-inner .attr-list{
 		margin:20px 0;

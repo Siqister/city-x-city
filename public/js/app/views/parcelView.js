@@ -23,11 +23,13 @@ define([
 		template:_.template(parcelViewTemplate),
 
 		ui:{
+			address: '.address',
 			comment: '.comment textarea',
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
 			partnerOwned: '.partner-owned input',
-			save: '.save'
+			save: '.save',
+			close:'.close'
 		},
 		events:{
 			'input @ui.comment':'attrModified',
@@ -35,6 +37,8 @@ define([
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
 			'click @ui.save':'saveChanges',
+			'click @ui.address':'zoomToParcel',
+			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); }
 		},
 
 		initialize:function(){
@@ -63,7 +67,7 @@ define([
 			this.stopListening();
 		},
 		attrModified:function(e,state){
-			console.log('parcelDetail:attrModified');
+			console.log('parcelDetail:attrModified:'+e.target.id+':'+state);
 
 			var that = this;
 
@@ -84,8 +88,8 @@ define([
 			this.model.set({
 				comment:this.ui.comment.val(),
 				marked: this.ui.marked.bootstrapSwitch('state'),
-				cityOwned:this.ui.cityOwned.bootstrapSwitch('state'),
-				partnerOwned:this.ui.partnerOwned.bootstrapSwitch('state'),
+				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
+				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),
 				modified:true
 			});
 
@@ -100,7 +104,10 @@ define([
 			this.ui.save.fadeOut();
 			this.$el.removeClass('modified');
 
-			vent.trigger('parcel:update'); //trippers mapView.drawParcels
+			vent.trigger('parcel:update'); //trips mapView.drawParcels and cityCollection.fetch
+		},
+		zoomToParcel:function(){
+			vent.trigger('map:pan:parcel',this.model);
 		}
 	})
 

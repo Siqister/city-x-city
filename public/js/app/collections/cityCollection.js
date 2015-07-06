@@ -21,11 +21,14 @@ define([
 
 	cityCollection.on('reset',function(){
 		console.log('cityCollection:reset');
-		vent.trigger('cityCollection:update',this);
+		vent.trigger('cityCollection:update',this); //trips cityCollectionView.render
 	});
 	cityCollection.on('sync',function(){
 		console.log('cityCollection:update');
 	});
+	vent.on('parcel:update',function(){
+		cityCollection.fetch();
+	})
 
 	return cityCollection;
 })

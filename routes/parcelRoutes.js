@@ -63,9 +63,9 @@ router
 		", marked="
 		+ req.body.marked +
 		", city_owned="
-		+ req.body.cityOwned +
+		+ req.body.city_owned +
 		", partner_owned="
-		+ req.body.partnerOwned +
+		+ req.body.partner_owned +
 		" WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(
@@ -77,7 +77,7 @@ router
 				res.send(err);
 			}
 			else{ 
-				console.log("UPDATE to parcel "+req.params.id);
+				console.log("SUCCESSFUL UPDATE to parcel "+req.params.id+" TO "+req.body.marked);
 				res.json(req.body)
 			};
 		}

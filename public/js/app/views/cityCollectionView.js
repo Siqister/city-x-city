@@ -26,23 +26,37 @@ define([
 
 		template:_.template(cityItemViewTemplate),
 
+		ui:{
+			actionMenu:'.city-action-menu',
+			addAsset:'.add-action .add-asset',
+			addInvestment:'.add-action .add-investment'
+		},
+		events:{
+			'mouseenter':function(){
+				vent.trigger('city:hover', this.model.get('city'));
+			},
+			'mouseleave':function(){
+				vent.trigger('city:unhover', this.model.get('city'));
+			},
+			'click':'onClick',
+			'click @ui.addAsset':'addNewItem',
+			'click @ui.addInvestment':'addNewItem'
+		},
+
 		initialize:function(){
 			this.listenTo(this.model,'hover',this.onHover,this);
 			this.listenTo(this.model,'unhover',this.onUnhover,this);
 			this.listenTo(this.model,'change',this.onModelAttrChange,this);
 		},
 		onRender:function(){
-			var that = this;
+			this.ui.actionMenu.hide();
+		},
+		onClick:function(){
+			vent.trigger('city:click', this.model); //triggers cityCollectionView.showCityDetail
+			vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
 
-			this.$el.on('mouseenter',function(){
-				vent.trigger('city:hover', that.model.get('city'));
-			})
-			this.$el.on('mouseleave',function(){
-				vent.trigger('city:unhover', that.model.get('city'));
-			})
-			this.$el.on('click',function(){
-				vent.trigger('city:click', that.model);
-			})
+			this.ui.actionMenu.fadeIn();
+
 		},
 		onHover:function(){
 			this.$el.addClass('highlight');
@@ -53,6 +67,27 @@ define([
 		onModelAttrChange:function(){
 			var that = this;
 			that.$el.find('.marked').html(that.model.get('marked'));
+			that.$el.find('.city-owned').html(that.model.get('city_owned'));
+			that.$el.find('.partner-owned').html(that.model.get('partner_owned'));
+		},
+		collapse:function(){
+			this.ui.actionMenu.fadeOut().hide();
+		},
+		addNewItem:function(e){
+			e.stopPropagation();
+
+			var that = this;
+			that.ui.actionMenu.find('.btn').removeClass('active');
+			$(e.target).addClass('active');
+
+			//trigger editing mode
+			vent.trigger('map:edit:add',{
+				xy:[e.pageX,e.pageY],
+				cityModel:that.model,
+				type:$(e.target).attr('id')
+			}); //TODO: figure out the precise location
+
+			vent.trigger('ui:hide:detail');
 		}
 	})
 
@@ -129,6 +164,10 @@ define([
 		cityModel.trigger('unhover');
 	});
 	vent.on('city:click',function(cityModel){
+		cityCollectionView.children.each(function(view){
+			view.collapse();
+		})
+
 		cityCollectionView.showCityDetail(cityModel);
 	})
 

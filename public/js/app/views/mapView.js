@@ -21,7 +21,7 @@ define([
 ){
 
 	//module internal variables for keeping leaflet+d3
-	var map, svg, g, features;
+	var map, svg, g, features, editMarker;
 
 	var cityIcon = L.icon({
 		iconUrl:'../style/assets/pin-02.png',
@@ -34,6 +34,18 @@ define([
 		iconAnchor:[15,70]
 	});
 	var cityIconHash = {};
+
+	var assetIcon = L.icon({
+		iconUrl:'../style/assets/pin-04.png',
+		iconSize:[30,30],
+		iconAnchor:[15,15]
+	});
+	var investmentIcon = L.icon({
+		iconUrl:'../style/assets/pin-05.png',
+		iconSize:[30,30],
+		iconAnchor:[15,15]
+	})
+
 
 	function projectPoint(x,y){
 		var point = map.latLngToLayerPoint(new L.LatLng(y,x));
@@ -96,8 +108,20 @@ define([
 
 			features
 				.transition()
-				.style('fill',function(d){
+				.style('stroke',function(d){
 					return d.marked==true?'#ef4136':null;
+				})
+				.style('stroke-width',function(d){
+					return d.marked==true?'2px':null;
+				})
+				.style('fill',function(d){
+					if(d.city_owned==true){
+						return '#d6d4ea';
+					}else if(d.partner_owned==true){
+						return '#96d5cf';
+					}else{
+						return null;
+					}
 				})
 
 			map.off('viewreset', that.mapViewReset, that);
@@ -127,25 +151,24 @@ define([
 		},
 
 		drawCityMarkers:function(cityCollection){
-			var cities = cityCollection.toJSON();
 
-			cities.forEach(function(city){
+			cityCollection.forEach(function(cityModel){
 				var marker = L.marker([
-					city.geometry.coordinates[1],
-					city.geometry.coordinates[0]
+					cityModel.get('geometry').coordinates[1],
+					cityModel.get('geometry').coordinates[0]
 				],{icon:cityIcon})
 					.addTo(map)
 					.on('mouseover',function(){
-						vent.trigger('city:hover',city.city);
+						vent.trigger('city:hover',cityModel.get('city'));
 					})
 					.on('mouseout',function(){
-						vent.trigger('city:unhover',city.city);
+						vent.trigger('city:unhover',cityModel.get('city'));
 					})
 					.on('click',function(){
-						vent.trigger('city:click',city);
+						vent.trigger('map:pan:city',cityModel);
 					})
 
-				cityIconHash[city.city] = marker;
+				cityIconHash[cityModel.get('city')] = marker;
 			});
 		},
 		highlightMarker:function(name){
@@ -154,9 +177,40 @@ define([
 		unHighlightMarker:function(name){
 			cityIconHash[name].setIcon(cityIcon);
 		},
-		cityClick:function(city){
-			var lngLat = city.get('geometry').coordinates;
+		panToCity:function(model){
+			//model can be city or parcel model
+			var lngLat = model.get('geometry').coordinates;
 			map.panTo(new L.LatLng(lngLat[1],lngLat[0]), {animate:true});
+		},
+		panToParcel:function(model){
+			var xy = path.centroid(model.get('geometry')); //xy in pixels
+			var latLng = map.layerPointToLatLng(new L.Point(xy[0],xy[1]));
+			map.panTo(latLng,{animate:true});
+		},
+
+		addItem:function(e){
+			console.log("Map:edit:add");
+
+			//remove any existing editMarker and instantiate new one
+			if(editMarker){ map.removeLayer(editMarker); }
+			editMarker = L.marker([
+					e.cityModel.get('geometry').coordinates[1],
+					e.cityModel.get('geometry').coordinates[0]
+				],{
+				icon:e.type=="asset"?assetIcon:investmentIcon,
+				draggable:true
+			});
+			editMarker
+				.addTo(map)
+				.on('drag',function(e){
+					this.setOpacity(.4);
+				})
+				.on('dragend',function(e){
+					this.setOpacity(1);
+					console.log(map.latLngToContainerPoint(this.getLatLng()));
+				})
+
+			//Create new item model and collection
 		}
 
 	});
@@ -165,13 +219,13 @@ define([
 
 	vent.on('city:hover', mapView.highlightMarker);
 	vent.on('city:unhover',mapView.unHighlightMarker);
-	vent.on('city:click',mapView.cityClick);
+	vent.on('map:pan:parcel',mapView.panToParcel);
+	vent.on('map:pan:city',mapView.panToCity);
+	vent.on('map:edit:add',mapView.addItem);
 	vent.on('parcel:update',function(){
 		//data for individual parcel model is sync'ed with server
 		//update and redraw mapView
 		mapView.drawParcels(); 
-		//update cityCollectionView
-		cityCollection.fetch();
 	});
 
 	return new MapView();
