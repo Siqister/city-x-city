@@ -7,7 +7,10 @@ define([
 
 	'app/collections/parcelsCollection',
 	'app/models/parcelModel',
-	'app/collections/cityCollection'
+	'app/collections/cityCollection',
+	'app/models/assetModel',
+	'app/models/investmentModel'
+
 ],function(
 	Marionette,
 	L,
@@ -17,7 +20,9 @@ define([
 
 	parcelsCollection,
 	ParcelModel,
-	cityCollection
+	cityCollection,
+	AssetModel,
+	InvestmentModel
 ){
 
 	//module internal variables for keeping leaflet+d3
@@ -81,6 +86,14 @@ define([
 
 			svg = d3.select(map.getPanes().overlayPane).append('svg');
 			g = svg.append('g').attr('class','leaflet-zoom-hide');
+
+			//broadcast map zoom and move events
+			map.on('zoomstart movestart',function(){
+				vent.trigger('map:change:start');
+			});
+			map.on('zoomend moveend',function(){
+				vent.trigger('map:change:end');
+			})
 
 
 
@@ -201,16 +214,30 @@ define([
 				draggable:true
 			});
 			editMarker
+				.on('add',function(e){
+					vent.trigger('ui:edit:show', map.latLngToContainerPoint(this.getLatLng()) )
+				})
 				.addTo(map)
 				.on('drag',function(e){
 					this.setOpacity(.4);
+					vent.trigger('ui:edit:hide');
 				})
 				.on('dragend',function(e){
 					this.setOpacity(1);
-					console.log(map.latLngToContainerPoint(this.getLatLng()));
+					vent.trigger('ui:edit:reposition', map.latLngToContainerPoint(this.getLatLng()) );
 				})
 
-			//Create new item model and collection
+
+			//Create new itemModel and instantiate editView
+			var newModel = e.type=="asset"?new AssetModel({
+				city:e.cityModel.get('city'),
+				geometry:e.cityModel.get('geometry')
+			}):new InvestmentModel({
+				city:e.cityModel.get('city'),
+				geometry:e.cityModel.get('geometry')
+			});
+
+			vent.trigger('edit:show', newModel);
 		}
 
 	});
@@ -219,9 +246,20 @@ define([
 
 	vent.on('city:hover', mapView.highlightMarker);
 	vent.on('city:unhover',mapView.unHighlightMarker);
+
 	vent.on('map:pan:parcel',mapView.panToParcel);
 	vent.on('map:pan:city',mapView.panToCity);
 	vent.on('map:edit:add',mapView.addItem);
+	vent.on('map:change:start',function(){
+		vent.trigger('ui:edit:hide');
+	});
+	vent.on('map:change:end',function(){
+		if(!editMarker){ return; }
+
+		vent.trigger('ui:edit:reposition', map.latLngToContainerPoint(editMarker.getLatLng()) );
+	})
+
+
 	vent.on('parcel:update',function(){
 		//data for individual parcel model is sync'ed with server
 		//update and redraw mapView

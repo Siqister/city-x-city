@@ -10,6 +10,8 @@ require.config({
 
 		'vent':'app/vent',
 
+		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
+
 		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min'
 	},
 	shim:{
@@ -17,6 +19,9 @@ require.config({
 			exports:'L'
 		},
 		'bootstrap-switch':{
+			deps:['jquery']
+		},
+		'bootstrap':{
 			deps:['jquery']
 		}
 	}

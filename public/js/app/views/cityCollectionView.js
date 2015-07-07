@@ -56,7 +56,6 @@ define([
 			vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
 
 			this.ui.actionMenu.fadeIn();
-
 		},
 		onHover:function(){
 			this.$el.addClass('highlight');

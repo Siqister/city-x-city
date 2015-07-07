@@ -1,0 +1,31 @@
+<h2>Add a New <%= type %></h2>
+<ul class="attr-list">
+	<li class="attr-list-item">
+		<span>City</span>
+		<div class="value"><%= city %></div>
+	</li>
+	<li class="attr-list-item">
+		<span>Investment Type</span>
+		<div class="dropdown">
+		  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Select Type
+		    <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="dLabel">
+		    <li><a href="#">Equity</a></li>
+		  </ul>
+		</div>
+
+	</li>
+	<div class="form-group investment-value attr-list-item">
+		<label for="investment-value">Investment Value</label>
+		<input type="text" class="form-control" id="investment-value" placeholder="$" ></input>
+	</div>
+	<div class="form-group comment attr-list-item">
+		<label for="comment">Comments</label>
+		<textarea type="text" class="form-control" id="comment" placeholder="Add a comment" ></textarea>
+	</div>
+</ul>
+<a class="btn btn-default close" href="#" role="button">Close</a>
+<a class="btn btn-default save" href="#" role="button">Save</a>
+<div class="clearfix"></div>

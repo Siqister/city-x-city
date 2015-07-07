@@ -50,14 +50,12 @@ body .btn{
 		height:100%;
 		z-index:10000;
 	}
-	.content .parcels{
-		background:#e6e8ec;
+	.content .edit{
 		position:absolute;
-		bottom:0;
 		left:0;
-		top:400px;
 		width:280px;
 		z-index:10001;
+		background:#2fdf9e;
 	}
 
 /*Global*/
@@ -163,12 +161,21 @@ h2{
 	.detail-inner .address{
 		color:rgb(240,240,235);
 	}
-	.detail-inner .save{
+
+/*Edit module*/
+
+.edit .edit-inner{
+	padding:30px 15px;
+}
+
+
+/*Common to all modules */
+	.module .save{
 		border-color:white;
 		background:none;
 		color:white;
 	}
-	.detail-inner .close{
+	.module .close{
 		border-color:white;
 		background:none;
 		color:white;
@@ -176,21 +183,18 @@ h2{
 		opacity:1;
 		text-shadow:none;
 	}
-	.detail-inner .attr-list{
+	.module .attr-list{
 		margin:20px 0;
 	}
-		.detail-inner .attr-list .attr-list-item{
+		.module .attr-list .attr-list-item{
 			margin:5px 0;
 			padding:3px 0;
 			/*border-bottom:1px solid rgba(255,255,255,.5);*/
 		}
-		.detail-inner .attr-list .attr-list-item:last-child{
-			border:none;
-		}
-			.detail-inner .attr-list .attr-list-item .value{
+			.module .attr-list .attr-list-item .value{
 				font-size:1.1em;
 			}
-			.detail-inner .attr-list .attr-list-item .form-control{
+			.module .attr-list .attr-list-item .form-control{
 				border:none;
 				background:#2fdf9e;
 				color:white;

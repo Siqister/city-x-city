@@ -6,6 +6,7 @@ define([
 	'app/views/mapView',
 	'app/views/parcelView',
 	'app/views/cityCollectionView',
+	'app/views/editView'
 ],function(
 	Marionette,
 
@@ -13,7 +14,8 @@ define([
 
 	mapView,
 	ParcelView,
-	cityCollectionView
+	cityCollectionView,
+	EditView
 ){
 
 	console.log(cityCollectionView);
@@ -27,7 +29,7 @@ define([
 			map:'.content .map',
 			viz:'.content .viz',
 			city:'.content .city',
-			parcels:'.content .parcels'
+			edit:'.content .edit'
 		},
 
 		onRender:function(){
@@ -42,6 +44,9 @@ define([
 
 	vent.on('parcel:detail:show',function(model){
 		appLayoutView.detail.show(new ParcelView({model:model}));
+	})
+	vent.on('edit:show',function(model){
+		appLayoutView.edit.show(new EditView({model:model}));
 	})
 
 	return appLayoutView;
