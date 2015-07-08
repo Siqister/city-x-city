@@ -48,6 +48,9 @@ define([
 	vent.on('edit:show',function(model){
 		appLayoutView.edit.show(new EditView({model:model}));
 	})
+	vent.on('edit:cancel',function(){
+		appLayoutView.edit.empty();
+	})
 
 	return appLayoutView;
 })

@@ -43,6 +43,10 @@ define([
 		}
 	};
 
+	$(window).on('resize', function(){
+		height = $('.content').height();
+	})
+
 	vent.on('ui:show:detail',ui.detail.show);
 	vent.on('ui:hide:detail',ui.detail.hide);
 	vent.on('ui:edit:hide',ui.edit.hide);

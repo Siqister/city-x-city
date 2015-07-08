@@ -6,7 +6,7 @@ define([
 	var InvestmentModel = Backbone.Model.extend({
 		urlRoot:'/investment',
 		defaults:{
-			type:'Investment'
+			type:'investment'
 		}
 	})
 	

@@ -10,8 +10,7 @@ require.config({
 
 		'vent':'app/vent',
 
-		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
-
+		'bootstrap-dropdown':'lib/bootstrap/js/dropdown',
 		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min'
 	},
 	shim:{
@@ -21,7 +20,7 @@ require.config({
 		'bootstrap-switch':{
 			deps:['jquery']
 		},
-		'bootstrap':{
+		'bootstrap-dropdown':{
 			deps:['jquery']
 		}
 	}

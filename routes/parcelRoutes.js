@@ -8,7 +8,7 @@ router
 	next();
 })
 .get('/',function(req,res){
-	console.log('Query collection');
+	console.log('Query entire parcel collection');
 
 	cartodbClient.query(
 		"SELECT * FROM {table}",

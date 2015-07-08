@@ -5,8 +5,9 @@ define([
 ){
 	var AssetModel = Backbone.Model.extend({
 		urlRoot:'/asset',
+		idAttribute:'cartodb_id',
 		defaults:{
-			type:'Asset'
+			type:'asset'
 		}
 	})
 	

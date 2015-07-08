@@ -8,6 +8,7 @@ var multer = require('multer');
 //Load express routers
 var parcelRoutes = require('./routes/parcelRoutes'); //for individual parcels
 var cityRoutes = require('./routes/cityRoutes');
+var assetRoutes = require('./routes/assetRoutes');
 
 
 //Middleware
@@ -18,6 +19,7 @@ app.use(multer());
 //Routes
 app.use('/parcel', parcelRoutes); //for parcels
 app.use('/city', cityRoutes);
+app.use('/asset', assetRoutes);
 
 
 //Connect to CartoDB via client

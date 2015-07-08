@@ -8,6 +8,8 @@ define([
 	'app/collections/parcelsCollection',
 	'app/models/parcelModel',
 	'app/collections/cityCollection',
+	'app/collections/assetCollection',
+	'app/collections/investmentCollection',
 	'app/models/assetModel',
 	'app/models/investmentModel'
 
@@ -21,6 +23,8 @@ define([
 	parcelsCollection,
 	ParcelModel,
 	cityCollection,
+	assetCollection,
+	investmentCollection,
 	AssetModel,
 	InvestmentModel
 ){
@@ -41,12 +45,12 @@ define([
 	var cityIconHash = {};
 
 	var assetIcon = L.icon({
-		iconUrl:'../style/assets/pin-04.png',
+		iconUrl:'../style/assets/pin_asset-edit.png',
 		iconSize:[30,30],
 		iconAnchor:[15,15]
 	});
 	var investmentIcon = L.icon({
-		iconUrl:'../style/assets/pin-05.png',
+		iconUrl:'../style/assets/pin_investment-edit.png',
 		iconSize:[30,30],
 		iconAnchor:[15,15]
 	})
@@ -229,15 +233,26 @@ define([
 
 
 			//Create new itemModel and instantiate editView
-			var newModel = e.type=="asset"?new AssetModel({
-				city:e.cityModel.get('city'),
-				geometry:e.cityModel.get('geometry')
-			}):new InvestmentModel({
-				city:e.cityModel.get('city'),
-				geometry:e.cityModel.get('geometry')
-			});
+			var newModel;
+			if(e.type == 'asset'){
+				newModel = new AssetModel({
+					city:e.cityModel.get('city'),
+					geometry:e.cityModel.get('geometry')
+				});
+				vent.trigger('assetCollection:add', newModel);
+			}else{
+				newModel = new InvestmentModel({
+					city:e.cityModel.get('city'),
+					geometry:e.cityModel.get('geometry')
+				});
+				vent.trigger('investmentCollection:add', newModel);
+			}
 
-			vent.trigger('edit:show', newModel);
+			vent.trigger('edit:show', newModel); //layoutView will show edit region
+		},
+
+		removeEditItem:function(){
+			map.removeLayer(editMarker);
 		}
 
 	});
@@ -250,6 +265,9 @@ define([
 	vent.on('map:pan:parcel',mapView.panToParcel);
 	vent.on('map:pan:city',mapView.panToCity);
 	vent.on('map:edit:add',mapView.addItem);
+	vent.on('map:edit:remove',mapView.removeEditItem);
+
+	//When map pans or zooms, hide edit window temporarily
 	vent.on('map:change:start',function(){
 		vent.trigger('ui:edit:hide');
 	});
@@ -257,12 +275,10 @@ define([
 		if(!editMarker){ return; }
 
 		vent.trigger('ui:edit:reposition', map.latLngToContainerPoint(editMarker.getLatLng()) );
-	})
+	});
 
-
+	//When parcelsCollection is sync'ed, redraw parcels
 	vent.on('parcel:update',function(){
-		//data for individual parcel model is sync'ed with server
-		//update and redraw mapView
 		mapView.drawParcels(); 
 	});
 
