@@ -7,6 +7,7 @@
 	<div class="form-group name attr-list-item">
 		<label for="name">Name</label>
 		<input type="text" class="form-control" id="name" placeholder="Name" ></input>
+		<span class="error-msg"></span>
 	</div>
 
 	<% if(type=='asset'){ %>
@@ -35,9 +36,10 @@
 		  </ul>
 		</div>
 	</li>
-	<div class="form-group <%= type %>-value attr-list-item">
-		<label for="<%= type %>-value">Investment Value</label>
-		<input type="text" class="form-control" id="<%= type %>-value" placeholder="$" ></input>
+	<div class="form-group value attr-list-item">
+		<label for="value">Investment Value</label>
+		<input type="text" class="form-control" id="value" placeholder="$" ></input>
+		<span class="error-msg"></span>
 	</div>
 	<% } %>
 	<div class="form-group comment attr-list-item">
@@ -48,3 +50,4 @@
 <a class="btn btn-default close" href="#" role="button">Cancel</a>
 <a class="btn btn-default save" href="#" role="button">Save</a>
 <div class="clearfix"></div>
+<div class="tooltip-below"></div>

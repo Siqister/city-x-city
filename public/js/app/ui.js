@@ -21,6 +21,9 @@ define([
 				$detail.animate({
 					'top':'100px',
 					'opacity':0
+				},function(){
+					console.log('ui:detail:hide:animationComplete');
+					vent.trigger('ui:detail:hide:animationComplete');
 				})
 			}
 		},

@@ -12,4 +12,4 @@ define([
 	})
 	
 	return AssetModel;
-})
+});

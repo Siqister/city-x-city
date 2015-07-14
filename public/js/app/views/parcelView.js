@@ -19,7 +19,7 @@ define([
 ){
 
 	var ParcelView = Marionette.ItemView.extend({
-		className:'detail-inner',
+		className:'detail-inner parcel-inner',
 		template:_.template(parcelViewTemplate),
 
 		ui:{

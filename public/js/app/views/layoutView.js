@@ -6,7 +6,9 @@ define([
 	'app/views/mapView',
 	'app/views/parcelView',
 	'app/views/cityCollectionView',
-	'app/views/editView'
+	'app/views/editView',
+	'app/views/assetView',
+	'app/views/investmentView'
 ],function(
 	Marionette,
 
@@ -15,7 +17,9 @@ define([
 	mapView,
 	ParcelView,
 	cityCollectionView,
-	EditView
+	EditView,
+	AssetView,
+	InvestmentView
 ){
 
 	console.log(cityCollectionView);
@@ -44,6 +48,15 @@ define([
 
 	vent.on('parcel:detail:show',function(model){
 		appLayoutView.detail.show(new ParcelView({model:model}));
+	})
+	vent.on('asset:detail:show',function(model){
+		appLayoutView.detail.show(new AssetView({model:model}));
+	})
+	vent.on('investment:detail:show',function(model){
+		appLayoutView.detail.show(new InvestmentView({model:model}));
+	})
+	vent.on('ui:detail:hide:animationComplete',function(){
+		appLayoutView.detail.empty();
 	})
 	vent.on('edit:show',function(model){
 		appLayoutView.edit.show(new EditView({model:model}));

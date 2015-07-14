@@ -77,7 +77,7 @@ router
 				res.send(err);
 			}
 			else{ 
-				console.log("SUCCESSFUL UPDATE to parcel "+req.params.id+" TO "+req.body.marked);
+				console.log("SUCCESSFUL UPDATE to parcel "+req.params.id);
 				res.json(req.body)
 			};
 		}

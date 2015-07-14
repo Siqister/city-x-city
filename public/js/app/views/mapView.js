@@ -44,16 +44,27 @@ define([
 	});
 	var cityIconHash = {};
 
-	var assetIcon = L.icon({
+	var assetIconEdit = L.icon({
 		iconUrl:'../style/assets/pin_asset-edit.png',
 		iconSize:[30,30],
 		iconAnchor:[15,15]
 	});
-	var investmentIcon = L.icon({
+	var investmentIconEdit = L.icon({
 		iconUrl:'../style/assets/pin_investment-edit.png',
 		iconSize:[30,30],
 		iconAnchor:[15,15]
-	})
+	});
+	var assetIcon = L.icon({
+		iconUrl:'../style/assets/pin_asset.png',
+		iconSize:[30,30],
+		iconAnchor:[15,15]
+	});
+	var investmentIcon = L.icon({
+		iconUrl:'../style/assets/pin_investment.png',
+		iconSize:[30,30],
+		iconAnchor:[15,15]
+	});
+	var assetMarkerHash = d3.map(), investmentMarkerHash = d3.map(); //allows one to one look-up between map icons and asset models
 
 
 	function projectPoint(x,y){
@@ -76,7 +87,6 @@ define([
 		initialize:function(){
 			this.listenTo(this.collection, 'sync', this.drawParcels);
 
-			vent.on('cityCollection:update',this.drawCityMarkers);
 		},
 
 		onShow:function(){
@@ -100,9 +110,14 @@ define([
 			})
 
 
-
 			//ask parcels collection to sync
 			this.collection.fetch();
+			//ask assetCollection to sync
+			this.listenTo(assetCollection,'reset',this.drawAssetMarkers,this);
+			assetCollection.fetch({reset:true});
+
+			this.listenTo(investmentCollection,'reset',this.drawInvestmentMarkers,this);
+			investmentCollection.fetch({reset:true});
 		},
 
 		drawParcels:function(){
@@ -188,6 +203,24 @@ define([
 				cityIconHash[cityModel.get('city')] = marker;
 			});
 		},
+
+		drawAssetMarkers:function(){
+			console.log(assetCollection);
+			var that = this;
+
+			assetCollection.each(function(assetModel){
+				that.addItem(assetModel)
+			});
+		},
+		drawInvestmentMarkers:function(){
+			var that = this;
+
+			investmentCollection.each(function(investmentModel){
+				that.addItem(investmentModel);
+			});
+		},
+
+
 		highlightMarker:function(name){
 			cityIconHash[name].setIcon(cityIconHighlight);
 		},
@@ -205,8 +238,10 @@ define([
 			map.panTo(latLng,{animate:true});
 		},
 
-		addItem:function(e){
+		addEditItem:function(e){
 			console.log("Map:edit:add");
+
+			var newModel;
 
 			//remove any existing editMarker and instantiate new one
 			if(editMarker){ map.removeLayer(editMarker); }
@@ -214,7 +249,7 @@ define([
 					e.cityModel.get('geometry').coordinates[1],
 					e.cityModel.get('geometry').coordinates[0]
 				],{
-				icon:e.type=="asset"?assetIcon:investmentIcon,
+				icon:e.type=="asset"?assetIconEdit:investmentIconEdit,
 				draggable:true
 			});
 			editMarker
@@ -222,9 +257,18 @@ define([
 					vent.trigger('ui:edit:show', map.latLngToContainerPoint(this.getLatLng()) )
 				})
 				.addTo(map)
-				.on('drag',function(e){
-					this.setOpacity(.4);
+				.on('drag',function(){
+					var thisMarker = this;
+
+					thisMarker.setOpacity(.4);
 					vent.trigger('ui:edit:hide');
+
+					//dragging updates the location of the item
+					var newGeo = {
+						type:'Point',
+						coordinates:[thisMarker.getLatLng().lng, thisMarker.getLatLng().lat]
+					}
+					newModel.set('geometry', newGeo);
 				})
 				.on('dragend',function(e){
 					this.setOpacity(1);
@@ -233,7 +277,6 @@ define([
 
 
 			//Create new itemModel and instantiate editView
-			var newModel;
 			if(e.type == 'asset'){
 				newModel = new AssetModel({
 					city:e.cityModel.get('city'),
@@ -253,6 +296,28 @@ define([
 
 		removeEditItem:function(){
 			map.removeLayer(editMarker);
+		},
+
+		addItem:function(model){
+			//model can be either investment or asset
+			if(!model.get('geometry')){return; }
+
+			var marker = new L.marker([
+					model.get('geometry').coordinates[1],
+					model.get('geometry').coordinates[0]
+				],{
+					icon:model.get('type')=='asset'?assetIcon:investmentIcon
+				});
+			marker.addTo(map);
+
+			marker.on('click',function(e){
+				if(model.get('type')=='asset'){
+					vent.trigger('asset:detail:show',model)
+				}else{
+					vent.trigger('investment:detail:show',model)
+				}
+				vent.trigger('ui:show:detail');
+			})
 		}
 
 	});
@@ -264,8 +329,10 @@ define([
 
 	vent.on('map:pan:parcel',mapView.panToParcel);
 	vent.on('map:pan:city',mapView.panToCity);
-	vent.on('map:edit:add',mapView.addItem);
+	vent.on('map:edit:add',mapView.addEditItem);
 	vent.on('map:edit:remove',mapView.removeEditItem);
+
+	vent.on('map:add:item',mapView.addItem);
 
 	//When map pans or zooms, hide edit window temporarily
 	vent.on('map:change:start',function(){
@@ -281,6 +348,8 @@ define([
 	vent.on('parcel:update',function(){
 		mapView.drawParcels(); 
 	});
+
+	vent.on('cityCollection:update',mapView.drawCityMarkers);
 
 	return new MapView();
 })

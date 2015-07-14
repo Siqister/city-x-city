@@ -32,6 +32,7 @@ define([
 
 		initialize:function(){
 			this.listenTo(this.model,'sync',this.onModelSync,this);
+			this.listenTo(this.model,'invalid',this.onModelError,this);
 		},
 		onShow:function(){
 			this.ui.save.hide();
@@ -62,8 +63,25 @@ define([
 		},
 		onModelSync:function(){
 			//model has been saved to database, remove this view;
-			console.log(this.model);
-			vent.trigger('edit:cancel');
+			vent.trigger('edit:cancel'); //layoutView
+			vent.trigger('map:edit:remove'); //mapView will remove the editMarker
+
+			//Depending on the type of the model (asset/investment), trigger mapView event to add the marker
+			vent.trigger('map:add:item',this.model); 
+		},
+		onModelError:function(model,errors){
+			var $formGroups = this.$('.form-group');
+
+			errors.forEach(function(err){
+
+				var $errorFields = $formGroups.filter(function(){
+					return $(this).hasClass(err.errorField);
+				});
+
+				$errorFields.addClass('error');
+				$errorFields.find('.error-msg').html(err.errorMsg);
+
+			})
 		}
 	});
 

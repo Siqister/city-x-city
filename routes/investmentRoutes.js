@@ -10,11 +10,11 @@ router
 	var query = "SELECT * FROM {table}";
 
 	cartodbClient.query(query,
-		{table:'tdi_assets'},function(err,data){
+		{table:'tdi_investments'},function(err,data){
 			if(err){
 				res.send(err);
 			}else{
-				console.log('SUCCESSFUL GET /asset');
+				console.log('SUCCESSFUL GET /investment');
 				//flatten response
 				data.features.forEach(function(feature){
 					for(var key in feature.properties){
@@ -22,9 +22,8 @@ router
 						delete feature.properties[key];
 					}
 
-					feature.type = 'asset';
+					feature.type = 'investment';
 				});
-
 
 				res.json(data.features);
 			}
@@ -33,16 +32,18 @@ router
 .post('/',function(req,res,next){
 	var loc = req.body.geometry.coordinates;
 
-	var query = "INSERT INTO {table} (city,the_geom,name,comment) "
+	var query = "INSERT INTO {table} (city,the_geom,name,comment,type,value) "
 		+"VALUES ('"
 		+ req.body.city + "',"
 		+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
 		+ req.body.name + "','"
-		+ req.body.comment +
-		"') RETURNING cartodb_id";
+		+ req.body.comment + "','"
+		+ req.body.type + "',"
+		+ req.body.value +
+		") RETURNING cartodb_id";
 
 	cartodbClient.query(query,
-		{table:'tdi_assets'},function(err,data){
+		{table:'tdi_investments'},function(err,data){
 			if(err){ 
 				res.send(err);
 			}
@@ -57,14 +58,14 @@ router
 		});
 })
 .put('/:id',function(req,res,next){
-	console.log('PUT REQUEST TO /asset');
+	console.log('PUT REQUEST TO /investment');
 	console.log(req.body);
 
 	var query = "UPDATE {table} SET comment='" 
 		+ req.body.comment + 
 		"' WHERE cartodb_id=" + req.params.id;
 
-	cartodbClient.query(query,{table:'tdi_assets'},function(err,data){
+	cartodbClient.query(query,{table:'tdi_investments'},function(err,data){
 		if(err){
 			res.send(err);
 		}else{
