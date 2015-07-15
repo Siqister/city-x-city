@@ -43,6 +43,9 @@ define([
 
 			//change model attributes
 			that.$('.form-group').each(function(i){
+				$(this).removeClass('error');
+				$(this).find('.error-msg').empty();
+
 				var $input = $(this).find('.form-control');
 				var attr = $input.attr('id'),
 					val = $input.val();

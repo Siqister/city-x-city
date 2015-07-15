@@ -75,7 +75,20 @@ router
 
 })
 .delete('/:id',function(req,res,next){
-	
+	console.log('DELETE REQUEST TO /asset');
+	console.log(req.body);
+
+	var query = "DELETE FROM {table} WHERE cartodb_id=" + req.params.id;
+
+	cartodbClient.query(query,{table:'tdi_assets'},function(err,data){
+		if(err){
+			res.send(err);
+		}else{
+			console.log('SUCCESSFUL DELETE TO ASSET ' + req.params.id);
+			console.log(req.body);
+			res.json(req.body);
+		}
+	});
 })
 
 module.exports = router;

@@ -302,6 +302,7 @@ define([
 			//model can be either investment or asset
 			if(!model.get('geometry')){return; }
 
+			//Create marker with the right icon, add it to map
 			var marker = new L.marker([
 					model.get('geometry').coordinates[1],
 					model.get('geometry').coordinates[0]
@@ -310,6 +311,14 @@ define([
 				});
 			marker.addTo(map);
 
+			//Add marker to correct icon hash
+			if(model.get('type')=='asset'){
+				assetMarkerHash.set(model.id,marker);
+			}else{
+				investmentMarkerHash.set(model.id,marker);
+			}
+
+			//Wire marker for clicks
 			marker.on('click',function(e){
 				if(model.get('type')=='asset'){
 					vent.trigger('asset:detail:show',model)
@@ -345,11 +354,18 @@ define([
 	});
 
 	//When parcelsCollection is sync'ed, redraw parcels
-	vent.on('parcel:update',function(){
-		mapView.drawParcels(); 
-	});
+	vent.on('parcel:update',mapView.drawParcels);
 
 	vent.on('cityCollection:update',mapView.drawCityMarkers);
+
+	vent.on('asset:delete',function(modelID){
+		var assetMarker = assetMarkerHash.get(modelID);
+		map.removeLayer(assetMarker);
+	})
+	vent.on('investment:delete',function(modelID){
+		var investmentMarker = investmentMarkerHash.get(modelID);
+		map.removeLayer(investmentMarker);
+	})
 
 	return new MapView();
 })

@@ -19,7 +19,7 @@ define([
 					errorMsg:"Investment value is not a number."
 				})
 			}
-			if(attr.name==null){
+			if(!attr.name){
 				errors.push({
 					errorCode:2,
 					errorField:'name',
