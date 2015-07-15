@@ -3,6 +3,7 @@ define([
 
 	'vent',
 
+	'app/views/headerView',
 	'app/views/mapView',
 	'app/views/parcelView',
 	'app/views/cityCollectionView',
@@ -14,6 +15,7 @@ define([
 
 	vent,
 
+	headerView,
 	mapView,
 	ParcelView,
 	cityCollectionView,
@@ -40,6 +42,7 @@ define([
 			console.log('appLayoutView:render');
 
 			this.map.show(mapView);
+			this.top.show(headerView);
 			this.city.show(cityCollectionView);
 		}
 	});

@@ -43,6 +43,12 @@ define([
 					bottom:height-xy.y+25+'px'
 				}).fadeIn('fast');
 			}
+		},
+		getContentSize:function(){
+			return {
+				width:$('.content').width(),
+				height:$('.content').height()
+			}
 		}
 	};
 

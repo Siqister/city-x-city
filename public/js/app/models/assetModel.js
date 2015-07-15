@@ -12,13 +12,6 @@ define([
 		validate:function(attr,options){
 			var errors = [];
 
-			if(isNaN(attr.value)){
-				errors.push({
-					errorCode:1,
-					errorField:'value',
-					errorMsg:"Investment value is not a number."
-				})
-			}
 			if(!attr.name){
 				errors.push({
 					errorCode:2,

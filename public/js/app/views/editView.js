@@ -24,6 +24,7 @@ define([
 		},
 		events:{
 			'click @ui.save': function(){
+				console.log('save');
 				this.model.save();
 			},
 			'click @ui.cancel': 'removeNewItem',

@@ -20,6 +20,7 @@ body .btn{
 	height:54px;
 	background:white;
 	border-bottom:1px solid #e2e2e2;
+	position:absolute;
 }
 .content{
 	position:absolute;
@@ -82,6 +83,10 @@ h2{
 
 
 /*Header*/
+.top .header-inner{
+	width:100%;
+	height:100%;
+}
 .top .options-menu{
 	width:280px;
 	height:100%;
@@ -104,16 +109,16 @@ h2{
 		float:right;
 		display:inline-block;
 		border-left:1px solid #eeeeee;
+		position:relative;
 	}
-	.top .options-menu .option.active{
-		background-color:rgb(240,240,240);
-	}
-	.top .options-menu .map{
-		background:white url('assets/btn-map.png') no-repeat 12px 12px;
-	}
-	.top .options-menu .grid{
-		background:white url('assets/btn-grid.png') no-repeat 12px 12px;
-	}
+		.top .options-menu .option.active .custom-btn{background-color:rgb(240,240,240);}
+		.top .options-menu .option .custom-btn{
+			width:100%;
+			height:100%;
+			position:absolute;
+		}
+		.top .options-menu .btn-map{ background:white url('assets/btn-map.png') no-repeat 12px 12px; }
+		.top .options-menu .btn-grid{ background:white url('assets/btn-grid.png') no-repeat 12px 12px; }
 
 /*Map module*/
 .content .map .map-inner{
@@ -143,7 +148,12 @@ h2{
 		position:absolute;
 		width:100%;
 		box-shadow:0px 1px 12px rgba(100,100,100,.2);
+		border:none;
 		cursor:pointer;
+	}
+	.content .grid .city-list-item{
+		box-shadow:none;
+		border:1px solid #eeeeee;
 	}
 	.content .city .city-list-item.highlight{
 		background:rgb(245,245,245);

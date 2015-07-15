@@ -4,6 +4,7 @@ define([
 	'underscore',
 
 	'vent',
+	'app/ui',
 
 	'app/collections/cityCollection',
 
@@ -14,6 +15,7 @@ define([
 	_,
 
 	vent,
+	ui,
 
 	cityCollection,
 
@@ -87,6 +89,10 @@ define([
 			}); //TODO: figure out the precise location
 
 			vent.trigger('ui:hide:detail');
+		},
+
+		expandDetail:function(){
+
 		}
 	})
 
@@ -144,14 +150,38 @@ define([
 					top:top+'px',
 					height:(that.$el.height()-top+100)+'px'
 				})
+		},
+
+		gridView:function(){
+			var that = this;
+			that.$el.addClass('grid');
+
+			var x = 5, y = 2, padding=0;
+			var width = ui.getContentSize().width,
+				height = ui.getContentSize().height;
+
+			var w = (width - (x+1)*padding)/x,
+				h = (height - (y+1)*padding)/y;
+
+			that.children.forEach(function(childView,i){
+				var xPos = padding + (i%x)*(w+padding),
+					yPos = padding + Math.floor(i/x)*(h+padding);
+
+				childView.$el.animate({
+					left:xPos+'px',
+					top:yPos+'px',
+					width:w+'px',
+					height:h+'px'
+				},'fast');
+			});
+
+			childView.expandDetail();
 		}
 	});
 
 	var cityCollectionView = new CityCollectionView({collection:cityCollection});
 
-	vent.on('cityCollection:update',function(){
-		cityCollectionView.render();
-	});
+	vent.on('cityCollection:update',function(){	cityCollectionView.render();	});
 	vent.on('city:hover',function(name){
 		var cityModel = (cityCollection.where({city:name}))[0];
 
@@ -168,7 +198,9 @@ define([
 		})
 
 		cityCollectionView.showCityDetail(cityModel);
-	})
+	});
+
+	vent.on('cityCollectionView:expand', function(){ cityCollectionView.gridView(); });
 
 
 	return cityCollectionView;

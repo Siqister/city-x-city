@@ -64,7 +64,7 @@ define([
 			this.$el.removeClass('modified');
 		},
 		onModelError:function(model,error){
-
+			console.log(error);
 		},
 		onModelDestroy:function(){
 			console.log('assetView:model:destroy');
