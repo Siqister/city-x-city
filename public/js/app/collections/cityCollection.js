@@ -8,7 +8,7 @@ define([
 	vent
 ){
 	var CityModel = Backbone.Model.extend({
-		url:'/city',
+		urlRoot:'/city',
 		idAttribute:'city'
 	});
 

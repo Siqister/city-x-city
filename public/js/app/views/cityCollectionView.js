@@ -2,27 +2,35 @@ define([
 	'backbone',
 	'marionette',
 	'underscore',
+	'd3',
 
 	'vent',
 	'app/ui',
 
 	'app/collections/cityCollection',
 
+	'app/views/viz/cityItemVizView',
+
 	'text!app/templates/cityItemView.html'
 ],function(
 	Backbone,
 	Marionette,
 	_,
+	d3,
 
 	vent,
 	ui,
 
 	cityCollection,
 
+	CityItemVizView,
+
 	cityItemViewTemplate
 ){
 
-	var CityItemView = Marionette.ItemView.extend({
+	var inGridView = false;
+
+	var CityItemView = Marionette.LayoutView.extend({
 		className:'city-list-item',
 		tagName:'li',
 
@@ -44,6 +52,9 @@ define([
 			'click @ui.addAsset':'addNewItem',
 			'click @ui.addInvestment':'addNewItem'
 		},
+		regions:{
+			'viz':'.city-item-viz'
+		},
 
 		initialize:function(){
 			this.listenTo(this.model,'hover',this.onHover,this);
@@ -54,10 +65,12 @@ define([
 			this.ui.actionMenu.hide();
 		},
 		onClick:function(){
-			vent.trigger('city:click', this.model); //triggers cityCollectionView.showCityDetail
-			vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
+			if(!inGridView){
+				vent.trigger('city:click', this.model); //triggers cityCollectionView.showCityDetail
+				vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
 
-			this.ui.actionMenu.fadeIn();
+				this.ui.actionMenu.fadeIn();
+			}
 		},
 		onHover:function(){
 			this.$el.addClass('highlight');
@@ -73,6 +86,7 @@ define([
 		},
 		collapse:function(){
 			this.ui.actionMenu.fadeOut().hide();
+			this.viz.empty();
 		},
 		addNewItem:function(e){
 			e.stopPropagation();
@@ -92,7 +106,11 @@ define([
 		},
 
 		expandDetail:function(){
+			this.viz.show(new CityItemVizView({model:this.model}));
+		},
 
+		hideDetail:function(){
+			this.viz.empty();
 		}
 	})
 
@@ -100,6 +118,8 @@ define([
 		className:'city-list',
 		tagName:'ul',
 		childView:CityItemView,
+
+		targetPos: null,
 
 
 		initialize:function(){
@@ -121,7 +141,9 @@ define([
 				top += spacing;
 			});
 		},
-		showCityDetail:function(cityModel){
+		expandCityDetail:function(cityModel){
+			if(inGridView){ return; } //do nothing if in gridView
+
 			//Find particular childView 
 			var cityDetailView = this.children.findByModel(cityModel);
 			var that = this,
@@ -153,10 +175,16 @@ define([
 		},
 
 		gridView:function(){
+			//disable gridView if already in grid
+			if(inGridView){ return; }
+
 			var that = this;
 			that.$el.addClass('grid');
 
-			var x = 5, y = 2, padding=0;
+			that.targetPos = d3.map(); //holds old mapView coordinates
+			inGridView = true;
+
+			var x = 5, y = 2, padding = 0;
 			var width = ui.getContentSize().width,
 				height = ui.getContentSize().height;
 
@@ -167,16 +195,56 @@ define([
 				var xPos = padding + (i%x)*(w+padding),
 					yPos = padding + Math.floor(i/x)*(h+padding);
 
+				that.targetPos.set(childView.cid,{
+					left: childView.$el.css('left'),
+					top: childView.$el.css('top'),
+					w: childView.$el.outerWidth(),
+					h: childView.$el.outerHeight(),
+					z: childView.$el.css('z-index')
+				});
+
 				childView.$el.animate({
 					left:xPos+'px',
 					top:yPos+'px',
 					width:w+'px',
 					height:h+'px'
-				},'fast');
+				},'fast',function(){
+					childView.expandDetail();
+				});
+
 			});
 
-			childView.expandDetail();
+
+		},
+
+		mapView:function(){
+			//disable mapView if already in mapView
+			if(!inGridView){return;}
+
+			var that = this;
+			that.$el.removeClass('grid');
+
+			this.children.forEach(function(childView){
+				var pos = that.targetPos.get(childView.cid);
+
+				childView.$el
+					.css({
+						'z-index': pos.z
+					})
+					.animate({
+						left:0,
+						top:pos.top,
+						width:pos.w+'px',
+						height:pos.h+'px'
+					},'fast',function(){
+						childView.hideDetail();
+					});
+			});
+
+			that.targetPos = null;
+			inGridView = false;
 		}
+
 	});
 
 	var cityCollectionView = new CityCollectionView({collection:cityCollection});
@@ -197,10 +265,11 @@ define([
 			view.collapse();
 		})
 
-		cityCollectionView.showCityDetail(cityModel);
+		cityCollectionView.expandCityDetail(cityModel);
 	});
 
 	vent.on('cityCollectionView:expand', function(){ cityCollectionView.gridView(); });
+	vent.on('cityCollectionView:collapse',function(){ cityCollectionView.mapView(); });
 
 
 	return cityCollectionView;

@@ -34,13 +34,13 @@ define([
 
 	var cityIcon = L.icon({
 		iconUrl:'../style/assets/pin-02.png',
-		iconSize:[30,70],
-		iconAnchor:[15,70]
+		iconSize:[24,56],
+		iconAnchor:[12,56]
 	});
 	var cityIconHighlight = L.icon({
 		iconUrl:'../style/assets/pin-03.png',
-		iconSize:[30,70],
-		iconAnchor:[15,70]
+		iconSize:[24,56],
+		iconAnchor:[12,56]
 	});
 	var cityIconHash = {};
 
@@ -123,6 +123,7 @@ define([
 		drawParcels:function(){
 			console.log('mapView:redrawParcels');
 			var that = this;
+
 
 			features = g.selectAll('.parcel')
 				.data(that.collection.toJSON(),function(d){return d.cartodb_id});
@@ -354,7 +355,7 @@ define([
 	});
 
 	//When parcelsCollection is sync'ed, redraw parcels
-	vent.on('parcel:update',mapView.drawParcels);
+	vent.on('parcel:update',function(){mapView.drawParcels()});
 
 	vent.on('cityCollection:update',mapView.drawCityMarkers);
 
