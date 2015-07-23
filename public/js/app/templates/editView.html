@@ -13,28 +13,20 @@
 	<% if(type=='asset'){ %>
 	<li class="attr-list-item multi-select">
 		<span class="title">Asset Type</span>
-		<div class="dropdown">
-		  <button class="btn dropdown-toggle" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    Select Type <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" aria-labelledby="dLabel">
-		    <li><a href="#">Equity</a></li>
-		  </ul>
-		</div>
+		<select id="assetType" class="form-control">
+			<option value="anchor business">Anchor business</option>
+			<option value="cultural institution">Cultural institution</option>
+		</select>
 	</li>
 	<% } %>
 
 	<% if(type=="investment"){ %>
 	<li class="attr-list-item multi-select">
 		<span class="title">Investment Type</span>
-		<div class="dropdown">
-		  <button class="btn dropdown-toggle" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    Select Type <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" aria-labelledby="dLabel">
-		    <li><a href="#">Equity</a></li>
-		  </ul>
-		</div>
+		<select id="investmentType" class="form-control">
+			<option value="equity">Equity investment</option>
+			<option value="masterlease">Retail master lease</option>
+		</select>
 	</li>
 	<div class="form-group value attr-list-item">
 		<label for="value">Investment Value</label>

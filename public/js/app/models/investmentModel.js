@@ -7,7 +7,8 @@ define([
 		urlRoot:'/investment',
 		idAttribute:'cartodb_id',
 		defaults:{
-			type:'investment'
+			type:'investment',
+			investmentType:'equity'
 		},
 		validate:function(attr,options){
 			var errors = [];

@@ -32,15 +32,18 @@ router
 .post('/',function(req,res,next){
 	var loc = req.body.geometry.coordinates;
 
+	console.log(req.body);
+
 	var query = "INSERT INTO {table} (city,the_geom,name,comment,type,value) "
 		+"VALUES ('"
 		+ req.body.city + "',"
 		+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
 		+ req.body.name + "','"
 		+ req.body.comment + "','"
-		+ req.body.type + "',"
+		+ req.body.investmentType + "',"
 		+ req.body.value +
 		") RETURNING cartodb_id";
+
 
 	cartodbClient.query(query,
 		{table:'tdi_investments'},function(err,data){

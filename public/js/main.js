@@ -11,7 +11,9 @@ require.config({
 		'vent':'app/vent',
 
 		'bootstrap-dropdown':'lib/bootstrap/js/dropdown',
-		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min'
+		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min',
+		'bootstrap-multiselect':'lib/bootstrap-multiselect/bootstrap-multiselect',
+		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min'
 	},
 	shim:{
 		'leaflet':{
@@ -21,6 +23,9 @@ require.config({
 			deps:['jquery']
 		},
 		'bootstrap-dropdown':{
+			deps:['jquery']
+		},
+		'bootstrap-multiselect':{
 			deps:['jquery']
 		}
 	}

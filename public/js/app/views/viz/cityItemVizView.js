@@ -59,7 +59,7 @@ define([
 		},
 		showViz:function(){
 			//Model has been updated and sync'ed, show viz
-			this.viz.show(new LandUseChartView({model:this.model}));
+			this.viz.show(new OwnershipChartView({model:this.model}));
 			this.ui.viz.removeClass('loading');
 		},
 		changeVizType:function(typeId){

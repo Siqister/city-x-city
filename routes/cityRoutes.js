@@ -25,12 +25,9 @@ router
 	)
 })
 .get('/:id',function(req,res,next){
-	console.log(req);
 	var city = (req.params.id).toUpperCase();
-	console.log(city);
 
 	var query = "SELECT cartodb_id, the_geom, city_owned, partner_owned, bld_area, bldg_val, land_val, lot_size, total_val, use_code, year_built, zoning from {table} WHERE city='"+city+"'";
-	console.log(query)
 
 	cartodbClient.query(
 		query,

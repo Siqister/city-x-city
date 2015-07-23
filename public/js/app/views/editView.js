@@ -1,15 +1,19 @@
 define([
 	'underscore',
 	'marionette',
+	'jquery',
 
 	'vent',
 
 	'text!app/templates/editView.html',
 
-	'bootstrap-dropdown'
+	//'bootstrap',
+	'bootstrap-dropdown',
+	'bootstrap-multiselect'
 ],function(
 	_,
 	Marionette,
+	$,
 
 	vent,
 
@@ -36,7 +40,22 @@ define([
 			this.listenTo(this.model,'invalid',this.onModelError,this);
 		},
 		onShow:function(){
+			var that = this;
+
 			this.ui.save.hide();
+			//initiate bootstrap multi
+			this.$('#assetType').multiselect({
+				onChange:function(option,checked,select){
+					that.model.set('assetType',$(option).val());
+					that.ui.save.fadeIn();
+				}
+			});
+			this.$('#investmentType').multiselect({
+				onChange:function(option,checked,select){
+					that.model.set('investmentType',$(option).val());
+					that.ui.save.fadeIn();
+				}
+			});
 		},
 		onAttrChange:function(){
 			var that = this;
@@ -53,7 +72,6 @@ define([
 				
 				that.model.set(attr,val);
 			});
-
 		},
 		removeNewItem:function(){
 			vent.trigger('map:edit:remove'); //mapView will remove marker

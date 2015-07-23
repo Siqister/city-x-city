@@ -7,7 +7,8 @@ define([
 		urlRoot:'/asset',
 		idAttribute:'cartodb_id',
 		defaults:{
-			type:'asset'
+			type:'asset',
+			assetType:'anchor business'
 		},
 		validate:function(attr,options){
 			var errors = [];
