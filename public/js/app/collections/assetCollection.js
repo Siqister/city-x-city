@@ -25,6 +25,13 @@ define([
 		assetCollection.remove(model);
 		console.log(assetCollection);
 	})
+	assetCollection.on('sync',function(){
+		vent.trigger('assetCollection:sync');
+	})
+	assetCollection.on('destroy',function(){
+		console.log('heard ya');
+		vent.trigger('assetCollection:sync');
+	})
 
 	return assetCollection;
 })

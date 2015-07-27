@@ -62,7 +62,6 @@ router
 })
 .put('/:id',function(req,res,next){
 	console.log('PUT REQUEST TO /investment');
-	console.log(req.body);
 
 	var query = "UPDATE {table} SET comment='" 
 		+ req.body.comment + 
@@ -80,7 +79,6 @@ router
 })
 .delete('/:id',function(req,res,next){
 	console.log('DELETE REQUEST TO /investment');
-	console.log(req.body);
 
 	var query = "DELETE FROM {table} WHERE cartodb_id=" + req.params.id;
 

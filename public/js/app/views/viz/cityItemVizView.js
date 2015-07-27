@@ -6,6 +6,7 @@ define([
 
 	'app/views/viz/landUseChartView',
 	'app/views/viz/ownershipChartView',
+	'app/views/viz/summaryView',
 
 	'text!app/templates/cityItemVizView.html',
 
@@ -18,6 +19,7 @@ define([
 
 	LandUseChartView,
 	OwnershipChartView,
+	SummaryView,
 
 	cityItemVizViewTemplate
 ){
@@ -59,7 +61,7 @@ define([
 		},
 		showViz:function(){
 			//Model has been updated and sync'ed, show viz
-			this.viz.show(new OwnershipChartView({model:this.model}));
+			this.viz.show(new SummaryView({model:this.model}));
 			this.ui.viz.removeClass('loading');
 		},
 		changeVizType:function(typeId){
@@ -70,6 +72,9 @@ define([
 					break;
 				case 'public-ownership':
 					that.viz.show(new OwnershipChartView({model:that.model}));
+					break;
+				case 'summary':
+					that.viz.show(new SummaryView({model:that.model}));
 					break;
 			}
 		}

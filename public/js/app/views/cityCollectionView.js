@@ -10,6 +10,7 @@ define([
 	'app/collections/cityCollection',
 
 	'app/views/viz/cityItemVizView',
+	'app/views/viz/summaryView',
 
 	'text!app/templates/cityItemView.html'
 ],function(
@@ -24,6 +25,7 @@ define([
 	cityCollection,
 
 	CityItemVizView,
+	SummaryView,
 
 	cityItemViewTemplate
 ){
@@ -70,6 +72,8 @@ define([
 				vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
 
 				this.ui.actionMenu.fadeIn();
+
+				this.viz.show(new SummaryView({model:this.model}));
 			}
 		},
 		onHover:function(){
@@ -106,11 +110,13 @@ define([
 		},
 
 		expandDetail:function(){
+			this.viz.empty();
 			this.viz.show(new CityItemVizView({model:this.model}));
 		},
 
 		hideDetail:function(){
 			this.viz.empty();
+			this.viz.show(new SummaryView({model:this.model}));
 		}
 	})
 

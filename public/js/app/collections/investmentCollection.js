@@ -25,6 +25,12 @@ define([
 		investmentCollection.remove(model);
 		console.log(investmentCollection);
 	})
+	investmentCollection.on('sync',function(){
+		vent.trigger('investmentCollection:sync');
+	})
+	investmentCollection.on('destroy',function(){
+		vent.trigger('investmentCollection:sync');
+	})
 
 	return investmentCollection;
 })

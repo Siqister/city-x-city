@@ -199,6 +199,9 @@ h3{
 .city-list-item{
 	overflow:hidden;
 }
+	.city-list-item .city-item-viz{
+		margin:10px 0 0;
+	}
 	.city-list-item .city-item-viz .viz{
 		width:100%;
 		height:260px;
@@ -347,3 +350,16 @@ h3{
 	stroke:rgb(150,150,150);
 	stroke-width:1px;
 }
+	/*summaryView*/
+	.summary .list-item{
+		margin:15px 0;
+	}
+	.summary .digits{
+		color:black;
+		font-size:1.8em;
+		display:block;
+		line-height:.8em;
+	}
+	.summary .meta{
+		font-size:.75em;
+	}
