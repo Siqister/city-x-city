@@ -2,7 +2,7 @@
   "name": "CartoDB_Test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,5 +13,8 @@
     "cartodb": "^0.2.1",
     "express": "^4.12.2",
     "multer": "^0.1.8"
+  },
+  "engines":{
+    "node":"0.10.x"
   }
 }
