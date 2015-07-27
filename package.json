@@ -1,12 +1,13 @@
 {
-  "name": "CartoDB_Test",
+  "name": "MassDev_cartodb",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node app.js"
   },
-  "author": "",
+  "author": "Siqi Zhu",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.1",
@@ -15,9 +16,6 @@
     "multer": "^0.1.8"
   },
   "engines":{
-    "node":"0.10.x"
-  },
-  "scripts":{
-    "start":"node app.js"
+    "node":"0.10.33"
   }
 }
