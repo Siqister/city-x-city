@@ -98,8 +98,18 @@ define([
 			L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
+			//upon mapView:show and map initialization, add 3D building overlay
+			L.imageOverlay(
+				'../assets/brockton_App overlay.svg', //imageUrl
+				L.latLngBounds([[42.07924,-71.0226],[42.08682,-71.01443]]) //SW and NE
+			)
+				.addTo(map);
+
+			//overlay for D3 drawing --> after 3D building in terms of z-index
 			svg = d3.select(map.getPanes().overlayPane).append('svg');
 			g = svg.append('g').attr('class','leaflet-zoom-hide');
+
+
 
 			//broadcast map zoom and move events
 			map.on('zoomstart movestart',function(){
@@ -152,6 +162,13 @@ define([
 						return '#d6d4ea';
 					}else if(d.partner_owned==true){
 						return '#96d5cf';
+					}else{
+						return null;
+					}
+				})
+				.style('fill-opacity',function(d){
+					if(d.city_owned == true || d.partner_owned == true){
+						return .6;
 					}else{
 						return null;
 					}

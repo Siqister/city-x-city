@@ -129,8 +129,8 @@ h3{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:rgba(220,220,220,.5);
-	stroke:rgba(150,150,150,.6);
+	fill:rgba(220,220,220,.2);
+	stroke:rgba(150,150,150,.8);
 	stroke-width:1px;
 }
 	.content .map .map-inner svg .parcel:hover{ 
