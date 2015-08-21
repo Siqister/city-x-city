@@ -5,6 +5,10 @@ Generic mapping utility that uses Cartodb as a backend
 ## To Install
 
 Run
-    npm install
+````
+npm install
+````
 and
-    node app
+````
+node app
+````
