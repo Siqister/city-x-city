@@ -12,3 +12,5 @@ and
 ````
 node app
 ````
+
+The cartodb npm module needs to be modified so that the response format from the Cartodb SQL API is GeoJSON.
