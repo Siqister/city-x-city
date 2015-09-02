@@ -4,16 +4,20 @@ define([
 
 	'vent',
 
-	'text!app/templates/headerView.html'
+	'text!app/templates/headerView.html',
+
+	'app/views/mapLayerControlView'
 ],function(
 	Marionette,
 	_,
 
 	vent,
 
-	headerViewTemplate
+	headerViewTemplate,
+
+	MapLayerControlView
 ){
-	var HeaderView = Marionette.ItemView.extend({
+	var HeaderView = Marionette.LayoutView.extend({
 		className:'header-inner',
 		template:_.template(headerViewTemplate),
 		ui:{
@@ -21,20 +25,30 @@ define([
 			'gridView':'.btn-grid',
 			'allBtn':'.custom-btn'
 		},
+		regions:{
+			mapLayerControl:'.map-layer-control'
+		},
 		events:{
 			'click @ui.mapView':function(){
 				//vent.trigger('ui:show:map');
 				vent.trigger('cityCollectionView:collapse');
 				this.ui.allBtn.removeClass('active');
 				this.ui.mapView.addClass('active');
-
+				
+				//Show mapLayerControl submenu
+				this.mapLayerControl.show(new MapLayerControlView());
 			},
 			'click @ui.gridView':function(){
 				//vent.trigger('ui:show:grid');
 				vent.trigger('cityCollectionView:expand');
 				this.ui.allBtn.removeClass('active');
 				this.ui.gridView.addClass('active');
+
+				this.mapLayerControl.empty();
 			}
+		},
+
+		onRender:function(){
 		}
 	});
 
