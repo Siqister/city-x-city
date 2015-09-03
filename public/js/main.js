@@ -13,7 +13,8 @@ require.config({
 		'bootstrap-dropdown':'lib/bootstrap/js/dropdown',
 		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min',
 		'bootstrap-multiselect':'lib/bootstrap-multiselect/bootstrap-multiselect',
-		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min'
+		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
+		'config':'config'
 	},
 	shim:{
 		'leaflet':{

@@ -11,7 +11,9 @@ define([
 	'app/collections/assetCollection',
 	'app/collections/investmentCollection',
 	'app/models/assetModel',
-	'app/models/investmentModel'
+	'app/models/investmentModel',
+
+	'config'
 
 ],function(
 	Marionette,
@@ -26,7 +28,9 @@ define([
 	assetCollection,
 	investmentCollection,
 	AssetModel,
-	InvestmentModel
+	InvestmentModel,
+
+	config
 ){
 
 	//module internal variables for keeping leaflet+d3
@@ -178,6 +182,54 @@ define([
 			map.on('viewreset', that.mapViewReset, that); //context is MapView
 
 			that.mapViewReset(); //position svg and generate shapes for parcel features			
+		},
+
+		showLayer:function(col){
+			//@param col: name of the cartodb column to thematically map by
+			console.log('mapView:show:themeLayer:'+col);
+
+			var mapLayerConfig = d3.map(config.mapLayers,function(d){return d.cartodbCol;});
+
+			if(col==undefined){
+				//this is the case where parcels are colored by ownership
+				features
+					.transition()
+					.style('fill',function(d){
+						if(d.city_owned==true){
+							return '#d6d4ea';
+						}else if(d.partner_owned==true){
+							return '#96d5cf';
+						}else{
+							return null;
+						}
+					})
+					.style('fill-opacity',function(d){
+						if(d.city_owned == true || d.partner_owned == true){
+							return .6;
+						}else{
+							return null;
+						}
+					});
+			}
+			else{
+				var options = d3.map( (mapLayerConfig.get(col)).options, function(d){return d.cartodbVal;} ),
+					_default = (mapLayerConfig.get(col)).defaults;
+
+				features
+					.transition()
+					.style('fill',function(d){
+						var _d = d[col],
+							option = options.get(_d);
+
+						if(option){
+
+						}else{
+							return _default.color;
+						}
+					})
+					.style('fill-opacity',.3);
+			}
+
 		},
 
 		mapViewReset:function(){
@@ -384,6 +436,10 @@ define([
 		var investmentMarker = investmentMarkerHash.get(modelID);
 		map.removeLayer(investmentMarker);
 	})
+
+
+	//Listen to events recoloring the parcel layer
+	vent.on('map:themeLayer:show',mapView.showLayer)
 
 	return new MapView();
 })

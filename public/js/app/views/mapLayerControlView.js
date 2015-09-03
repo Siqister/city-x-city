@@ -3,30 +3,34 @@ define([
 	'underscore',
 	'd3',
 
-	'vent'
+	'vent',
+
+	'config'
 ],function(
 	Marionette,
 	_,
 	d3,
 
-	vent
+	vent,
+
+	config
 ){
-	var config = [
-		{name:'Ownership', options:[
-			{name:"Publicly Owned"},
-			{name:"Partner-Controlled"}
-		]},
-		{name:'Vacancy', options:[
-			{name:"Ground floor vacancy"},
-			{name:"Upper floor vacancy"},
-			{name:"Total vacancy"}
-		]}
-	];
+
+	var mapLayerConfig = config.mapLayers;
 
 	var MapLayerControlView = Marionette.ItemView.extend({
 		className:'map-layer-control-inner',
 		tagName:'ul',
 		template:false,
+		ui:{
+			'layerOption':'.option .dropdown-toggle'
+		},
+		events:{
+			'click @ui.layerOption':function(e){
+				var cartodbCol = $(e.target).data('col');
+				vent.trigger('map:themeLayer:show',cartodbCol); //recolor map parcel layer based on different cartodb columns
+			}
+		},
 
 		render:function(){
 			var _el = d3.select(this.el);
@@ -37,7 +41,7 @@ define([
 				.html('MAP LAYERS <span class="glyphicon glyphicon-menu-right"></span>');
 
 			//custom render function to add dropdown menu groups
-			config.forEach(function(menuItem){
+			mapLayerConfig.forEach(function(menuItem){
 				var _li = _el.append('li')
 					.attr('class','menu-item option dropdown');
 
@@ -45,16 +49,21 @@ define([
 					.html(menuItem.name)
 					.attr('class','dropdown-toggle')
 					.attr('data-toggle','dropdown')
+					.attr('data-col',menuItem.cartodbCol)
 					.attr('href','#');
 
 				var _dropdown = _li.append('ul')
 					.attr('class', 'dropdown-menu');
 
 				menuItem.options.forEach(function(menuItemOption){
-					_dropdown.append('li')
+					var legendItem = _dropdown.append('li')
 						.append('a')
 						.attr('href','#')
-						.html(menuItemOption.name);
+						.html('<span class="legend"></span>'+menuItemOption.name);
+
+					legendItem.select('.legend')
+						.style('background',menuItemOption.color);
+
 				})
 			});
 		}
