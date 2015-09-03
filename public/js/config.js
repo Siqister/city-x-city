@@ -25,10 +25,10 @@ define([],function(){
 			name:'Land Use',
 			cartodbCol: 'tdi_land_use',
 			options:[
-				{name:"Residential",cartodbVal:0,color:'yellow'},
-				{name:"Commercial",cartodbVal:1,color:'red'},
-				{name:"Industrial",cartodbVal:2,color:'purple'},
-				{name:"Institutional",cartodbVal:3,color:'rgb(180,180,180)'}
+				{name:"Residential",cartodbVal:'1',color:'yellow'},
+				{name:"Commercial",cartodbVal:'3',color:'red'},
+				{name:"Industrial",cartodbVal:'4',color:'purple'},
+				{name:"Institutional, Other, or Unknown",cartodbVal:'9',color:'rgb(180,180,180)'}
 			],
 			defaults:{
 				color:'white'

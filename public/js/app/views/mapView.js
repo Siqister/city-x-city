@@ -222,7 +222,7 @@ define([
 							option = options.get(_d);
 
 						if(option){
-
+                                                  return option.color;
 						}else{
 							return _default.color;
 						}
