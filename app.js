@@ -10,6 +10,8 @@ var parcelRoutes = require('./routes/parcelRoutes'); //for individual parcels
 var cityRoutes = require('./routes/cityRoutes');
 var assetRoutes = require('./routes/assetRoutes');
 var investmentRoutes = require('./routes/investmentRoutes');
+
+//Port configuration
 var port = process.env.PORT || 8080;
 
 //Middleware
