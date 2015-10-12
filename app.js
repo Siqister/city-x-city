@@ -10,7 +10,7 @@ var parcelRoutes = require('./routes/parcelRoutes'); //for individual parcels
 var cityRoutes = require('./routes/cityRoutes');
 var assetRoutes = require('./routes/assetRoutes');
 var investmentRoutes = require('./routes/investmentRoutes');
-
+var port = process.env.PORT || 8080;
 
 //Middleware
 app.use(express.static('public'));
@@ -28,8 +28,8 @@ app.use('/investment',investmentRoutes);
 cartodbClient.on('connect',function(){
 	console.log('Connected to CartoDB...');
 
-	app.listen(process.env.PORT,function(){
-		console.log('App listening on port',process.env.PORT);
+	app.listen(port, function(){
+		console.log('App listening on port', port);
 	});
 })
 
