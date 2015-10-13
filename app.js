@@ -11,6 +11,8 @@ var cityRoutes = require('./routes/cityRoutes');
 var assetRoutes = require('./routes/assetRoutes');
 var investmentRoutes = require('./routes/investmentRoutes');
 
+//Port configuration
+var port = process.env.PORT || 8080;
 
 //Middleware
 app.use(express.static('public'));
@@ -28,8 +30,8 @@ app.use('/investment',investmentRoutes);
 cartodbClient.on('connect',function(){
 	console.log('Connected to CartoDB...');
 
-	app.listen(8080,function(){
-		console.log('App listening on port 8080');
+	app.listen(port, function(){
+		console.log('App listening on port', port);
 	});
 })
 
