@@ -28,6 +28,7 @@ define([
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
 			partnerOwned: '.partner-owned input',
+			vacancy: '.vacancy .btn',
 			save: '.save',
 			close:'.close'
 		},
@@ -36,6 +37,7 @@ define([
 			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
+			'click @ui.vacancy':'attrModified',
 			'click @ui.save':'saveChanges',
 			'click @ui.address':'zoomToParcel',
 			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); }
@@ -67,9 +69,12 @@ define([
 			this.stopListening();
 		},
 		attrModified:function(e,state){
+			console.log(e);
+			e.stopPropagation();
 			console.log('parcelDetail:attrModified:'+e.target.id+':'+state);
 
-			var that = this;
+			var that = this,
+				$target = $(e.target);
 
 			//Parcels can't be both partner controlled and city owned
 			if($(e.target).hasClass('city-owned') && state == true){
@@ -86,14 +91,46 @@ define([
 				}
 			}
 
+
+			//Set behavior of vancancy
+			if($(e.target).hasClass('vacancy')){
+				console.log('vac')
+				if($target.hasClass('active')){
+					$target.removeClass('active');
+					//no need to manually set checkboxes; behavior is default
+					//$target.find('input').prop('checked',false)
+				}else{
+					$target.addClass('active');
+					//$target.find('input').prop('checked',true)
+				}
+			}
+
+			var vacancyCode;
+			if(that.$('#ground').prop('checked')==true){
+				if(that.$('#upper').prop('checked')==true){
+					vacancyCode = 3;
+				}else{
+					vacancyCode = 1;
+				}
+			}else if(that.$('#upper').prop('checked')==true){
+				vacancyCode = 2;
+			}else{
+				vacancyCode = 0;
+			}
+			console.log('Vacancy: '+vacancyCode);
+
+
 			this.model.set({
 				comment:this.ui.comment.val(),
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
 				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),
+				vacancy: vacancyCode,
 				modified:true
 			});
 
+			//Add 'modified' class to this view
+			//Show 'save' button
 			this.$el.addClass('modified');
 			this.ui.save.fadeIn();
 		},
