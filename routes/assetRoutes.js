@@ -12,7 +12,7 @@ router
 	cartodbClient.query(query,
 		{table:'tdi_assets'},function(err,data){
 			if(err){
-				res.send(err);
+				res.status(400).send(err);
 			}else{
 				console.log('SUCCESSFUL GET /asset');
 				//flatten response
@@ -45,7 +45,8 @@ router
 	cartodbClient.query(query,
 		{table:'tdi_assets'},function(err,data){
 			if(err){ 
-				res.send(err);
+				res.status(400).send(err);
+				console.log(err);
 			}
 			else{
 				console.log('SUCCESSFULLY POST');
@@ -67,7 +68,7 @@ router
 
 	cartodbClient.query(query,{table:'tdi_assets'},function(err,data){
 		if(err){
-			res.send(err);
+			res.status(400).send(err);
 		}else{
 			console.log('SUCCESSFUL UPDATE TO ASSET '+req.params.id);
 			res.json(req.body);

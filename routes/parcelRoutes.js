@@ -16,7 +16,9 @@ router
 			table:"tdi_parcels"
 		},
 		function(err,data){
-			if(err){ res.send(err); }
+			if(err){ res.status(400).send(error); }
+
+			console.log('successful GET to /parcel');
 
 			data.features.forEach(function(feature){
 				for(var key in feature.properties){
@@ -39,6 +41,8 @@ router
 			if(err){ res.send(err); }
 			else{
 
+			console.log('successful GET to /parcel/' + req.params.id);
+
 			//data returns a feature collection
 				var feature = data.features[0];
 				for(var key in feature.properties){
@@ -54,7 +58,7 @@ router
 })
 .put('/:id',function(req,res){
 	//HTTP PUT request assumes req.body contains the entire resource representation
-	
+
 	//Construct query string
 	var query = "UPDATE {table} SET comment='" 
 		+ req.body.comment + 
@@ -68,16 +72,18 @@ router
 		+ req.body.partner_owned +
 		" WHERE cartodb_id=" + req.params.id;
 
+	console.log(query);
+
 	cartodbClient.query(
 		query,
 		{table:"tdi_parcels"},
 		function(err,data){
 			if(err){ 
 				console.log(err);
-				res.send(err);
+				res.status(400).send(err);
 			}
 			else{ 
-				console.log("SUCCESSFUL UPDATE to parcel "+req.params.id);
+				console.log("successful UPDATE to parcel "+req.params.id);
 				res.json(req.body)
 			};
 		}

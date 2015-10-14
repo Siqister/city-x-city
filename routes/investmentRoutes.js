@@ -48,7 +48,8 @@ router
 	cartodbClient.query(query,
 		{table:'tdi_investments'},function(err,data){
 			if(err){ 
-				res.send(err);
+				res.status(400).send(err);
+				console.log(err);
 			}
 			else{
 				console.log('SUCCESSFULLY POST');

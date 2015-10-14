@@ -69,9 +69,7 @@ define([
 			this.stopListening();
 		},
 		attrModified:function(e,state){
-			console.log(e);
 			e.stopPropagation();
-			console.log('parcelDetail:attrModified:'+e.target.id+':'+state);
 
 			var that = this,
 				$target = $(e.target);
@@ -94,7 +92,6 @@ define([
 
 			//Set behavior of vancancy
 			if($(e.target).hasClass('vacancy')){
-				console.log('vac')
 				if($target.hasClass('active')){
 					$target.removeClass('active');
 					//no need to manually set checkboxes; behavior is default
@@ -117,7 +114,6 @@ define([
 			}else{
 				vacancyCode = 0;
 			}
-			console.log('Vacancy: '+vacancyCode);
 
 
 			this.model.set({
@@ -135,10 +131,21 @@ define([
 			this.ui.save.fadeIn();
 		},
 		saveChanges:function(){
-			this.model.save(); //issues HTTP PUT request
+			console.log('parcelModel:save:before');
+			console.log(this.model);
+
+			this.model.save(null,{
+				error:function(model,res,op){
+					console.log('parcelModel:save:ERROR');
+				},
+				success:function(model,res,op){
+					console.log('parcelModel:save:Success');
+				}
+			}); //issues HTTP PUT request
 		},
 		onSync:function(){
 			//parcel model is sync'ed up with server
+			console.log('parcelView:onSync');
 			this.ui.save.fadeOut();
 			this.$el.removeClass('modified');
 

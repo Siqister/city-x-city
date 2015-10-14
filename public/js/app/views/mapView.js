@@ -89,7 +89,8 @@ define([
 		collection:parcelsCollection, //use itemView to render a collection
 
 		initialize:function(){
-			this.listenTo(this.collection, 'sync', this.drawParcels);
+			//listen to only the initial population of the parcelsCollection
+			this.listenToOnce(this.collection, 'sync', this.drawParcels);
 
 		},
 
