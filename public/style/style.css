@@ -279,6 +279,12 @@ h3{
 			}
 
 /*Detail module*/
+	.content .detail .divider{
+		margin:15px 0 10px;
+		padding:5px 0;
+		border-top:1px solid rgba(255,255,255,.5);
+		text-transform: uppercase;
+	}
 
 	/* Global override for bootstrap-switch */
 	.content .detail .bootstrap-switch-wrapper{
@@ -293,6 +299,15 @@ h3{
 			background:#5bbb90;
 			color:white;
 		}
+	.content .detail .custom-checkbox .btn{
+		border:none;
+		background:#5bbb90;
+		color:#4ea47e;
+	}
+	.content .detail .custom-checkbox .active{
+		background:#ef4136;
+		color:white;
+	}
 
 .content .detail .detail-inner{
 	padding:30px 15px;
@@ -300,6 +315,7 @@ h3{
 	.detail-inner .address{
 		color:rgb(240,240,235);
 	}
+
 
 
 /*Edit module*/

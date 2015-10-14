@@ -5,19 +5,7 @@
 	</a>
 </h2>
 <ul class="attr-list">
-	<li class="attr-list-item">
-		<span>Owner</span>
-		<div class="value"><%= owner1 %></div>
-	</li>
-	<li class="form-group city-owned attr-list-item">
-		<label for="city-owned">City-owned</label>
-		<input type="checkbox" name="marked" id="city-owned" class='city-owned' <% if(city_owned==true){ %>checked<% } %>>
-	</li>
-	<li class="form-group partner-owned attr-list-item">
-		<label for="partner-owned">Partner-controlled</label>
-		<input type="checkbox" name="marked" id="partner-owned" class='partner-owned' <% if(partner_owned==true){ %>checked<% } %>>
-	</li>
-	<li role="separator" class="divider"></li>
+	<li role="separator" class="divider">Basic Info</li>
 	<li class="attr-list-item">
 		<span>Parcel area</span>
 		<div class="value"><%= Math.round(shape_area)+'sqm' %></div>
@@ -30,18 +18,31 @@
 		<span>Year Built</span>
 		<div class="value"><%= year_built %></div>
 	</li>
+	<li role="separator" class="divider">Use and Ownership</li>
+	<li class="attr-list-item">
+		<span>Owner</span>
+		<div class="value"><%= owner1 %></div>
+	</li>
+	<li class="form-group city-owned attr-list-item">
+		<label for="city-owned">City-owned</label>
+		<input type="checkbox" name="marked" id="city-owned" class='city-owned' <% if(city_owned==true){ %>checked<% } %>>
+	</li>
+	<li class="form-group partner-owned attr-list-item">
+		<label for="partner-owned">Partner-controlled</label>
+		<input type="checkbox" name="marked" id="partner-owned" class='partner-owned' <% if(partner_owned==true){ %>checked<% } %>>
+	</li>
 	<li class="form-group vacancy attr-list-item">
 		<span>Vacancy</span>
-		<div class="btn-group pull-right" data-toggle="buttons">
-		  <label class="btn btn-primary ground-vac vacancy">
-		    <input type="checkbox" autocomplete="off" class="" id="ground" /> Ground floor
+		<div class="btn-group pull-right custom-checkbox" data-toggle="buttons">
+		  <label class="btn btn-primary ground-vac <% if(vacancy==1||vacancy==3){ %>active<% } %>">
+		    <input type="checkbox" autocomplete="off" class="vacancy" id="ground" <% if(vacancy==1||vacancy==3){ %>checked<% } %>> Ground floor
 		  </label>
-		  <label class="btn btn-primary upper-vac vacancy">
-		    <input type="checkbox" autocomplete="off" class="" id="upper" /> Upper floor
+		  <label class="btn btn-primary upper-vac <% if(vacancy==2||vacancy==3){ %>active<% } %>">
+		    <input type="checkbox" autocomplete="off" class="vacancy" id="upper" <% if(vacancy==2||vacancy==3){ %>checked<% } %>> Upper floor
 		  </label>
 		</div>
 	</li>
-	<li role="separator" class="divider"></li>
+	<li role="separator" class="divider">Addtional Information</li>
 	<li class="form-group marked attr-list-item">
 		<label for="marked">Mark this parcel</label>
 		<input type="checkbox" name="marked" id="marked" <% if(marked==true){ %>checked<% } %>>
