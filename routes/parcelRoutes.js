@@ -74,6 +74,8 @@ router
 		+ req.body.city_owned +
 		", partner_owned="
 		+ req.body.partner_owned +
+		", vacancy="
+		+ req.body.vacancy +
 		" WHERE cartodb_id=" + req.params.id;
 
 	console.log(query);

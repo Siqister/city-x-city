@@ -28,7 +28,7 @@ define([
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
 			partnerOwned: '.partner-owned input',
-			vacancy: '.vacancy .btn',
+			vacancy: '.vacancy input',
 			save: '.save',
 			close:'.close'
 		},
@@ -90,15 +90,13 @@ define([
 			}
 
 
-			//Set behavior of vancancy
+
+			//Set behavior of vancancy checkbox input
 			if($(e.target).hasClass('vacancy')){
-				if($target.hasClass('active')){
-					$target.removeClass('active');
-					//no need to manually set checkboxes; behavior is default
-					//$target.find('input').prop('checked',false)
+				if(e.target.checked == true){
+					$target.parent().addClass('active')
 				}else{
-					$target.addClass('active');
-					//$target.find('input').prop('checked',true)
+					$target.parent().removeClass('active')
 				}
 			}
 
@@ -114,6 +112,7 @@ define([
 			}else{
 				vacancyCode = 0;
 			}
+
 
 
 			this.model.set({
