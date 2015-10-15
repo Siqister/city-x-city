@@ -85,6 +85,7 @@ define([
 
 		className:'map-inner',
 		template:false,
+		currentLayer:undefined,
 
 		collection:parcelsCollection, //use itemView to render a collection
 
@@ -136,7 +137,7 @@ define([
 		},
 
 		drawParcels:function(){
-			console.log('mapView:redrawParcels');
+			console.log('mapView:redrawParcels:layer:'+this.currentLayer);
 			var that = this;
 
 
@@ -154,34 +155,23 @@ define([
 					vent.trigger('ui:show:detail');
 				});
 
+			//Style parcel stroke based "marked" model attribute
 			features
-				.transition()
 				.style('stroke',function(d){
 					return d.marked==true?'#ef4136':null;
 				})
 				.style('stroke-width',function(d){
 					return d.marked==true?'2px':null;
-				})
-				.style('fill',function(d){
-					if(d.city_owned==true){
-						return '#d6d4ea';
-					}else if(d.partner_owned==true){
-						return '#96d5cf';
-					}else{
-						return null;
-					}
-				})
-				.style('fill-opacity',function(d){
-					if(d.city_owned == true || d.partner_owned == true){
-						return .6;
-					}else{
-						return null;
-					}
-				})
+				});
+
+			//Style parcel fill based on land use, vacancy, or ownership, as determined by
+			//this.currentLayer
+			that.showLayer(that.currentLayer);
 
 			map.off('viewreset', that.mapViewReset, that);
 			map.on('viewreset', that.mapViewReset, that); //context is MapView
 
+			//Set parcel shape attribute
 			that.mapViewReset(); //position svg and generate shapes for parcel features			
 		},
 
@@ -276,7 +266,6 @@ define([
 		},
 
 		drawAssetMarkers:function(){
-			console.log(assetCollection);
 			var that = this;
 
 			assetCollection.each(function(assetModel){
@@ -425,6 +414,7 @@ define([
 	});
 
 	//When parcelsCollection is sync'ed, redraw parcels
+	//triggered by parcelView
 	vent.on('parcel:update',function(){mapView.drawParcels()});
 
 	vent.on('cityCollection:update',mapView.drawCityMarkers);
@@ -440,7 +430,11 @@ define([
 
 
 	//Listen to events recoloring the parcel layer
-	vent.on('map:themeLayer:show',mapView.showLayer)
+	vent.on('map:themeLayer:show',function(colName){
+		console.log('redraw mapView parcels based on layer:'+colName);
+		mapView.currentLayer = colName;
+		mapView.showLayer(colName);
+	})
 
 	return new MapView();
 })

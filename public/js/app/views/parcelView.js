@@ -131,7 +131,6 @@ define([
 		},
 		saveChanges:function(){
 			console.log('parcelModel:save:before');
-			console.log(this.model);
 
 			this.model.save(null,{
 				error:function(model,res,op){
