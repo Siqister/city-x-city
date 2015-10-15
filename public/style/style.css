@@ -332,6 +332,9 @@ h3{
 		position:absolute;
 		background:url('assets/tooltip.png') no-repeat 0 -2px;
 	}
+	.datepicker{
+		color:gray;
+	}
 
 
 /*Common to all modules */
