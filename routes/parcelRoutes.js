@@ -1,6 +1,8 @@
 var express = require('express'),
 	router = express.Router();
 var cartodbClient = require('../cartodbClient');
+var secret = require('../secret');
+var request = require('request');
 
 //All routes derive from /parcels
 router
@@ -16,6 +18,8 @@ router
 			table:"tdi_parcels"
 		},
 		function(err,data){
+			//Assumes data is in GeoJSON
+
 			if(err){ res.status(400).send(error); }
 
 			console.log('successful GET to /parcel');
@@ -60,7 +64,7 @@ router
 	//HTTP PUT request assumes req.body contains the entire resource representation
 
 	//Construct query string
-	var query = "UPDATE {table} SET comment='" 
+	var query = "UPDATE tdi_parcels SET comment='" 
 		+ req.body.comment + 
 		"', modified="
 		+ req.body.modified + 
@@ -74,7 +78,10 @@ router
 
 	console.log(query);
 
-	cartodbClient.query(
+	//TODO: there is a bug here where, if UPDATE or INSERT query is made to the Cartodb API with format=GeoJSON,
+	//it returns a syntax error
+
+	/*cartodbClient.query(
 		query,
 		{table:"tdi_parcels"},
 		function(err,data){
@@ -87,7 +94,20 @@ router
 				res.json(req.body)
 			};
 		}
-	)
+	)*/
+	
+	//TODO: this is a shim; manually make request to cartodb api without specifying GeoJSON format
+	request("https://"+secret.USER+".cartodb.com/api/v2/sql?q=" + query + "&api_key=" + secret.API_KEY,
+		function(err,response,body){
+			if(err || response.statusCode != 200){
+				console.log(err);
+				res.status(400).send(err);
+			}else{
+				console.log("successful UPDATE to parcel "+req.params.id);
+				res.json(req.body)
+			}
+		});
+	
 });
 
 module.exports = router;
