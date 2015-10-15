@@ -299,7 +299,7 @@ define([
 		},
 
 		addEditItem:function(e){
-			console.log("Map:edit:add");
+			console.log("Map:edit:add:type:"+e.type);
 
 			var newModel;
 

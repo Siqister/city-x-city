@@ -32,7 +32,7 @@ define([
 		svg:null,
 
 		ui:{
-			addItem:'.add'
+			addItem:'.add-btn'
 		},
 		events:{
 			'click @ui.addItem':'addItem'
@@ -76,8 +76,8 @@ define([
 			listItems
 				.filter(function(d){return d.add})
 				.attr('class','list-item add')
-				.attr('id',function(d){return d.add})
-				.append('span').attr('class','glyphicon glyphicon-plus add-btn');
+				//.attr('id',function(d){return d.add})
+				.append('span').attr('class','glyphicon glyphicon-plus add-btn').attr('id',function(d){return d.add});
 			listItems
 				.append('span').attr('class','digits')
 				.text(function(d){return d.digits});
@@ -89,11 +89,15 @@ define([
 		addItem:function(e){
 			e.stopPropagation();
 
+			console.log($(e.target).attr('id'))
+
 			vent.trigger('map:edit:add',{
 				xy:[e.pageX,e.pageY],
 				cityModel:this.model,
 				type:$(e.target).attr('id')
 			}); //TODO: figure out the precise location
+
+			vent.trigger('ui:hide:detail');
 		},
 
 		redraw:function(){
