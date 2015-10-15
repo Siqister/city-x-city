@@ -31,6 +31,13 @@ define([
 		tooltip:null,
 		svg:null,
 
+		ui:{
+			addItem:'.add'
+		},
+		events:{
+			'click @ui.addItem':'addItem'
+		},
+
 		initialize:function(){
 			var that = this;
 
@@ -43,6 +50,8 @@ define([
 		},
 
 		onShow:function(){
+			//this.model => cityModel
+
 			var cityName = this.model.id;
 
 			//Array of asset models
@@ -57,19 +66,34 @@ define([
 
 			var listItems = list.selectAll('.list-item')
 				.data([
-					{meta:'assets',digits:cityAssets.length},
-					{meta:'investments',digits:cityInvestments.length},
+					{meta:'assets',digits:cityAssets.length,add:'asset'},
+					{meta:'investments',digits:cityInvestments.length,add:'investment'},
 					{meta:'total investment value',digits:'$'+format(investmentSum)}
 				],function(d){return d.meta})
 				.enter()
 				.append('li').attr('class','list-item');
 
 			listItems
+				.filter(function(d){return d.add})
+				.attr('class','list-item add')
+				.attr('id',function(d){return d.add})
+				.append('span').attr('class','glyphicon glyphicon-plus add-btn');
+			listItems
 				.append('span').attr('class','digits')
 				.text(function(d){return d.digits});
 			listItems
 				.append('span').attr('class','meta')
 				.text(function(d){return d.meta});
+		},
+
+		addItem:function(e){
+			e.stopPropagation();
+
+			vent.trigger('map:edit:add',{
+				xy:[e.pageX,e.pageY],
+				cityModel:this.model,
+				type:$(e.target).attr('id')
+			}); //TODO: figure out the precise location
 		},
 
 		redraw:function(){
@@ -83,8 +107,8 @@ define([
 		
 			var listItems = d3.select(this.el).selectAll('.list-item')
 				.data([
-					{meta:'assets',digits:cityAssets.length},
-					{meta:'investments',digits:cityInvestments.length},
+					{meta:'assets',digits:cityAssets.length,add:'asset'},
+					{meta:'investments',digits:cityInvestments.length,add:'investment'},
 					{meta:'total investment value',digits:'$'+format(investmentSum)}
 				],function(d){return d.meta});
 

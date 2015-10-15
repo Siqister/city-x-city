@@ -99,7 +99,7 @@ define([
 			that.ui.actionMenu.find('.btn').removeClass('active');
 			$(e.target).addClass('active');
 
-			//trigger editing mode
+			//trigger editing mode in mapView
 			vent.trigger('map:edit:add',{
 				xy:[e.pageX,e.pageY],
 				cityModel:that.model,
@@ -148,7 +148,7 @@ define([
 			});
 		},
 		expandCityDetail:function(cityModel){
-			if(inGridView){ return; } //do nothing if in gridView
+			if(inGridView){ return; } //noop if in gridView
 
 			//Find particular childView 
 			var cityDetailView = this.children.findByModel(cityModel);

@@ -415,12 +415,27 @@ h3{
 	.summary .list-item{
 		margin:15px 0;
 	}
+	.summary .add-btn{
+		background:rgb(200,200,200);
+		width:22px;
+		height:22px;
+		line-height:22px;
+		text-align: center;
+		font-size:.8em;
+		color:white;
+		border-radius:22px;
+		-webkit-border-radius:22px;
+		margin:0 5px 0 0;
+	}
+	.summary .list-item:hover .add-btn{
+		background:rgb(80,80,80);
+	}
 	.summary .digits{
 		color:black;
 		font-size:1.8em;
-		display:block;
 		line-height:.8em;
 	}
 	.summary .meta{
 		font-size:.75em;
+		display:block;
 	}
