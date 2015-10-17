@@ -71,6 +71,7 @@ define([
 
 			var that = this;
 
+			//Parcels can't be both partner controlled and city owned
 			if($(e.target).hasClass('city-owned') && state == true){
 				if(that.ui.partnerOwned.bootstrapSwitch('state')==true){
 					console.log('Conflict');
