@@ -13,6 +13,8 @@ router
 		function(err,data){
 			if(err){ res.send(err); }
 
+			console.log('successful GET /city');
+
 			data.features.forEach(function(feature){
 				for(var key in feature.properties){
 					feature[key] = feature.properties[key];

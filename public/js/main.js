@@ -13,6 +13,7 @@ require.config({
 		'bootstrap-dropdown':'lib/bootstrap/js/dropdown',
 		'bootstrap-switch':'lib/bootstrap-switch/bootstrap-switch.min',
 		'bootstrap-multiselect':'lib/bootstrap-multiselect/bootstrap-multiselect',
+		'bootstrap-datepicker':'lib/bootstrap-datepicker/bootstrap-datepicker.min',
 		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
 		'config':'config'
 	},
@@ -27,6 +28,9 @@ require.config({
 			deps:['jquery']
 		},
 		'bootstrap-multiselect':{
+			deps:['jquery']
+		},
+		'bootstrap-datepicker':{
 			deps:['jquery']
 		}
 	}

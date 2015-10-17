@@ -11,14 +11,14 @@ define([],function(){
 		},
 		{
 			name:'Vacancy',
-			cartodbCol: 'tdi_vacancy',
+			cartodbCol: 'vacancy',
 			options:[
-				{name:"Ground floor",cartodbVal:0,color:'red'},
-				{name:"Upper floor",cartodbVal:1,color:'blue'},
-				{name:"Total vacancy",cartodbVal:2,color:'purple'}
+				{name:"Ground floor",cartodbVal:1,color:'red'},
+				{name:"Upper floor",cartodbVal:2,color:'blue'},
+				{name:"Total vacancy",cartodbVal:3,color:'purple'}
 			],
 			defaults:{
-				color:'yellow'
+				color:'white'
 			}
 		},
 		{
