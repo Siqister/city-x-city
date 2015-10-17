@@ -33,19 +33,18 @@ router
 .post('/',function(req,res,next){
 	var loc = req.body.geometry.coordinates;
 
-	var query = "INSERT INTO {table} (city,the_geom,name,comment,type) "
-		+"VALUES ('"
-		+ req.body.city + "',"
-		+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
-		+ req.body.name + "','"
-		+ req.body.comment + "','"
-		+ req.body.assetType +
-		"') RETURNING cartodb_id";
+	// var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type) "
+	// 	+"VALUES ('"
+	// 	+ req.body.city + "',"
+	// 	+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
+	// 	+ req.body.name + "','"
+	// 	+ req.body.comment + "','"
+	// 	+ req.body.assetType +
+	// 	"') RETURNING cartodb_id";
 
-	console.log(query);
+	var query ="INSERT INTO tdi_assets (city) VALUES ('PITTSFIELD') RETURNING cartodb_id";
 
-	cartodbClient.query(query,
-		{table:'tdi_assets'},function(err,data){
+	cartodbClient.query(query,function(err,data){
 			if(err){ 
 				console.log("Error!");
 				res.status(500).send(err);
