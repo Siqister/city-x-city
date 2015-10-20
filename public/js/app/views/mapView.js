@@ -250,6 +250,12 @@ define([
 				.attr('transform','translate('+ -tl[0] +','+ -tl[1] + ')');
 
 			features.attr('d',path);
+
+		},
+
+		setZoom:function(zoom){
+			console.log('map:zoom:to:'+zoom);
+			map.setZoom(zoom);
 		},
 
 		drawCityMarkers:function(cityCollection){
@@ -300,6 +306,7 @@ define([
 			//model can be city or parcel model
 			var lngLat = model.get('geometry').coordinates;
 			map.panTo(new L.LatLng(lngLat[1],lngLat[0]), {animate:true});
+
 		},
 		panToParcel:function(model){
 			var xy = path.centroid(model.get('geometry')); //xy in pixels
@@ -413,6 +420,7 @@ define([
 	vent.on('map:pan:city',mapView.panToCity);
 	vent.on('map:edit:add',mapView.addEditItem);
 	vent.on('map:edit:remove',mapView.removeEditItem);
+	vent.on('map:setzoom',mapView.setZoom);
 
 	vent.on('map:add:item',mapView.addItem);
 

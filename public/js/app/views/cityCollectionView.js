@@ -61,7 +61,7 @@ define([
 				vent.trigger('city:click', this.model); //triggers cityCollectionView.showCityDetail
 				vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
 
-				this.viz.show(new SummaryView({model:this.model}));
+				//this.viz.show(new SummaryView({model:this.model}));
 			}
 		},
 		onHover:function(){
@@ -122,6 +122,8 @@ define([
 
 			//Find particular childView 
 			var cityDetailView = this.children.findByModel(cityModel);
+			cityDetailView.viz.show(new SummaryView({model:cityDetailView.model}))
+
 			var that = this,
 				top = 0, spacing = 45, z = 999;
 

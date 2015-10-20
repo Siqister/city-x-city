@@ -14,7 +14,10 @@ define([
 
 	var CityCollection = Backbone.Collection.extend({
 		url:'/city',
-		model:CityModel
+		model:CityModel,
+		initialize:function(){
+			this.deferred = this.fetch();
+		}
 	});
 
 	var cityCollection = new CityCollection();
