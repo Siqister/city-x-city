@@ -35,6 +35,7 @@ define([
 
 	//module internal variables for keeping leaflet+d3
 	var map, svg, g, features, editMarker;
+	var mapBackground = {};
 
 	var cityIcon = L.icon({
 		iconUrl:'../style/assets/pin-02.png',
@@ -101,7 +102,9 @@ define([
 
 			//upon mapView:show, initialize leaflet map
 			map = L.map(this.el).setView([42.3, -71.8], 9);
-			L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+				.addTo(map);
+			mapBackground.satellite = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.nok599k9/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
 			//upon mapView:show and map initialization, add 3D building overlay
@@ -153,7 +156,13 @@ define([
 					var parcelModel = that.collection.get(d.cartodb_id);
 					vent.trigger('parcel:detail:show',parcelModel);
 					vent.trigger('ui:show:detail');
-				});
+				})
+				.on('mouseenter',function(d){
+					d3.select(this).style('fill-opacity',1)
+				})
+				.on('mouseleave',function(d){
+					d3.select(this).style('fill-opacity',.2);
+				})
 
 			//Style parcel stroke based "marked" model attribute
 			features
@@ -387,6 +396,10 @@ define([
 				}
 				vent.trigger('ui:show:detail');
 			})
+		},
+
+		toggleBackground:function(layerName){
+			mapBackground[layerName].bringToFront();
 		}
 
 	});
@@ -434,6 +447,12 @@ define([
 		console.log('redraw mapView parcels based on layer:'+colName);
 		mapView.currentLayer = colName;
 		mapView.showLayer(colName);
+	})
+	//Listen to events changing map background
+	//Triggered by mapLayerControlView only
+	vent.on('map:background:show',function(layerName){
+		//@param layername -> string value "street" || "satellite"
+		mapView.toggleBackground(layerName);
 	})
 
 	return new MapView();

@@ -36,5 +36,10 @@ define([],function(){
 		}
 	];
 
+	config.mapBackground = [
+		{name:'Street', layer:'street'},
+		{name:'Satellite', layer:'satellite'}
+	];
+
 	return config;
 })
