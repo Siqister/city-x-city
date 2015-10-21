@@ -143,15 +143,17 @@ h3{
 		.map-layer-control .map-layer-control-inner .heading{
 			line-height:54px;
 			background:rgb(240,240,240);
+			text-align:center;
 		}
 		.map-layer-control .map-layer-control-inner .option{
 			text-align:center;
 			line-height:54px;
 		}
+
 		.map-layer-control .map-layer-control-inner .open{
 			border-top:4px solid #e2e2e2;
 		}
-			.map-layer-control .map-layer-control-inner .option .dropdown-toggle{
+			.map-layer-control .map-layer-control-inner .option .layer-name{
 				height:100%;
 				width:100%;
 				text-align:center;
@@ -174,14 +176,14 @@ h3{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:rgba(220,220,220,.2);
+	fill:rgb(220,220,220);
+	fill-opacity:.2;
 	stroke:rgba(150,150,150,.8);
 	stroke-width:1px;
 }
-	.content .map .map-inner svg .parcel:hover{ 
-		fill-opacity:.7; 
-		fill:#2fdf9e;
-	}
+.content .map .map-inner svg .publicly-owned{
+	fill-opacity:.6;
+}
 
 /*City collection module*/
 .content .city .city-list{
