@@ -176,12 +176,14 @@ h3{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:rgba(220,220,220,.2);
+	fill:rgb(220,220,220);
+	fill-opacity:.2;
 	stroke:rgba(150,150,150,.8);
 	stroke-width:1px;
 }
-	.content .map .map-inner svg .parcel{ 
-	}
+.content .map .map-inner svg .publicly-owned{
+	fill-opacity:.6;
+}
 
 /*City collection module*/
 .content .city .city-list{

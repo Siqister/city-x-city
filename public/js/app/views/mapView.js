@@ -102,9 +102,9 @@ define([
 
 			//upon mapView:show, initialize leaflet map
 			map = L.map(this.el).setView([42.3, -71.8], 9);
-			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
-				.addTo(map);
 			mapBackground.satellite = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.nok599k9/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+				.addTo(map);
+			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
 			//upon mapView:show and map initialization, add 3D building overlay
@@ -150,7 +150,13 @@ define([
 			var featuresEnter = features
 				.enter()
 				.append('path')
-				.attr('class','parcel')
+				.attr('class',function(d){
+					if(d.city_owned == true || d.partner_owned == true){
+						return 'parcel publicly-owned';
+					}else{
+						return 'parcel';
+					}
+				})
 				.on('click', function(d){
 					//a parcel is clicked on
 					var parcelModel = that.collection.get(d.cartodb_id);
@@ -159,9 +165,12 @@ define([
 				})
 				.on('mouseenter',function(d){
 					d3.select(this).style('fill-opacity',1)
+						.style('stroke-width','2px');
+
 				})
 				.on('mouseleave',function(d){
-					d3.select(this).style('fill-opacity',.2);
+					d3.select(this).style('fill-opacity',.2)
+						.style('stroke-width',null);
 				})
 
 			//Style parcel stroke based "marked" model attribute
@@ -222,7 +231,7 @@ define([
 							option = options.get(_d);
 
 						if(option){
-                                                  return option.color;
+                            return option.color;
 						}else{
 							return _default.color;
 						}
