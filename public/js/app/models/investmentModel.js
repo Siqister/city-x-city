@@ -11,7 +11,11 @@ define([
 			investmentType:'equity'
 		},
 		validate:function(attr,options){
-			var errors = [];
+			console.log('Validate:investmentModel');
+
+
+			var errors = [],
+				dateRegex = new RegExp("[0-9][0-9]/[0-9][0-9][0-9][0-9]");
 
 			if(isNaN(attr.value)){
 				errors.push({
@@ -27,8 +31,21 @@ define([
 					errorMsg:"A name is required."
 				})
 			}
+			if(!dateRegex.test(attr.date)){
+				errors.push({
+					errorCode:3,
+					errorField:'date',
+					errorMsg:"Invalid date"
+				})
+			}
 
-			if(errors.length>0){return errors;}
+			if(errors.length>0){
+				console.log(errors);
+				return errors;
+			}else{
+				console.log("investmentModel:validate:success");
+				console.log(attr);
+			}
 		}
 	})
 	

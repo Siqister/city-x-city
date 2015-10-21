@@ -28,6 +28,7 @@ define([
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
 			partnerOwned: '.partner-owned input',
+			vacancy: '.vacancy input',
 			save: '.save',
 			close:'.close'
 		},
@@ -36,6 +37,7 @@ define([
 			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
+			'click @ui.vacancy':'attrModified',
 			'click @ui.save':'saveChanges',
 			'click @ui.address':'zoomToParcel',
 			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); }
@@ -67,9 +69,10 @@ define([
 			this.stopListening();
 		},
 		attrModified:function(e,state){
-			console.log('parcelDetail:attrModified:'+e.target.id+':'+state);
+			e.stopPropagation();
 
-			var that = this;
+			var that = this,
+				$target = $(e.target);
 
 			//Parcels can't be both partner controlled and city owned
 			if($(e.target).hasClass('city-owned') && state == true){
@@ -86,22 +89,61 @@ define([
 				}
 			}
 
+
+
+			//Set behavior of vancancy checkbox input
+			if($(e.target).hasClass('vacancy')){
+				if(e.target.checked == true){
+					$target.parent().addClass('active')
+				}else{
+					$target.parent().removeClass('active')
+				}
+			}
+
+			var vacancyCode;
+			if(that.$('#ground').prop('checked')==true){
+				if(that.$('#upper').prop('checked')==true){
+					vacancyCode = 3;
+				}else{
+					vacancyCode = 1;
+				}
+			}else if(that.$('#upper').prop('checked')==true){
+				vacancyCode = 2;
+			}else{
+				vacancyCode = 0;
+			}
+
+
+
 			this.model.set({
 				comment:this.ui.comment.val(),
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
 				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),
+				vacancy: vacancyCode,
 				modified:true
 			});
 
+			//Add 'modified' class to this view
+			//Show 'save' button
 			this.$el.addClass('modified');
 			this.ui.save.fadeIn();
 		},
 		saveChanges:function(){
-			this.model.save(); //issues HTTP PUT request
+			console.log('parcelModel:save:before');
+
+			this.model.save(null,{
+				error:function(model,res,op){
+					console.log('parcelModel:save:ERROR');
+				},
+				success:function(model,res,op){
+					console.log('parcelModel:save:Success');
+				}
+			}); //issues HTTP PUT request
 		},
 		onSync:function(){
 			//parcel model is sync'ed up with server
+			console.log('parcelView:onSync');
 			this.ui.save.fadeOut();
 			this.$el.removeClass('modified');
 

@@ -38,11 +38,6 @@ define([
 
 		template:_.template(cityItemViewTemplate),
 
-		ui:{
-			actionMenu:'.city-action-menu',
-			addAsset:'.add-action .add-asset',
-			addInvestment:'.add-action .add-investment'
-		},
 		events:{
 			'mouseenter':function(){
 				vent.trigger('city:hover', this.model.get('city'));
@@ -50,9 +45,7 @@ define([
 			'mouseleave':function(){
 				vent.trigger('city:unhover', this.model.get('city'));
 			},
-			'click':'onClick',
-			'click @ui.addAsset':'addNewItem',
-			'click @ui.addInvestment':'addNewItem'
+			'click':'onClick'
 		},
 		regions:{
 			'viz':'.city-item-viz'
@@ -63,15 +56,10 @@ define([
 			this.listenTo(this.model,'unhover',this.onUnhover,this);
 			this.listenTo(this.model,'change',this.onModelAttrChange,this);
 		},
-		onRender:function(){
-			this.ui.actionMenu.hide();
-		},
 		onClick:function(){
 			if(!inGridView){
 				vent.trigger('city:click', this.model); //triggers cityCollectionView.showCityDetail
 				vent.trigger('map:pan:city', this.model); //triggers mapView.panTo
-
-				this.ui.actionMenu.fadeIn();
 
 				this.viz.show(new SummaryView({model:this.model}));
 			}
@@ -89,26 +77,8 @@ define([
 			that.$el.find('.partner-owned').html(that.model.get('partner_owned'));
 		},
 		collapse:function(){
-			this.ui.actionMenu.fadeOut().hide();
 			this.viz.empty();
 		},
-		addNewItem:function(e){
-			e.stopPropagation();
-
-			var that = this;
-			that.ui.actionMenu.find('.btn').removeClass('active');
-			$(e.target).addClass('active');
-
-			//trigger editing mode
-			vent.trigger('map:edit:add',{
-				xy:[e.pageX,e.pageY],
-				cityModel:that.model,
-				type:$(e.target).attr('id')
-			}); //TODO: figure out the precise location
-
-			vent.trigger('ui:hide:detail');
-		},
-
 		expandDetail:function(){
 			this.viz.empty();
 			this.viz.show(new CityItemVizView({model:this.model}));
@@ -148,7 +118,7 @@ define([
 			});
 		},
 		expandCityDetail:function(cityModel){
-			if(inGridView){ return; } //do nothing if in gridView
+			if(inGridView){ return; } //noop if in gridView
 
 			//Find particular childView 
 			var cityDetailView = this.children.findByModel(cityModel);

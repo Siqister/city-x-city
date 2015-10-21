@@ -9,7 +9,8 @@ define([
 
 	//'bootstrap',
 	'bootstrap-dropdown',
-	'bootstrap-multiselect'
+	'bootstrap-multiselect',
+	'bootstrap-datepicker'
 ],function(
 	_,
 	Marionette,
@@ -32,7 +33,7 @@ define([
 				this.model.save();
 			},
 			'click @ui.cancel': 'removeNewItem',
-			'input': 'onAttrChange'
+			'change input': 'onAttrChange'
 		},
 
 		initialize:function(){
@@ -56,8 +57,15 @@ define([
 					that.ui.save.fadeIn();
 				}
 			});
+
+			//instantiate bootstrap datepicker
+			this.$('.date input').datepicker({
+				format:'mm/yyyy'
+			})
 		},
 		onAttrChange:function(){
+			console.log('input:changed');
+
 			var that = this;
 			that.ui.save.fadeIn();
 
