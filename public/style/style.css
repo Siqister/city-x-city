@@ -342,6 +342,20 @@ h3{
 		color:gray;
 	}
 
+	.edit-inner .bootstrap-switch-wrapper{
+		display:inline-block;
+		border:none;
+		float:right;
+	}
+		.edit-inner .bootstrap-switch .bootstrap-switch-container .bootstrap-switch-handle-on{
+			background:rgb(90,90,90); 
+			color:#fff;
+		}
+		.edit-inner .bootstrap-switch .bootstrap-switch-container .bootstrap-switch-handle-off{
+			background:rgb(90,90,90); 
+			color:#fff;
+		}
+
 
 /*Common to all modules */
 	.module .btn{

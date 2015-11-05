@@ -8,7 +8,10 @@ define([
 		idAttribute:'cartodb_id',
 		defaults:{
 			type:'asset',
-			assetType:'anchor business'
+			assetType:'anchor business',
+			employer:false,
+			employee:0,
+			parking:0
 		},
 		validate:function(attr,options){
 			var errors = [];
