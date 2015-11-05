@@ -182,6 +182,9 @@ h3{
 	stroke:rgba(150,150,150,.8);
 	stroke-width:1px;
 }
+.content .map .map-inner svg .marked{
+	stroke-width:2px;
+}
 .content .map .map-inner svg .publicly-owned{
 	fill-opacity:.6;
 }

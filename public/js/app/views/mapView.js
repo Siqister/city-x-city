@@ -156,13 +156,6 @@ define([
 			var featuresEnter = features
 				.enter()
 				.append('path')
-				.attr('class',function(d){
-					if(d.city_owned == true || d.partner_owned == true){
-						return 'parcel publicly-owned';
-					}else{
-						return 'parcel';
-					}
-				})
 				.on('click', function(d){
 					//a parcel is clicked on
 					var parcelModel = that.collection.get(d.cartodb_id);
@@ -184,9 +177,17 @@ define([
 				.style('stroke',function(d){
 					return d.marked==true?'#ef4136':null;
 				})
-				.style('stroke-width',function(d){
-					return d.marked==true?'2px':null;
-				});
+				.attr('class',function(d){
+					var classes = "parcel";
+					if(d.city_owned == true || d.partner_owned == true){
+						classes += " publicly-owned";
+					}
+					if(d.tdi_for_sale == true){ classes += " for-sale"; }
+					if(d.tdi_for_lease == true){ classes += " for-lease"; }
+					if(d.marked == true){ classes += " marked"; }
+
+					return classes;
+				})
 
 			//Style parcel fill based on land use, vacancy, or ownership, as determined by
 			//this.currentLayer
