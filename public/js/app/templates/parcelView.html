@@ -43,6 +43,14 @@
 		</div>
 	</li>
 	<li role="separator" class="divider">Addtional Information</li>
+	<li class="form-group for-sale attr-list-item">
+		<label for="for-sale">For Sale</label>
+		<input type="checkbox" name="marked" id="for-sale" class='for-sale' <% if(tdi_for_sale==true){ %>checked<% } %>>
+	</li>
+		<li class="form-group for-lease attr-list-item">
+		<label for="for-lease">For Lease</label>
+		<input type="checkbox" name="marked" id="for-lease" class='for-lease' <% if(tdi_for_lease==true){ %>checked<% } %>>
+	</li>
 	<li class="form-group marked attr-list-item">
 		<label for="marked">Mark this parcel</label>
 		<input type="checkbox" name="marked" id="marked" <% if(marked==true){ %>checked<% } %>>

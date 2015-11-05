@@ -76,6 +76,10 @@ router
 		+ req.body.partner_owned +
 		", vacancy="
 		+ req.body.vacancy +
+		", tdi_for_sale="
+		+ req.body.tdi_for_sale +
+		", tdi_for_lease="
+		+ req.body.tdi_for_lease +
 		" WHERE cartodb_id=" + req.params.id;
 
 	console.log(query);

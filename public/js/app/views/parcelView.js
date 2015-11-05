@@ -28,6 +28,8 @@ define([
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
 			partnerOwned: '.partner-owned input',
+			forSale:'.for-sale input',
+			forLease:'.for-lease input',
 			vacancy: '.vacancy input',
 			save: '.save',
 			close:'.close'
@@ -37,6 +39,8 @@ define([
 			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
+			'switchChange.bootstrapSwitch @ui.forSale':'attrModified',
+			'switchChange.bootstrapSwitch @ui.forLease':'attrModified',
 			'click @ui.vacancy':'attrModified',
 			'click @ui.save':'saveChanges',
 			'click @ui.address':'zoomToParcel',
@@ -64,6 +68,17 @@ define([
 				onText:'Yes',
 				offText:'No'
 			});
+			this.ui.forSale.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			});
+			this.ui.forLease.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			})
+
 		},
 		onBeforeDestroy:function(){
 			this.stopListening();
@@ -120,6 +135,8 @@ define([
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
 				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),
+				tdi_for_sale:this.ui.forSale.bootstrapSwitch('state'),
+				tdi_for_lease:this.ui.forLease.bootstrapSwitch('state'),
 				vacancy: vacancyCode,
 				modified:true
 			});
@@ -131,6 +148,7 @@ define([
 		},
 		saveChanges:function(){
 			console.log('parcelModel:save:before');
+			console.log(this.model);
 
 			this.model.save(null,{
 				error:function(model,res,op){
