@@ -23,6 +23,9 @@ define([
 		template:_.template(parcelViewTemplate),
 
 		ui:{
+			hiddenInputs: '.attr-list-item-hide-input',
+			textInputs: 'input[type="text"]',
+
 			address: '.address',
 			comment: '.comment textarea',
 			marked: '.marked input',
@@ -30,21 +33,27 @@ define([
 			partnerOwned: '.partner-owned input',
 			forSale:'.for-sale input',
 			forLease:'.for-lease input',
+
 			vacancy: '.vacancy input',
 			save: '.save',
 			close:'.close'
 		},
 		events:{
 			'input @ui.comment':'attrModified',
+			'input @ui.textInputs':'attrModified',
+
 			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.forSale':'attrModified',
 			'switchChange.bootstrapSwitch @ui.forLease':'attrModified',
 			'click @ui.vacancy':'attrModified',
+
 			'click @ui.save':'saveChanges',
 			'click @ui.address':'zoomToParcel',
-			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); }
+			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); },
+
+			'click @ui.hiddenInputs':'showInputs'
 		},
 
 		initialize:function(){
@@ -79,10 +88,16 @@ define([
 				offText:'No'
 			})
 
+			this.ui.hiddenInputs.on('click',function(e){
+				$(this).find('.value').hide();
+				$(this).find('.form-control').show();
+			})
+
 		},
 		onBeforeDestroy:function(){
 			this.stopListening();
 		},
+
 		attrModified:function(e,state){
 			e.stopPropagation();
 
@@ -132,6 +147,8 @@ define([
 
 			this.model.set({
 				comment:this.ui.comment.val(),
+				owner1:this.$('#owner').val(), //TODO: can do this in a nicer way
+
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
 				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),

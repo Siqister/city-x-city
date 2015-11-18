@@ -80,6 +80,8 @@ router
 		+ req.body.tdi_for_sale +
 		", tdi_for_lease="
 		+ req.body.tdi_for_lease +
+		", owner1='"
+		+ req.body.owner1 + "'" +
 		" WHERE cartodb_id=" + req.params.id;
 
 	console.log(query);
@@ -106,7 +108,7 @@ router
 	request("https://"+secret.USER+".cartodb.com/api/v2/sql?q=" + query + "&api_key=" + secret.API_KEY,
 		function(err,response,body){
 			if(err || response.statusCode != 200){
-				console.log(err);
+				console.error(err);
 				res.status(400).send(err);
 			}else{
 				console.log("successful UPDATE to parcel "+req.params.id);

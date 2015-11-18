@@ -290,6 +290,8 @@ h3{
 		padding:5px 0;
 		border-top:1px solid rgba(255,255,255,.5);
 		text-transform: uppercase;
+		font-weight:bold;
+		color:rgba(255,255,255,.6);
 	}
 
 	/* Global override for bootstrap-switch */
@@ -391,8 +393,14 @@ h3{
 				display:block;
 				margin-bottom:5px;
 			}
+			.detail .detail-inner .attr-list-item .title{
+				display:inline-block;
+				color:rgba(255,255,255,.6);
+				margin-bottom:2px;
+			}
 			.module .attr-list .attr-list-item .value{
 				font-size:1.1em;
+				line-height:34px;
 			}
 			.module .attr-list .attr-list-item .form-control{
 				border:none;
@@ -404,14 +412,21 @@ h3{
 				-web-kit-transition: background 1s;
 				transition:background 1s;
 			}
+			.module .attr-list .attr-list-item-hide-input .form-control{
+				font-size:1.1em;
+				display:none;
+			}
 			.module .attr-list .attr-list-item.error .form-control{
 				color:#f04c23;
 			}
 			.edit .attr-list .attr-list-item .form-control{
 				background:rgb(90,90,90);
 			}
-			.detail .detail-inner.modified .attr-list .attr-list-item .form-control{
+			.detail .detail-inner.modified .attr-list .attr-list-item textarea{
 				background:#5bbb90;
+			}
+			.detail .detail-inner.modified .attr-list .attr-list-item input[type=text]{
+				border-bottom:2px solid white;
 			}
 
 	.module .custom-glyph{
