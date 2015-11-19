@@ -34,18 +34,18 @@ define([
 ){
 
 	//module internal variables for keeping leaflet+d3
-	var map, svg, g, features, editMarker;
+	var map, svg, g, features, editMarker, parcelMarker;
 	var mapBackground = {};
 
 	var cityIcon = L.icon({
 		iconUrl:'../style/assets/pin-02.png',
-		iconSize:[24,56],
-		iconAnchor:[12,56]
+		iconSize:[20,46],
+		iconAnchor:[10,46]
 	});
 	var cityIconHighlight = L.icon({
 		iconUrl:'../style/assets/pin-03.png',
-		iconSize:[24,56],
-		iconAnchor:[12,56]
+		iconSize:[20,46],
+		iconAnchor:[10,46]
 	});
 	var cityIconHash = {};
 
@@ -69,6 +69,13 @@ define([
 		iconSize:[30,30],
 		iconAnchor:[15,15]
 	});
+
+	var parcelIcon = L.icon({
+		iconUrl:'../style/assets/pin-04.png',
+		iconSize:[20,46],
+		iconAnchor:[10,46]
+	});
+
 	var assetMarkerHash = d3.map(), investmentMarkerHash = d3.map(); //allows one to one look-up between map icons and asset models
 
 
@@ -159,16 +166,30 @@ define([
 				.on('click', function(d){
 					//a parcel is clicked on
 					var parcelModel = that.collection.get(d.cartodb_id);
+
+					//create a new parcelMarker and add it to parcel centroid
+					var parcelCentroid = d3.geo.centroid(d);
+					if(parcelMarker){ map.removeLayer(parcelMarker); }
+					parcelMarker = L.marker([
+							parcelCentroid[1],
+							parcelCentroid[0]
+						],{
+							icon:parcelIcon
+						})
+						.addTo(map);
+
 					vent.trigger('parcel:detail:show',parcelModel);
 					vent.trigger('ui:show:detail');
 				})
 				.on('mouseenter',function(d){
-					d3.select(this).style('fill-opacity',1)
+					d3.select(this)
+						.style('fill-opacity',.35)
 						.style('stroke-width','2px');
 
 				})
 				.on('mouseleave',function(d){
-					d3.select(this).style('fill-opacity',.2)
+					d3.select(this)
+						.style('fill-opacity',.2)
 						.style('stroke-width',null);
 				})
 
