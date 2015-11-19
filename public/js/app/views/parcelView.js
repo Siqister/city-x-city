@@ -23,6 +23,7 @@ define([
 		template:_.template(parcelViewTemplate),
 
 		ui:{
+			allAttrListItems:'.attr-list-item',
 			hiddenInputs: '.attr-list-item-hide-input',
 			textInputs: 'input[type="text"]',
 
@@ -61,6 +62,9 @@ define([
 		},
 		onShow:function(){
 			//customize initial appearance
+			//Hide save button
+			//Initialize bootstrap switches
+			//Hide inputs
 			this.ui.save.hide();
 			this.ui.marked.bootstrapSwitch({
 				size:'small',
@@ -88,6 +92,9 @@ define([
 				offText:'No'
 			})
 
+			this.ui.allAttrListItems.on('click',function(e){
+				$(this).addClass('modified');
+			});
 			this.ui.hiddenInputs.on('click',function(e){
 				$(this).find('.value').hide();
 				$(this).find('.form-control').show();
@@ -148,6 +155,8 @@ define([
 			this.model.set({
 				comment:this.ui.comment.val(),
 				owner1:this.$('#owner').val(), //TODO: can do this in a nicer way
+				zoning:this.$('#zoning').val(),
+				year_built:this.$('#year-built').val(),
 
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),

@@ -8,19 +8,21 @@
 	<li role="separator" class="divider">Basic Info</li>
 	<li class="attr-list-item">
 		<span class="title">Parcel area</span>
-		<div class="value"><%= Math.round(shape_area)+'sqm' %></div>
+		<div class="value"><%= Math.round(shape_area*10.7639)+' sqft' %></div>
 	</li>
-	<li class="attr-list-item">
-		<span class="title">Zoning</span>
+	<li class="attr-list-item attr-list-item-hide-input">
+		<label for="zoning" class="title">Zoning</label>
 		<div class="value"><%= zoning %></div>
+		<input type="text" class="form-control" id="zoning" value=<%= '"'+zoning+'"' %> >
 	</li>	
-	<li class="attr-list-item">
-		<span class="title">Year Built</span>
+	<li class="attr-list-item attr-list-item-hide-input">
+		<label for="year-built" class="title">Year Built</label>
 		<div class="value"><%= year_built %></div>
+		<input type="text" class="form-control" id="year-built" value=<%= year_built %> >
 	</li>
 	<li role="separator" class="divider">Use and Ownership</li>
 	<li class="attr-list-item attr-list-item-hide-input">
-		<label for="owner" class="title">Owner</label>
+		<label for="owner" class="title">Owner </label>
 		<div class="value"><%= owner1 %></div>
 		<input type="text" class="form-control" id="owner" value=<%= '"'+owner1+'"' %>/>
 	</li>

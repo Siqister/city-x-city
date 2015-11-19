@@ -427,6 +427,7 @@ h3{
 			}
 			.detail .detail-inner.modified .attr-list .attr-list-item input[type=text]{
 				border-bottom:2px solid white;
+				border-radius:0;
 			}
 
 	.module .custom-glyph{

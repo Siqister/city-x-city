@@ -80,6 +80,10 @@ router
 		+ req.body.tdi_for_sale +
 		", tdi_for_lease="
 		+ req.body.tdi_for_lease +
+		", year_built="
+		+ req.body.year_built +
+		", zoning='"
+		+ req.body.zoning + "'" +
 		", owner1='"
 		+ req.body.owner1 + "'" +
 		" WHERE cartodb_id=" + req.params.id;
