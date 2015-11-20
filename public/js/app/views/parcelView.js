@@ -23,24 +23,38 @@ define([
 		template:_.template(parcelViewTemplate),
 
 		ui:{
+			allAttrListItems:'.attr-list-item',
+			hiddenInputs: '.attr-list-item-hide-input',
+			textInputs: 'input[type="text"]',
+
 			address: '.address',
 			comment: '.comment textarea',
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
 			partnerOwned: '.partner-owned input',
+			forSale:'.for-sale input',
+			forLease:'.for-lease input',
+
 			vacancy: '.vacancy input',
 			save: '.save',
 			close:'.close'
 		},
 		events:{
 			'input @ui.comment':'attrModified',
+			'input @ui.textInputs':'attrModified',
+
 			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
+			'switchChange.bootstrapSwitch @ui.forSale':'attrModified',
+			'switchChange.bootstrapSwitch @ui.forLease':'attrModified',
 			'click @ui.vacancy':'attrModified',
+
 			'click @ui.save':'saveChanges',
 			'click @ui.address':'zoomToParcel',
-			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); }
+			'click @ui.close':function(){ vent.trigger('ui:hide:detail'); },
+
+			'click @ui.hiddenInputs':'showInputs'
 		},
 
 		initialize:function(){
@@ -48,6 +62,9 @@ define([
 		},
 		onShow:function(){
 			//customize initial appearance
+			//Hide save button
+			//Initialize bootstrap switches
+			//Hide inputs
 			this.ui.save.hide();
 			this.ui.marked.bootstrapSwitch({
 				size:'small',
@@ -64,10 +81,30 @@ define([
 				onText:'Yes',
 				offText:'No'
 			});
+			this.ui.forSale.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			});
+			this.ui.forLease.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			})
+
+			this.ui.allAttrListItems.on('click',function(e){
+				$(this).addClass('modified');
+			});
+			this.ui.hiddenInputs.on('click',function(e){
+				$(this).find('.value').hide();
+				$(this).find('.form-control').show();
+			})
+
 		},
 		onBeforeDestroy:function(){
 			this.stopListening();
 		},
+
 		attrModified:function(e,state){
 			e.stopPropagation();
 
@@ -117,9 +154,15 @@ define([
 
 			this.model.set({
 				comment:this.ui.comment.val(),
+				owner1:this.$('#owner').val(), //TODO: can do this in a nicer way
+				zoning:this.$('#zoning').val(),
+				year_built:this.$('#year-built').val(),
+
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
 				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),
+				tdi_for_sale:this.ui.forSale.bootstrapSwitch('state'),
+				tdi_for_lease:this.ui.forLease.bootstrapSwitch('state'),
 				vacancy: vacancyCode,
 				modified:true
 			});
@@ -131,6 +174,7 @@ define([
 		},
 		saveChanges:function(){
 			console.log('parcelModel:save:before');
+			console.log(this.model);
 
 			this.model.save(null,{
 				error:function(model,res,op){

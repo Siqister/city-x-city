@@ -16,19 +16,28 @@ define([
 	config
 ){
 
-	var mapLayerConfig = config.mapLayers;
+	var mapLayerConfig = config.mapLayers,
+		mapBackgroundConfig = config.mapBackground;
 
 	var MapLayerControlView = Marionette.ItemView.extend({
 		className:'map-layer-control-inner',
 		tagName:'ul',
 		template:false,
 		ui:{
-			'layerOption':'.option .dropdown-toggle'
+			'layerOption':'.layer-option .dropdown-toggle',
+			'backgroundOption':'.background-option .layer-name'
 		},
 		events:{
 			'click @ui.layerOption':function(e){
 				var cartodbCol = $(e.target).data('col');
 				vent.trigger('map:themeLayer:show',cartodbCol); //recolor map parcel layer based on different cartodb columns
+			},
+			'click @ui.backgroundOption':function(e){
+				var backgroundLayer = d3.select(e.target).datum();
+				vent.trigger('map:background:show',backgroundLayer.layer)
+
+				this.$('.background-option .layer-name').removeClass('active');
+				$(e.target).addClass('active');
 			}
 		},
 
@@ -43,11 +52,11 @@ define([
 			//custom render function to add dropdown menu groups
 			mapLayerConfig.forEach(function(menuItem){
 				var _li = _el.append('li')
-					.attr('class','menu-item option dropdown');
+					.attr('class','menu-item option layer-option dropdown');
 
 				_li.append('a')
 					.html(menuItem.name)
-					.attr('class','dropdown-toggle')
+					.attr('class','dropdown-toggle layer-name')
 					.attr('data-toggle','dropdown')
 					.attr('data-col',menuItem.cartodbCol)
 					.attr('href','#');
@@ -65,6 +74,21 @@ define([
 						.style('background',menuItemOption.color);
 
 				})
+			});
+
+			_el.append('li')
+				.attr('class','menu-item heading')
+				.html('BACKGROUND <span class="glyphicon glyphicon-menu-right"></span>');
+
+			mapBackgroundConfig.forEach(function(menuItem){
+				var _li = _el.append('li')
+					.attr('class','menu-item option background-option');
+
+				_li.append('a')
+					.html(menuItem.name)
+					.attr('href','#')
+					.attr('class','layer-name')
+					.datum(menuItem);
 			});
 		}
 

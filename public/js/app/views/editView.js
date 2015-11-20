@@ -10,7 +10,8 @@ define([
 	//'bootstrap',
 	'bootstrap-dropdown',
 	'bootstrap-multiselect',
-	'bootstrap-datepicker'
+	'bootstrap-datepicker',
+	'bootstrap-switch'
 ],function(
 	_,
 	Marionette,
@@ -24,6 +25,7 @@ define([
 		className:'edit-inner',
 		template:_.template(editViewTemplate),
 		ui:{
+			employer:'.employer input',
 			cancel:'.close',
 			save:'.save'
 		},
@@ -33,7 +35,8 @@ define([
 				this.model.save();
 			},
 			'click @ui.cancel': 'removeNewItem',
-			'change input': 'onAttrChange'
+			'change input': 'onAttrChange',
+			'switchChange.bootstrapSwitch @ui.employer':'onAttrChange',
 		},
 
 		initialize:function(){
@@ -49,6 +52,21 @@ define([
 				onChange:function(option,checked,select){
 					that.model.set('assetType',$(option).val());
 					that.ui.save.fadeIn();
+
+					if($(option).val()=='parking'){
+						//if asset type is parking, hide and reset employment
+						that.$('.parking').show();
+
+						that.$('.employment').hide();
+						that.ui.employer.bootstrapSwitch('state',false);
+						that.$('#employee').val(0);
+					}else{
+						//otherwise, hide and reset parking, show employment
+						that.$('.parking').hide();
+						that.$('#parking').val(0);
+
+						that.$('.employer').show();
+					}
 				}
 			});
 			this.$('#investmentType').multiselect({
@@ -58,9 +76,23 @@ define([
 				}
 			});
 
+			//initiate bootstrap switch
+			this.ui.employer.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			});
+
 			//instantiate bootstrap datepicker
 			this.$('.date input').datepicker({
 				format:'mm/yyyy'
+			});
+
+
+			//Hide/show logic
+			this.ui.employer.on('switchChange.bootstrapSwitch',function(e,state){
+				if(state == true){that.$('.employee').show();}
+				else{that.$('.employee').hide();}
 			})
 		},
 		onAttrChange:function(){
@@ -80,6 +112,12 @@ define([
 				
 				that.model.set(attr,val);
 			});
+
+			//deal with bootstrap switch separately
+			var employer = that.ui.employer.bootstrapSwitch('state');
+			that.model.set('employer',employer);
+
+			console.log(that.model);
 		},
 		removeNewItem:function(){
 			vent.trigger('map:edit:remove'); //mapView will remove marker

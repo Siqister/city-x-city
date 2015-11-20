@@ -34,17 +34,18 @@ define([
 ){
 
 	//module internal variables for keeping leaflet+d3
-	var map, svg, g, features, editMarker;
+	var map, svg, g, features, editMarker, parcelMarker;
+	var mapBackground = {};
 
 	var cityIcon = L.icon({
 		iconUrl:'../style/assets/pin-02.png',
-		iconSize:[24,56],
-		iconAnchor:[12,56]
+		iconSize:[20,46],
+		iconAnchor:[10,46]
 	});
 	var cityIconHighlight = L.icon({
 		iconUrl:'../style/assets/pin-03.png',
-		iconSize:[24,56],
-		iconAnchor:[12,56]
+		iconSize:[20,46],
+		iconAnchor:[10,46]
 	});
 	var cityIconHash = {};
 
@@ -68,6 +69,13 @@ define([
 		iconSize:[30,30],
 		iconAnchor:[15,15]
 	});
+
+	var parcelIcon = L.icon({
+		iconUrl:'../style/assets/pin-04.png',
+		iconSize:[20,46],
+		iconAnchor:[10,46]
+	});
+
 	var assetMarkerHash = d3.map(), investmentMarkerHash = d3.map(); //allows one to one look-up between map icons and asset models
 
 
@@ -101,13 +109,21 @@ define([
 
 			//upon mapView:show, initialize leaflet map
 			map = L.map(this.el).setView([42.3, -71.8], 9);
-			L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+			mapBackground.satellite = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.nok599k9/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+				.addTo(map);
+			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
 			//upon mapView:show and map initialization, add 3D building overlay
 			L.imageOverlay(
 				'../assets/brockton_App overlay.svg', //imageUrl
 				L.latLngBounds([[42.07924,-71.0226],[42.08682,-71.01443]]) //SW and NE
+			)
+				.addTo(map);
+				
+			L.imageOverlay(
+				'../assets/springfield_App overlay.svg', //imageUrl
+				L.latLngBounds([[42.10155381,-72.59665675],[42.10856358,-72.58559589]]) //SW and NE
 			)
 				.addTo(map);
 
@@ -147,22 +163,52 @@ define([
 			var featuresEnter = features
 				.enter()
 				.append('path')
-				.attr('class','parcel')
 				.on('click', function(d){
 					//a parcel is clicked on
 					var parcelModel = that.collection.get(d.cartodb_id);
+
+					//create a new parcelMarker and add it to parcel centroid
+					var parcelCentroid = d3.geo.centroid(d);
+					if(parcelMarker){ map.removeLayer(parcelMarker); }
+					parcelMarker = L.marker([
+							parcelCentroid[1],
+							parcelCentroid[0]
+						],{
+							icon:parcelIcon
+						})
+						.addTo(map);
+
 					vent.trigger('parcel:detail:show',parcelModel);
 					vent.trigger('ui:show:detail');
-				});
+				})
+				.on('mouseenter',function(d){
+					d3.select(this)
+						.style('fill-opacity',.35)
+						.style('stroke-width','2px');
+
+				})
+				.on('mouseleave',function(d){
+					d3.select(this)
+						.style('fill-opacity',.2)
+						.style('stroke-width',null);
+				})
 
 			//Style parcel stroke based "marked" model attribute
 			features
 				.style('stroke',function(d){
 					return d.marked==true?'#ef4136':null;
 				})
-				.style('stroke-width',function(d){
-					return d.marked==true?'2px':null;
-				});
+				.attr('class',function(d){
+					var classes = "parcel";
+					if(d.city_owned == true || d.partner_owned == true){
+						classes += " publicly-owned";
+					}
+					if(d.tdi_for_sale == true){ classes += " for-sale"; }
+					if(d.tdi_for_lease == true){ classes += " for-lease"; }
+					if(d.marked == true){ classes += " marked"; }
+
+					return classes;
+				})
 
 			//Style parcel fill based on land use, vacancy, or ownership, as determined by
 			//this.currentLayer
@@ -213,7 +259,7 @@ define([
 							option = options.get(_d);
 
 						if(option){
-                                                  return option.color;
+                            return option.color;
 						}else{
 							return _default.color;
 						}
@@ -241,6 +287,12 @@ define([
 				.attr('transform','translate('+ -tl[0] +','+ -tl[1] + ')');
 
 			features.attr('d',path);
+
+		},
+
+		setZoom:function(zoom){
+			console.log('map:zoom:to:'+zoom);
+			map.setZoom(zoom);
 		},
 
 		drawCityMarkers:function(cityCollection){
@@ -291,6 +343,7 @@ define([
 			//model can be city or parcel model
 			var lngLat = model.get('geometry').coordinates;
 			map.panTo(new L.LatLng(lngLat[1],lngLat[0]), {animate:true});
+
 		},
 		panToParcel:function(model){
 			var xy = path.centroid(model.get('geometry')); //xy in pixels
@@ -387,6 +440,10 @@ define([
 				}
 				vent.trigger('ui:show:detail');
 			})
+		},
+
+		toggleBackground:function(layerName){
+			mapBackground[layerName].bringToFront();
 		}
 
 	});
@@ -400,6 +457,7 @@ define([
 	vent.on('map:pan:city',mapView.panToCity);
 	vent.on('map:edit:add',mapView.addEditItem);
 	vent.on('map:edit:remove',mapView.removeEditItem);
+	vent.on('map:setzoom',mapView.setZoom);
 
 	vent.on('map:add:item',mapView.addItem);
 
@@ -434,6 +492,12 @@ define([
 		console.log('redraw mapView parcels based on layer:'+colName);
 		mapView.currentLayer = colName;
 		mapView.showLayer(colName);
+	})
+	//Listen to events changing map background
+	//Triggered by mapLayerControlView only
+	vent.on('map:background:show',function(layerName){
+		//@param layername -> string value "street" || "satellite"
+		mapView.toggleBackground(layerName);
 	})
 
 	return new MapView();

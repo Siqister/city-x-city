@@ -33,7 +33,32 @@ define([],function(){
 			defaults:{
 				color:'white'
 			}
+		},
+		{
+			name:'For Sale',
+			cartodbCol:'tdi_for_sale',
+			options:[
+				{name:"For Sale",cartodbVal:true,color:'red'}
+			],
+			defaults:{
+				color:'white'
+			}
+		},
+		{
+			name:'For Lease',
+			cartodbCol:'tdi_for_lease',
+			options:[
+				{name:"For Lease",cartodbVal:true,color:'red'}
+			],
+			defaults:{
+				color:'white'
+			}
 		}
+	];
+
+	config.mapBackground = [
+		{name:'Street', layer:'street'},
+		{name:'Satellite', layer:'satellite'}
 	];
 
 	return config;

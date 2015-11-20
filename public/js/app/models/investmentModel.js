@@ -37,6 +37,12 @@ define([
 					errorField:'date',
 					errorMsg:"Invalid date"
 				})
+			}else{
+				//date is validated successfully
+				var year = +attr.date.slice(3),
+					month = +(attr.date.slice(0,2))-1;
+
+				attr.date = (new Date(year,month)).toUTCString();
 			}
 
 			if(errors.length>0){

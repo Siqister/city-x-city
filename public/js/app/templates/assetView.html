@@ -9,6 +9,18 @@
 		<span>City</span>
 		<div class="value"><%= city %></div>
 	</li>
+	<li class="attr-list-item">
+		<span>Type</span>
+		<div class="value"><%= type %></div>
+	</li>
+	<% if(employer){ %><li class="attr-list-item">
+		<span>Employee</span>
+		<div class="value"><%=employee%></div>
+	</li><%}%>
+	<% if(parking>0) { %><li class="attr-list-item">
+		<span>Parking Spaces</span>
+		<div class="value"><%=parking%></div>
+	</li><%}%>
 	<div class="form-group comment attr-list-item">
 		<label for="comment">Comments</label>
 		<textarea type="text" class="form-control" id="comment" placeholder="Add a comment" ><%= comment %></textarea>

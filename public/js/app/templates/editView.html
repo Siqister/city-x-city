@@ -20,17 +20,35 @@
 			<option value="health-care">Health Care</option>
 			<option value="arts">Arts and Recreation</option>
 			<option value="institutions">Institutions</option>
+			<option value="parking">Parking</option>
 			<option value="other">Other</option>
 		</select>
 	</li>
+
+	<li class="form-group employer attr-list-item employment">
+		<label for="employer">Employer?</label>
+		<input type="checkbox" name="employer" id="employer" <% if(employer==true){ %>checked<% } %>>
+	</li>
+	<div class="form-group employee attr-list-item employment" style="display:none">
+		<label for="employee">Number of Employees</label>
+		<input type="text" class="form-control" id="employee" placeholder="0" value=0></input>
+		<span class="error-msg"></span>
+	</div>
+
+	<div class="form-group parking attr-list-item" style="display:none">
+		<label for="parking">Parking Spaces</label>
+		<input type="text" class="form-control" id="parking" placeholder="0" value=0></input>
+		<span class="error-msg"></span>
+	</div>
+
 	<% } %>
 
 	<% if(type=="investment"){ %>
 	<li class="attr-list-item multi-select">
 		<span class="title">Investment Type</span>
 		<select id="investmentType" class="form-control">
-			<option value="equity">Equity investment</option>
-			<option value="masterlease">Retail master lease</option>
+			<option value="public">Public</option>
+			<option value="private">Private</option>
 		</select>
 	</li>
 	<div class="form-group value attr-list-item">
@@ -44,6 +62,8 @@
 		<span class="error-msg"></span>
 	</div>
 	<% } %>
+
+	<!--common to both asset and investment-->
 	<div class="form-group comment attr-list-item">
 		<label for="comment">Comments</label>
 		<textarea type="text" class="form-control" id="comment" placeholder="Add a comment" ></textarea>

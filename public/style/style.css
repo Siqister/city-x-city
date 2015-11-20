@@ -135,7 +135,6 @@ h3{
 	}
 		.map-layer-control .map-layer-control-inner .menu-item{
 			height:100%;
-			width:150px;
 			float:left;
 			border-right:1px solid #e2e2e2;
 			color:rgb(120,120,120);
@@ -143,15 +142,19 @@ h3{
 		.map-layer-control .map-layer-control-inner .heading{
 			line-height:54px;
 			background:rgb(240,240,240);
+			text-align:center;
+			width:150px;
 		}
 		.map-layer-control .map-layer-control-inner .option{
 			text-align:center;
 			line-height:54px;
+			min-width:100px;
 		}
+
 		.map-layer-control .map-layer-control-inner .open{
 			border-top:4px solid #e2e2e2;
 		}
-			.map-layer-control .map-layer-control-inner .option .dropdown-toggle{
+			.map-layer-control .map-layer-control-inner .option .layer-name{
 				height:100%;
 				width:100%;
 				text-align:center;
@@ -174,14 +177,17 @@ h3{
 	height:100%;
 }
 .content .map .map-inner svg .parcel{
-	fill:rgba(220,220,220,.2);
+	fill:rgb(220,220,220);
+	fill-opacity:.2;
 	stroke:rgba(150,150,150,.8);
 	stroke-width:1px;
 }
-	.content .map .map-inner svg .parcel:hover{ 
-		fill-opacity:.7; 
-		fill:#2fdf9e;
-	}
+.content .map .map-inner svg .marked{
+	stroke-width:2px;
+}
+.content .map .map-inner svg .publicly-owned{
+	fill-opacity:.6;
+}
 
 /*City collection module*/
 .content .city .city-list{
@@ -284,6 +290,8 @@ h3{
 		padding:5px 0;
 		border-top:1px solid rgba(255,255,255,.5);
 		text-transform: uppercase;
+		font-weight:bold;
+		color:rgba(255,255,255,.6);
 	}
 
 	/* Global override for bootstrap-switch */
@@ -336,6 +344,20 @@ h3{
 		color:gray;
 	}
 
+	.edit-inner .bootstrap-switch-wrapper{
+		display:inline-block;
+		border:none;
+		float:right;
+	}
+		.edit-inner .bootstrap-switch .bootstrap-switch-container .bootstrap-switch-handle-on{
+			background:rgb(90,90,90); 
+			color:#fff;
+		}
+		.edit-inner .bootstrap-switch .bootstrap-switch-container .bootstrap-switch-handle-off{
+			background:rgb(90,90,90); 
+			color:#fff;
+		}
+
 
 /*Common to all modules */
 	.module .btn{
@@ -371,8 +393,14 @@ h3{
 				display:block;
 				margin-bottom:5px;
 			}
+			.detail .detail-inner .attr-list-item .title{
+				display:inline-block;
+				color:rgba(255,255,255,.6);
+				margin-bottom:2px;
+			}
 			.module .attr-list .attr-list-item .value{
 				font-size:1.1em;
+				line-height:34px;
 			}
 			.module .attr-list .attr-list-item .form-control{
 				border:none;
@@ -384,14 +412,22 @@ h3{
 				-web-kit-transition: background 1s;
 				transition:background 1s;
 			}
+			.module .attr-list .attr-list-item-hide-input .form-control{
+				font-size:1.1em;
+				display:none;
+			}
 			.module .attr-list .attr-list-item.error .form-control{
 				color:#f04c23;
 			}
 			.edit .attr-list .attr-list-item .form-control{
 				background:rgb(90,90,90);
 			}
-			.detail .detail-inner.modified .attr-list .attr-list-item .form-control{
+			.detail .detail-inner.modified .attr-list .attr-list-item textarea{
 				background:#5bbb90;
+			}
+			.detail .detail-inner.modified .attr-list .attr-list-item input[type=text]{
+				border-bottom:2px solid white;
+				border-radius:0;
 			}
 
 	.module .custom-glyph{

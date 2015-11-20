@@ -7,32 +7,35 @@
 <ul class="attr-list">
 	<li role="separator" class="divider">Basic Info</li>
 	<li class="attr-list-item">
-		<span>Parcel area</span>
-		<div class="value"><%= Math.round(shape_area)+'sqm' %></div>
+		<span class="title">Parcel area</span>
+		<div class="value"><%= Math.round(shape_area*10.7639)+' sqft' %></div>
 	</li>
-	<li class="attr-list-item">
-		<span>Zoning</span>
+	<li class="attr-list-item attr-list-item-hide-input">
+		<label for="zoning" class="title">Zoning</label>
 		<div class="value"><%= zoning %></div>
+		<input type="text" class="form-control" id="zoning" value=<%= '"'+zoning+'"' %> >
 	</li>	
-	<li class="attr-list-item">
-		<span>Year Built</span>
+	<li class="attr-list-item attr-list-item-hide-input">
+		<label for="year-built" class="title">Year Built</label>
 		<div class="value"><%= year_built %></div>
+		<input type="text" class="form-control" id="year-built" value=<%= year_built %> >
 	</li>
 	<li role="separator" class="divider">Use and Ownership</li>
-	<li class="attr-list-item">
-		<span>Owner</span>
+	<li class="attr-list-item attr-list-item-hide-input">
+		<label for="owner" class="title">Owner </label>
 		<div class="value"><%= owner1 %></div>
+		<input type="text" class="form-control" id="owner" value=<%= '"'+owner1+'"' %>/>
 	</li>
 	<li class="form-group city-owned attr-list-item">
-		<label for="city-owned">City-owned</label>
+		<label for="city-owned" class="title">City-owned</label>
 		<input type="checkbox" name="marked" id="city-owned" class='city-owned' <% if(city_owned==true){ %>checked<% } %>>
 	</li>
 	<li class="form-group partner-owned attr-list-item">
-		<label for="partner-owned">Partner-controlled</label>
+		<label for="partner-owned" class="title">Partner-controlled</label>
 		<input type="checkbox" name="marked" id="partner-owned" class='partner-owned' <% if(partner_owned==true){ %>checked<% } %>>
 	</li>
 	<li class="form-group vacancy attr-list-item">
-		<span>Vacancy</span>
+		<span class="title">Vacancy</span>
 		<div class="btn-group pull-right custom-checkbox" data-toggle="buttons">
 		  <label class="btn btn-primary ground-vac <% if(vacancy==1||vacancy==3){ %>active<% } %>">
 		    <input type="checkbox" autocomplete="off" class="vacancy" id="ground" <% if(vacancy==1||vacancy==3){ %>checked<% } %>> Ground floor
@@ -43,12 +46,20 @@
 		</div>
 	</li>
 	<li role="separator" class="divider">Addtional Information</li>
+	<li class="form-group for-sale attr-list-item">
+		<label for="for-sale" class="title">For Sale</label>
+		<input type="checkbox" name="marked" id="for-sale" class='for-sale' <% if(tdi_for_sale==true){ %>checked<% } %>>
+	</li>
+		<li class="form-group for-lease attr-list-item">
+		<label for="for-lease" class="title">For Lease</label>
+		<input type="checkbox" name="marked" id="for-lease" class='for-lease' <% if(tdi_for_lease==true){ %>checked<% } %>>
+	</li>
 	<li class="form-group marked attr-list-item">
-		<label for="marked">Mark this parcel</label>
+		<label for="marked" class="title">Mark this parcel</label>
 		<input type="checkbox" name="marked" id="marked" <% if(marked==true){ %>checked<% } %>>
 	</li>
 	<li class="form-group comment attr-list-item">
-		<label for="comment">Comments</label>
+		<label for="comment" class="title">Comments</label>
 		<textarea type="text" class="form-control" id="comment" placeholder="Add a comment" ><%= comment %></textarea>
 	</li>
 

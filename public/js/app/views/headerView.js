@@ -25,6 +25,9 @@ define([
 			'gridView':'.btn-grid',
 			'allBtn':'.custom-btn'
 		},
+		onShow:function(){
+			this.mapLayerControl.show(new MapLayerControlView());
+		},
 		regions:{
 			mapLayerControl:'.map-layer-control'
 		},
