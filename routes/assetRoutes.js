@@ -33,7 +33,7 @@ router
 .post('/',function(req,res,next){
 	var loc = req.body.geometry.coordinates;
 
-	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at) "
+	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at,address,contact) "
 		+"VALUES ('"
 		+ req.body.city + "',"
 		+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
@@ -43,8 +43,10 @@ router
 		+ req.body.employer + ","
 		+ req.body.employee + ","
 		+ req.body.parking + ",'"
-		+ (new Date()).toISOString() +
-		"') RETURNING cartodb_id";
+		+ (new Date()).toISOString() + "','"
+		+ req.body.address + "','"
+		+ req.body.contact + "'" +
+		") RETURNING cartodb_id";
 
 	// var query ="INSERT INTO tdi_assets (city) VALUES ('PITTSFIELD') RETURNING cartodb_id";
 

@@ -15,7 +15,8 @@ define([
 
 
 			var errors = [],
-				dateRegex = new RegExp("[0-9][0-9]/[0-9][0-9][0-9][0-9]");
+				dateRegex = new RegExp("[0-9][0-9]/[0-9][0-9][0-9][0-9]"),
+				emailRegex = new RegExp();
 
 			if(isNaN(attr.value)){
 				errors.push({
@@ -43,6 +44,13 @@ define([
 					month = +(attr.date.slice(0,2))-1;
 
 				attr.date = (new Date(year,month)).toUTCString();
+			}
+			if(!attr.contact){
+				errors.push({
+					errorCode:4,
+					errorField:'contact',
+					errorMsg:"Invalid email"
+				})
 			}
 
 			if(errors.length>0){
