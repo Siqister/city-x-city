@@ -21,7 +21,8 @@ define([
 		ui:{
 			cancel:'.close',
 			save:'.save',
-			delete:'.delete'
+			delete:'.delete',
+			hiddenInputs:'.attr-list-item-hide-input'
 		},
 		events:{
 			'click @ui.save': function(){
@@ -43,6 +44,10 @@ define([
 		},
 		onShow:function(){
 			this.ui.save.hide();
+			this.ui.hiddenInputs.on('click',function(e){
+				$(this).find('.value').hide();
+				$(this).find('.form-control').show();
+			})
 		},
 		onAttrChange:function(){
 			var that = this;

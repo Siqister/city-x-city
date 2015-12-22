@@ -67,14 +67,19 @@ router
 	console.log('PUT REQUEST TO /investment');
 
 	var query = "UPDATE {table} SET comment='" 
-		+ req.body.comment + 
-		"' WHERE cartodb_id=" + req.params.id;
+		+ req.body.comment + "', address='"
+		+ req.body.address + "', contact='"
+		+ req.body.contact + "', value="
+		+ req.body.value +
+		" WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(query,{table:'tdi_investments'},function(err,data){
 		if(err){
+			console.log('ERROR UPDATE TO  INVESTMENT');
+			console.log(query);
 			res.send(err);
 		}else{
-			console.log('SUCCESSFUL UPDATE TO ASSET '+req.params.id);
+			console.log('SUCCESSFUL UPDATE TO INVESTMENT '+req.params.id);
 			res.json(req.body);
 		}
 	});

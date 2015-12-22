@@ -45,13 +45,6 @@ define([
 
 				attr.date = (new Date(year,month)).toUTCString();
 			}
-			if(!attr.contact){
-				errors.push({
-					errorCode:4,
-					errorField:'contact',
-					errorMsg:"Invalid email"
-				})
-			}
 
 			if(errors.length>0){
 				console.log(errors);
