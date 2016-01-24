@@ -13,7 +13,7 @@ router
 	console.log('Query entire parcel collection');
 
 	cartodbClient.query(
-		"SELECT * FROM {table}",
+		"SELECT * FROM {table} WHERE use_code NOT LIKE '102%'",
 		{ 
 			table:"tdi_parcels"
 		},
@@ -39,7 +39,7 @@ router
 .get('/:id',function(req,res){
 
 	cartodbClient.query(
-		"SELECT * FROM {table} WHERE cartodb_id=" + req.params.id,
+		"SELECT * FROM {table} WHERE WHERE use_code NOT LIKE '102%' AND cartodb_id=" + req.params.id,
 		{ table:"tdi_parcels" },
 		function(err,data){
 			if(err){ res.send(err); }
