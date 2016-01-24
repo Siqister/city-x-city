@@ -34,7 +34,10 @@
 			<option value="other">Other</option>
 		</select>
 	</li>
-
+	<li class="form-group activating attr-list-item">
+		<label for="activating">Activating?</label>
+		<input type="checkbox" name="activating" id="activating" <% if(activating==true){ %>checked<% } %>>
+	</li>
 	<li class="form-group employer attr-list-item employment">
 		<label for="employer">Employer?</label>
 		<input type="checkbox" name="employer" id="employer" <% if(employer==true){ %>checked<% } %>>

@@ -26,6 +26,7 @@ define([
 		template:_.template(editViewTemplate),
 		ui:{
 			employer:'.employer input',
+			activating: '.activating input',
 			cancel:'.close',
 			save:'.save'
 		},
@@ -37,6 +38,7 @@ define([
 			'click @ui.cancel': 'removeNewItem',
 			'change input': 'onAttrChange',
 			'switchChange.bootstrapSwitch @ui.employer':'onAttrChange',
+			'switchChange.bootstrapSwitch @ui.activating':'onAttrChange',
 		},
 
 		initialize:function(){
@@ -83,6 +85,11 @@ define([
 				offText:'No'
 			});
 
+			this.ui.activating.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			});
 			//instantiate bootstrap datepicker
 			this.$('.date input').datepicker({
 				format:'mm/yyyy'
@@ -94,6 +101,11 @@ define([
 				if(state == true){that.$('.employee').show();}
 				else{that.$('.employee').hide();}
 			})
+
+			// this.ui.activating.on('switchChange.bootstrapSwitch',function(e,state){
+			// 	if(state == true){that.$('.activating').show();}
+			// 	else{that.$('.activating').hide();}
+			// })
 		},
 		onAttrChange:function(){
 			console.log('input:changed');
@@ -116,6 +128,9 @@ define([
 			//deal with bootstrap switch separately
 			var employer = that.ui.employer.bootstrapSwitch('state');
 			that.model.set('employer',employer);
+
+			var activating = that.ui.activating.bootstrapSwitch('state');
+			that.model.set('activating',activating);
 
 			console.log(that.model);
 		},

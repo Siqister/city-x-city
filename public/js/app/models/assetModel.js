@@ -11,7 +11,8 @@ define([
 			assetType:'anchor business',
 			employer:false,
 			employee:0,
-			parking:0
+			parking:0,
+			activating: false
 		},
 		validate:function(attr,options){
 			var errors = [];
