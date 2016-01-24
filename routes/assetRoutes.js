@@ -33,7 +33,7 @@ router
 .post('/',function(req,res,next){
 	var loc = req.body.geometry.coordinates;
 
-	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at) "
+	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at,address,contact) "
 		+"VALUES ('"
 		+ req.body.city + "',"
 		+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
@@ -43,8 +43,10 @@ router
 		+ req.body.employer + ","
 		+ req.body.employee + ","
 		+ req.body.parking + ",'"
-		+ (new Date()).toISOString() +
-		"') RETURNING cartodb_id";
+		+ (new Date()).toISOString() + "','"
+		+ req.body.address + "','"
+		+ req.body.contact + "'" +
+		") RETURNING cartodb_id";
 
 	// var query ="INSERT INTO tdi_assets (city) VALUES ('PITTSFIELD') RETURNING cartodb_id";
 
@@ -68,11 +70,17 @@ router
 	console.log(req.body);
 
 	var query = "UPDATE {table} SET comment='" 
-		+ req.body.comment + 
-		"' WHERE cartodb_id=" + req.params.id;
+		+ req.body.comment + "', address='"
+		+ req.body.address + "', contact='"
+		+ req.body.contact + "', employee="
+		+ req.body.employee + ", parking="
+		+ req.body.parking +
+		" WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(query,{table:'tdi_assets'},function(err,data){
 		if(err){
+			console.log('ERROR UPDATE TO ASSET');
+			console.log(query);
 			res.status(400).send(err);
 		}else{
 			console.log('SUCCESSFUL UPDATE TO ASSET '+req.params.id);

@@ -15,7 +15,8 @@ define([
 
 
 			var errors = [],
-				dateRegex = new RegExp("[0-9][0-9]/[0-9][0-9][0-9][0-9]");
+				dateRegex = new RegExp("[0-9][0-9]/[0-9][0-9][0-9][0-9]"),
+				emailRegex = new RegExp();
 
 			if(isNaN(attr.value)){
 				errors.push({
