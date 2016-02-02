@@ -127,6 +127,18 @@ define([
 			)
 				.addTo(map);
 
+			// L.imageOverlay(
+			// 	'../assets/lynn_App overlay.svg', //imageUrl
+			// 	L.latLngBounds([[42.10155381,-72.59665675],[42.10856358,-72.58559589]]) //SW and NE
+			// )
+			// 	.addTo(map);
+
+			// L.imageOverlay(
+			// 	'../assets/revere_App overlay.svg', //imageUrl
+			// 	L.latLngBounds([[42.10155381,-72.59665675],[42.10856358,-72.58559589]]) //SW and NE
+			// )
+			// 	.addTo(map);
+
 			//overlay for D3 drawing --> after 3D building in terms of z-index
 			svg = d3.select(map.getPanes().overlayPane).append('svg');
 			g = svg.append('g').attr('class','leaflet-zoom-hide');
