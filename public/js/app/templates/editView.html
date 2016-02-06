@@ -24,20 +24,11 @@
 	<li class="attr-list-item multi-select">
 		<span class="title">Asset Type</span>
 		<select id="assetType" class="form-control">
-			<option value="food">Food</option>
-			<option value="retail">Retail</option>
-			<option value="community">Community</option>
-			<option value="health-care">Health Care</option>
-			<option value="arts">Arts and Recreation</option>
-			<option value="institutions">Institutions</option>
-			<option value="parking">Parking</option>
-			<option value="other">Other</option>
 		</select>
 	</li>
-	<li class="form-group activating attr-list-item">
-		<label for="activating">Activating?</label>
-		<input type="checkbox" name="activating" id="activating" <% if(activating==true){ %>checked<% } %>>
-	</li>
+	<div id="assetSubtypes">
+
+	</div>
 	<li class="form-group employer attr-list-item employment">
 		<label for="employer">Employer?</label>
 		<input type="checkbox" name="employer" id="employer" <% if(employer==true){ %>checked<% } %>>
@@ -53,6 +44,11 @@
 		<input type="text" class="form-control" id="parking" placeholder="0" value=0></input>
 		<span class="error-msg"></span>
 	</div>
+
+	<li class="form-group activating attr-list-item">
+		<label for="activating">Activating?</label>
+		<input type="checkbox" name="activating" id="activating" <% if(activating==true){ %>checked<% } %>>
+	</li>
 
 	<% } %>
 

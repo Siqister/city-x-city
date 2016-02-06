@@ -2,24 +2,26 @@ define([
 	'underscore',
 	'marionette',
 	'jquery',
-
+	'd3',
 	'vent',
 
 	'text!app/templates/editView.html',
-
+	'config',
 	//'bootstrap',
 	'bootstrap-dropdown',
 	'bootstrap-multiselect',
 	'bootstrap-datepicker',
 	'bootstrap-switch'
+
 ],function(
 	_,
 	Marionette,
 	$,
-
+	d3,
 	vent,
 
-	editViewTemplate
+	editViewTemplate,
+	config
 ){
 	var EditView = Marionette.ItemView.extend({
 		className:'edit-inner',
@@ -49,13 +51,47 @@ define([
 			var that = this;
 
 			this.ui.save.hide();
+
+			//draw asset type form from data
+			var assetTypes = d3.select("#assetType");
+			assetTypes.selectAll("option")
+				.data(config.assetTypes)
+				.enter()
+				.append("option")
+				.attr("value", function(data) {
+					return data.category;
+				})
+				.text(function(data) {
+					return data.category;
+				});
+
+
+			var assetSubtypes = d3.select("#assetSubtypes")
+				.selectAll("li")
+				.data(config.assetTypes)
+				.enter()
+				.append("li")
+				.attr("class", "attr-list-item multi-select")
+				.append("select")
+				.attr("class", "form-control")
+
+			assetSubtypes.selectAll("option")
+				.data(function(d) {
+					console.log(d);
+					return d.subcategories;
+				})
+				.enter()
+				.append("option")
+				.attr("value", function(d) { return d; })
+				.text(function(d) { return d; });
+
 			//initiate bootstrap multi
 			this.$('#assetType').multiselect({
 				onChange:function(option,checked,select){
 					that.model.set('assetType',$(option).val());
 					that.ui.save.fadeIn();
 
-					if($(option).val()=='parking'){
+					if($(option).val()=='Parking'){
 						//if asset type is parking, hide and reset employment
 						that.$('.parking').show();
 
