@@ -61,5 +61,11 @@ define([],function(){
 		{name:'Satellite', layer:'satellite'}
 	];
 
+	config.filters = [
+		{
+			name: 'activating?'
+		}
+	]
+
 	return config;
 })

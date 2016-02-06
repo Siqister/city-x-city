@@ -27,15 +27,17 @@ define([
 	var SummaryView = Marionette.ItemView.extend({
 		className:'summary viz-inner',
 		template:false,
-
+		activatingToggle: false,
 		tooltip:null,
 		svg:null,
 
 		ui:{
-			addItem:'.add-btn'
+			addItem:'.add-btn',
+			toggleActivating: '.toggleActivating'
 		},
 		events:{
-			'click @ui.addItem':'addItem'
+			'click @ui.addItem':'addItem',
+			'click @ui.toggleActivating': 'toggleActivating'
 		},
 
 		initialize:function(){
@@ -55,7 +57,7 @@ define([
 			var cityName = this.model.id;
 
 			//Array of asset models
-			var cityAssets = assetCollection.filter(function(assetModel){return assetModel.get('city') == cityName;})
+			var cityAssets = assetCollection.where({city: cityName, activating: this.activatingToggle});
 			//Array of investment models
 			var cityInvestments = investmentCollection.filter(function(investmentModel){return investmentModel.get('city') == cityName;})
 			var investmentSum = _.reduce(cityInvestments,function(memo,investment){return memo + +(investment.get('value'));}, 0);
@@ -84,6 +86,13 @@ define([
 			listItems
 				.append('span').attr('class','meta')
 				.text(function(d){return d.meta});
+
+			var toggle = list.append("li").attr("class", "add form-group activating attr-list-item");
+			toggle.append("label").attr("for", "activating").text("Show only activating?: ");
+			toggle.append("input").attr("type", "checkbox")
+						.attr("class", "toggleActivating")
+						.attr("name", "activating")
+						.attr("id", "activating");
 		},
 
 		addItem:function(e){
@@ -100,11 +109,24 @@ define([
 			vent.trigger('ui:hide:detail');
 		},
 
+		toggleActivating: function(e) {
+			e.stopPropagation();
+
+			if (this.activatingToggle) {
+				this.activatingToggle = false;
+			} else {
+				this.activatingToggle = true;
+			}
+			
+			vent.trigger("asset:toggle:activating", { activating: this.activatingToggle });
+			this.redraw();
+		},
+
 		redraw:function(){
 			var cityName = this.model.id;
 
 			//Array of asset models
-			var cityAssets = assetCollection.filter(function(assetModel){return assetModel.get('city') == cityName;})
+			var cityAssets = assetCollection.where({city: cityName, activating: this.activatingToggle})
 			//Array of investment models
 			var cityInvestments = investmentCollection.filter(function(investmentModel){return investmentModel.get('city') == cityName;})
 			var investmentSum = _.reduce(cityInvestments,function(memo,investment){return memo + +(investment.get('value'));}, 0);

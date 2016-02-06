@@ -94,7 +94,7 @@ define([
 		className:'map-inner',
 		template:false,
 		currentLayer:undefined,
-
+		filterObject: {},
 		collection:parcelsCollection, //use itemView to render a collection
 
 		initialize:function(){
@@ -329,10 +329,17 @@ define([
 			});
 		},
 
-		drawAssetMarkers:function(){
+		drawAssetMarkers:function(filterObject){
 			var that = this;
-
-			assetCollection.each(function(assetModel){
+			console.log("Filter Object ", that.filterObject);
+			if (that.filterObject.activating == true) {
+				// filter only when true
+				var filteredAssetCollection = assetCollection.where(that.filterObject);
+			} else {
+				var filteredAssetCollection = assetCollection.where({});
+			}
+			
+			filteredAssetCollection.forEach(function(assetModel){
 				that.addItem(assetModel)
 			});
 		},
@@ -493,6 +500,29 @@ define([
 		var assetMarker = assetMarkerHash.get(modelID);
 		map.removeLayer(assetMarker);
 	})
+
+	vent.on('asset:toggle:activating', function(c) {
+		if (mapView.filterObject.activating) {
+			mapView.filterObject.activating = false;
+		} else {
+			mapView.filterObject.activating = true;
+		}
+
+		// remove everything for a redraw
+		var values = assetMarkerHash.values();
+		values.forEach(function(key) {
+			map.removeLayer(key);
+		});
+
+		// after removal, reset
+		assetCollection.trigger("reset");
+		// get models ids from the filter
+		// call the assetMarkerHash and get the model ids. 
+		// assetCollection.trigger("reset");
+		// assetCollection.trigger("sync");
+
+	});
+
 	vent.on('investment:delete',function(modelID){
 		var investmentMarker = investmentMarkerHash.get(modelID);
 		map.removeLayer(investmentMarker);

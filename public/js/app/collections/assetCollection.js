@@ -13,7 +13,15 @@ define([
 ){
 	var AssetCollection = Backbone.Collection.extend({
 		url:'/asset',
-		model:AssetModel
+		model:AssetModel,
+    filterByActivating: function () {
+    	console.log("filter by byActivating");
+      var filtered = this.filter(function (asset) {
+          return asset.get("byActivating") === true;
+      });
+      return new AssetCollection(filtered);
+      this.trigger("sync");
+    }
 	});
 
 	var assetCollection = new AssetCollection();
@@ -32,6 +40,7 @@ define([
 		console.log('heard ya');
 		vent.trigger('assetCollection:sync');
 	})
+	// assetCollection.on("assetCollection:filterByActivating", assetCollection.filterByActivating);
 
 	return assetCollection;
 })
