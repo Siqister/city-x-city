@@ -127,11 +127,11 @@ define([
 			)
 				.addTo(map);
 
-			// L.imageOverlay(
-			// 	'../assets/lynn_App overlay.svg', //imageUrl
-			// 	L.latLngBounds([[42.10155381,-72.59665675],[42.10856358,-72.58559589]]) //SW and NE
-			// )
-			// 	.addTo(map);
+			L.imageOverlay(
+				'../assets/lynn_App overlay.svg', //imageUrl
+				L.latLngBounds([[42.4615690031,-70.9488618533],[42.4654450111, -70.942116989]]) //SW and NE
+			)
+				.addTo(map);
 
 			// L.imageOverlay(
 			// 	'../assets/revere_App overlay.svg', //imageUrl
