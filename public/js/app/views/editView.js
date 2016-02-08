@@ -61,19 +61,47 @@ define([
 				.attr("value", function(data) {
 					return data.category;
 				})
+				.attr("id", function(data) {
+					return data.css + "-type";
+				})
 				.text(function(data) {
 					return data.category;
 				});
-
 
 			var assetSubtypes = d3.select("#assetSubtypes")
 				.selectAll("li")
 				.data(config.assetTypes)
 				.enter()
 				.append("li")
-				.attr("class", "attr-list-item multi-select")
+				.attr("class", function(d) {
+					if (d.category == "Food") {
+						return d.css + "-type selected attr-list-item multi-select";
+					}  else {
+						return d.css + "-type attr-list-item multi-select";	
+					}
+					
+				})
+				.attr("style", function(d) {
+					if (d.category == "Food") {
+						return "display: block";
+					} else {
+						return "display: none;";
+					}
+				})
 				.append("select")
-				.attr("class", "form-control")
+				.attr("class", function(d) {
+					if (d.category == "Food") {
+						return d.css + "-type form-control assetSubtype";
+					} else {
+						return d.css + "-type form-control assetSubtype";	
+					}
+
+				})
+				.attr("id", function(d) {
+					return d.css + "-type";
+				});
+
+			assetSubtypes.append("option").attr("value", "");
 
 			assetSubtypes.selectAll("option")
 				.data(function(d) {
@@ -85,11 +113,26 @@ define([
 				.attr("value", function(d) { return d; })
 				.text(function(d) { return d; });
 
+			this.$(".selected select.assetSubtype").change(function() {
+				 var subtype = $("#assetSubtypes li.selected .Food-type").find(":selected").first().text();
+				 that.model.set("subtype", subtype);
+			});
+
 			//initiate bootstrap multi
 			this.$('#assetType').multiselect({
 				onChange:function(option,checked,select){
 					that.model.set('assetType',$(option).val());
 					that.ui.save.fadeIn();
+
+					// $(".assetSubtype").multiselect();
+					$("#assetSubtypes li").hide().removeClass("selected");
+					$("." + $(option).attr('id')).show().addClass("selected");
+
+					that.$(".selected select.assetSubtype ").change(function() {
+						var subtype = $("#assetSubtypes li.selected ." + $(option).attr('id')).find(":selected").first().text();
+						that.model.set("subtype", subtype);
+					});
+
 
 					if($(option).val()=='Parking'){
 						//if asset type is parking, hide and reset employment
@@ -107,6 +150,8 @@ define([
 					}
 				}
 			});
+
+
 			this.$('#investmentType').multiselect({
 				onChange:function(option,checked,select){
 					that.model.set('investmentType',$(option).val());

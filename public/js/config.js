@@ -62,12 +62,14 @@ define([],function(){
 	];
 
 	config.assetTypes = [{ "category": "Food",
+												"css": "Food",
 											    "subcategories": 
 											    ["Grocery",
 											      "Café",
 											      "Restaurant",
 											      "Fast-Food"]},
 											  {"category": "Business",
+					  								"css": "Business",
 											"subcategories": 
 											  ["Hotel",
 											    "General Office ",
@@ -76,6 +78,7 @@ define([],function(){
 											    "Coworking Space",
 											    "Corporation"]},
 											    {"category": "Retail",
+					    								"css": "Retail",
 											"subcategories": 
 											  ["Clothing",
 											    "Convenience ",
@@ -83,29 +86,34 @@ define([],function(){
 											    "Household Goods",
 											    "Other Retail"]},
 											    {"category": "Community",
+					    								"css": "Community",
 											"subcategories": 
 											  ["Community Center",
 											    "Non-Profit",
 											    "Groups or Associations",
 											    "Church"]},
 											    {"category": "Cultural & Entertainment",
+					    								"css": "Cultural",
 											"subcategories": 
 											  ["Museum",
 											    "Theatre",
 											    "Indoor Recreation ",
 											    "Art Center / Gallery"]},
 											    {"category": "Health Care",
+					    								"css": "Health",
 											"subcategories": 
 											  ["Hospital or Clinic",
 											    "Care and Treatment Facility",
 											    "Medical Office"]},
 											    {"category": "Education",
+					    								"css": "Education",
 											"subcategories": 
 											  ["K - 12",
 											    "Higher Ed",
 											    "Community College",
 											    "Vocational School"]},
 											    {"category": "Government ",
+					    								"css": "Government",
 											"subcategories": 
 											  ["Police ",
 											    "Fire",
@@ -114,20 +122,24 @@ define([],function(){
 											    "Other Govt Dept and Agencies",
 											    "Post Office"]},
 											    {"category": "Temporary",
+					    								"css": "Temporary",
 											"subcategories": 
 											  ["Placemaking Initiative",
 											    "Farmers Market",
 											    "Event Location"]},
 											    {"category": "Park / Open Space",
+					    								"css": "Park",
 											"subcategories": 
 											  ["Green Space",
 											    "Plaza",
 											    "Alleyway",
 											    "Community Garden / Farm"]},
 											    {"category": "Parking",
+					    								"css": "Parking",
 											"subcategories": 
 											  ["Garage"]},
 											  { "category": "Public Transit",
+					  								"css": "Public",
 											"subcategories": [] }];
 
 
