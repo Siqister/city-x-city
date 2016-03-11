@@ -53,7 +53,12 @@ define([
 				console.log("investmentModel:validate:success");
 				console.log(attr);
 			}
+		},
+		parse: function(response) {
+			console.log(response);
+			return response;
 		}
+
 	})
 	
 	return InvestmentModel;

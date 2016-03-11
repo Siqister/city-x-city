@@ -70,6 +70,12 @@ define([
 		iconAnchor:[15,15]
 	});
 
+	var investmentIconPrivate = L.icon({
+		iconUrl:'../style/assets/pin_investment_private.png',
+		iconSize:[30,30],
+		iconAnchor:[15,15]
+	});
+
 	var parcelIcon = L.icon({
 		iconUrl:'../style/assets/pin-04.png',
 		iconSize:[20,46],
@@ -383,11 +389,24 @@ define([
 
 			//remove any existing editMarker and instantiate new one
 			if(editMarker){ map.removeLayer(editMarker); }
+			var icon;
+			if (e.type =="asset") {
+				icon = assetIconEdit;
+			}
+
+			if (e.type =="investment" && e.investmentType == "equity") {
+				icon = investmentIconEdit;
+			}
+
+			if (e.type =="investment" && e.investmentType == "private") {
+				icon = investmentIconPrivate;
+			}
+
 			editMarker = L.marker([
 					e.cityModel.get('geometry').coordinates[1],
 					e.cityModel.get('geometry').coordinates[0]
 				],{
-				icon:e.type=="asset"?assetIconEdit:investmentIconEdit,
+				icon:icon,
 				draggable:true
 			});
 			editMarker
@@ -440,12 +459,29 @@ define([
 			//model can be either investment or asset
 			if(!model.get('geometry')){return; }
 
+			if(editMarker){ map.removeLayer(editMarker); }
+
+			var icon;
+			if (model.get("type") =="asset") {
+				icon = assetIcon;
+			}
+
+			if (model.get("type") =="investment" && model.get("investmentType") == "equity") {
+				icon = investmentIcon;
+			}
+			if (model.get("type") =="investment" && model.get("investmentType") == "private") {
+				icon = investmentIconPrivate;
+			}  
+
+			if (model.get("type") =="investment" && model.get("investmentType") == "public") {
+				icon = investmentIcon;
+			}
 			//Create marker with the right icon, add it to map
 			var marker = new L.marker([
 					model.get('geometry').coordinates[1],
 					model.get('geometry').coordinates[0]
 				],{
-					icon:model.get('type')=='asset'?assetIcon:investmentIcon
+					icon:icon
 				});
 			marker.addTo(map);
 

@@ -21,7 +21,7 @@ router
 						feature[key] = feature.properties[key];
 						delete feature.properties[key];
 					}
-
+					feature.investmentType = feature.type;
 					feature.type = 'investment';
 				});
 
