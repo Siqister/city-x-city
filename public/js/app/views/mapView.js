@@ -389,7 +389,7 @@ define([
 
 			//remove any existing editMarker and instantiate new one
 			if(editMarker){ map.removeLayer(editMarker); }
-			var icon;
+			var icon = investmentIcon;
 			if (e.type =="asset") {
 				icon = assetIconEdit;
 			}
@@ -461,7 +461,7 @@ define([
 
 			if(editMarker){ map.removeLayer(editMarker); }
 
-			var icon;
+			var icon = investmentIcon;
 			if (model.get("type") =="asset") {
 				icon = assetIcon;
 			}
@@ -473,9 +473,6 @@ define([
 				icon = investmentIconPrivate;
 			}  
 
-			if (model.get("type") =="investment" && model.get("investmentType") == "public") {
-				icon = investmentIcon;
-			}
 			//Create marker with the right icon, add it to map
 			var marker = new L.marker([
 					model.get('geometry').coordinates[1],
