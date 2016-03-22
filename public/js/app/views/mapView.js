@@ -464,6 +464,7 @@ define([
 			var icon = investmentIcon;
 			if (model.get("type") =="asset") {
 				icon = assetIcon;
+				console.log(model.get("assetType"));
 			}
 
 			if (model.get("type") =="investment" && model.get("investmentType") == "equity") {
