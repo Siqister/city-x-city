@@ -82,6 +82,72 @@ define([
 		iconAnchor:[10,46]
 	});
 
+	var assetIconClasses = { business: L.icon({
+		iconUrl:'../style/assets/business.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+	parking: L.icon({
+		iconUrl:'../style/assets/parking.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		community: L.icon({
+		iconUrl:'../style/assets/community.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		culture: L.icon({
+		iconUrl:'../style/assets/culture.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		education: L.icon({
+		iconUrl:'../style/assets/education.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		food: L.icon({
+		iconUrl:'../style/assets/food.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		government: L.icon({
+		iconUrl:'../style/assets/government.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		health: L.icon({
+		iconUrl:'../style/assets/health.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		park: L.icon({
+		iconUrl:'../style/assets/park.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+		retail: L.icon({
+		iconUrl:'../style/assets/retail.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}),
+
+	temporary: L.icon({
+		iconUrl:'../style/assets/temporary.png',
+		iconSize:[31,31],
+		iconAnchor:[15,15]
+	}) };
+
 	var assetMarkerHash = d3.map(), investmentMarkerHash = d3.map(); //allows one to one look-up between map icons and asset models
 
 
@@ -461,25 +527,40 @@ define([
 
 			if(editMarker){ map.removeLayer(editMarker); }
 
-			var icon = investmentIcon;
-			if (model.get("type") =="asset") {
-				icon = assetIcon;
-				console.log(model.get("assetType"));
+			function returnCorrectIcon() {
+				var assetTypeIcons = [{type: "Park / Open Space",icon: "park"},{type: "Community",icon: "community"},{type: "Government ",icon: "government"},{type: "Health Care",icon: "health"},{type: "Food",icon: "food"},{type: "Education",icon: "education"},{type: "Business",icon: "business"},{type: "Parking",icon: "parking"},{type: "Cultural & Entertainment",icon: "culture"},{type: "Temporary",icon: "temporary"},{type: "Retail",icon: "retail"}];
+				var icon = investmentIcon;
+				if (model.get("type") =="asset") {
+					assetTypeIcons.forEach(function(assetTypeIcon) {
+						if (model.get("assetType") == assetTypeIcon.type) {
+							console.log(model.get("assetType"));
+							icon = assetIconClasses[assetTypeIcon.icon];
+							console.log("inside loop: ", icon);
+						}
+						
+					});
+					console.log("outside loop:", icon)
+				}
+				
+
+				if (model.get("type") =="investment" && model.get("investmentType") == "equity") {
+					icon = investmentIcon;
+				}
+				if (model.get("type") =="investment" && model.get("investmentType") == "private") {
+					icon = investmentIconPrivate;
+				}  
+				return icon;
 			}
 
-			if (model.get("type") =="investment" && model.get("investmentType") == "equity") {
-				icon = investmentIcon;
-			}
-			if (model.get("type") =="investment" && model.get("investmentType") == "private") {
-				icon = investmentIconPrivate;
-			}  
+
+
 
 			//Create marker with the right icon, add it to map
 			var marker = new L.marker([
 					model.get('geometry').coordinates[1],
 					model.get('geometry').coordinates[0]
 				],{
-					icon:icon
+					icon:returnCorrectIcon()
 				});
 			marker.addTo(map);
 
