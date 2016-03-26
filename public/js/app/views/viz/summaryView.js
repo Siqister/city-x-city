@@ -68,7 +68,7 @@ define([
 
 			var listItems = list.selectAll('.list-item')
 				.data([
-					{meta:'assets',digits:cityAssets.length,add:'asset'},
+					{meta:'features',digits:cityAssets.length,add:'feature'},
 					{meta:'investments',digits:cityInvestments.length,add:'investment'},
 					{meta:'total investment value',digits:'$'+format(investmentSum)}
 				],function(d){return d.meta})

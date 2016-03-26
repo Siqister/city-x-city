@@ -8,7 +8,7 @@ define([
 		idAttribute:'cartodb_id',
 		defaults:{
 			type:'asset',
-			assetType:'anchor business',
+			assetType:'Food',
 			employer:false,
 			employee:0,
 			parking:0,

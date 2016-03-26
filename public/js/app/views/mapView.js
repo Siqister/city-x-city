@@ -456,7 +456,7 @@ define([
 			//remove any existing editMarker and instantiate new one
 			if(editMarker){ map.removeLayer(editMarker); }
 			var icon = investmentIcon;
-			if (e.type =="asset") {
+			if (e.type =="feature") {
 				icon = assetIconEdit;
 			}
 
@@ -500,7 +500,7 @@ define([
 
 
 			//Create new itemModel and instantiate editView
-			if(e.type == 'asset'){
+			if(e.type == 'feature'){
 				newModel = new AssetModel({
 					city:e.cityModel.get('city'),
 					geometry:e.cityModel.get('geometry')
