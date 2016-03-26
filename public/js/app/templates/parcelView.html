@@ -34,6 +34,10 @@
 		<label for="partner-owned" class="title">Partner-controlled</label>
 		<input type="checkbox" name="marked" id="partner-owned" class='partner-owned' <% if(partner_owned==true){ %>checked<% } %>>
 	</li>
+	<li class="form-group partially-vacant attr-list-item">
+		<label for="partially-vacant" class="title">Partially-vacant</label>
+		<input type="checkbox" name="marked" id="partially-vacant" class='partially-vacant' <% if(partially_vacant==true){ %>checked<% } %>>
+	</li>
 	<li class="form-group vacancy attr-list-item">
 		<span class="title">Vacancy</span>
 		<div class="btn-group pull-right custom-checkbox" data-toggle="buttons">

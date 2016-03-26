@@ -12,12 +12,18 @@ define([
 	var ui = {
 		detail:{
 			show:function(){
+				$detail.css({
+					"pointer-events": "all"
+				});
 				$detail.animate({
 					'top':'0px',
 					'opacity':1
 				})
 			},
 			hide:function(){
+				$detail.css({
+					"pointer-events": "none"
+				});
 				$detail.animate({
 					'top':'100px',
 					'opacity':0

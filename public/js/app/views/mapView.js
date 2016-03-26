@@ -323,16 +323,16 @@ define([
 					.transition()
 					.style('fill',function(d){
 						if(d.city_owned==true){
-							return '#d6d4ea';
+							return '#de2d26';
 						}else if(d.partner_owned==true){
-							return '#96d5cf';
+							return '#2c7fb8';
 						}else{
 							return null;
 						}
 					})
 					.style('fill-opacity',function(d){
 						if(d.city_owned == true || d.partner_owned == true){
-							return .6;
+							return .7;
 						}else{
 							return null;
 						}
@@ -354,7 +354,7 @@ define([
 							return _default.color;
 						}
 					})
-					.style('fill-opacity',.3);
+					.style('fill-opacity',.7);
 			}
 
 		},
@@ -392,7 +392,7 @@ define([
 					cityModel.get('geometry').coordinates[1],
 					cityModel.get('geometry').coordinates[0]
 				],{icon:cityIcon})
-					.addTo(map)
+					// .addTo(map)
 					.on('mouseover',function(){
 						vent.trigger('city:hover',cityModel.get('city'));
 					})

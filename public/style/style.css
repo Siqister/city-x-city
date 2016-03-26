@@ -43,6 +43,9 @@ body .btn{
 		opacity:0;
 		width:280px;
 		z-index:999;
+    height: 100%;
+    pointer-events: none;
+    overflow-y: scroll;
 	}
 	.content .city{
 		position:absolute;

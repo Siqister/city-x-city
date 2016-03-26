@@ -31,6 +31,7 @@ define([
 			comment: '.comment textarea',
 			marked: '.marked input',
 			cityOwned: '.city-owned input',
+			partially_vacant: '.partially-vacant input',
 			partnerOwned: '.partner-owned input',
 			forSale:'.for-sale input',
 			forLease:'.for-lease input',
@@ -45,6 +46,7 @@ define([
 
 			'switchChange.bootstrapSwitch @ui.marked':'attrModified', //custom event associated with boostrap-switch
 			'switchChange.bootstrapSwitch @ui.cityOwned':'attrModified',
+			'switchChange.bootstrapSwitch @ui.partially_vacant':'attrModified',
 			'switchChange.bootstrapSwitch @ui.partnerOwned':'attrModified',
 			'switchChange.bootstrapSwitch @ui.forSale':'attrModified',
 			'switchChange.bootstrapSwitch @ui.forLease':'attrModified',
@@ -77,6 +79,11 @@ define([
 				offText:'No'
 			});
 			this.ui.partnerOwned.bootstrapSwitch({
+				size:'small',
+				onText:'Yes',
+				offText:'No'
+			});
+			this.ui.partially_vacant.bootstrapSwitch({
 				size:'small',
 				onText:'Yes',
 				offText:'No'
@@ -160,6 +167,7 @@ define([
 
 				marked: this.ui.marked.bootstrapSwitch('state'),
 				city_owned:this.ui.cityOwned.bootstrapSwitch('state'),
+				partially_vacant:this.ui.partially_vacant.bootstrapSwitch('state'),
 				partner_owned:this.ui.partnerOwned.bootstrapSwitch('state'),
 				tdi_for_sale:this.ui.forSale.bootstrapSwitch('state'),
 				tdi_for_lease:this.ui.forLease.bootstrapSwitch('state'),

@@ -74,6 +74,8 @@ router
 		+ req.body.city_owned +
 		", partner_owned="
 		+ req.body.partner_owned +
+		", partially_vacant="
+		+ req.body.partially_vacant +
 		", vacancy="
 		+ req.body.vacancy +
 		", tdi_for_sale="

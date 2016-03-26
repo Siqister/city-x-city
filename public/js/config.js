@@ -5,8 +5,8 @@ define([],function(){
 		{
 			name:'Ownership', 
 			options:[
-				{name:"Publicly Owned",color:'#d6d4ea'},
-				{name:"Partner-Controlled",color:'#96d5cf'}
+				{name:"Publicly Owned",color:'#de2d26'},
+				{name:"Partner-Controlled",color:'#2c7fb8'}
 			]
 		},
 		{
