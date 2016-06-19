@@ -4,6 +4,10 @@ define([
 	Backbone
 ){
 	var AssetModel = Backbone.Model.extend({
+		schema: {
+			name: 'Text',
+      comments: 'TextArea'
+		},
 		urlRoot:'/asset',
 		idAttribute:'cartodb_id',
 		defaults:{
@@ -28,7 +32,7 @@ define([
 
 			if(errors.length>0){return errors;}
 		}
-	})
+	});
 	
 	return AssetModel;
 });
