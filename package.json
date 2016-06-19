@@ -10,6 +10,7 @@
   "author": "Siqi Zhu",
   "license": "ISC",
   "dependencies": {
+    "backbone-forms": "^0.14.0",
     "body-parser": "^1.13.1",
     "cartodb": "^0.2.1",
     "express": "^4.12.2",
