@@ -67,10 +67,12 @@ router
 	console.log('PUT REQUEST TO /investment');
 
 	var query = "UPDATE {table} SET comment='" 
-		+ req.body.comment + "', address='"
+		+ req.body.comment + "', name='"
+		+ req.body.name + "', address='"
 		+ req.body.address + "', contact='"
 		+ req.body.contact + "', value="
-		+ req.body.value +
+		+ req.body.value + ", type='"
+		+ req.body.investmentType + "' " +
 		" WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(query,{table:'tdi_investments'},function(err,data){
