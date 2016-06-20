@@ -43,6 +43,10 @@ define([
 			this.listenTo(this.model,'destroy',this.onModelDestroy,this);
 		},
 		onShow:function(){
+			this.form_element = new Backbone.Form({
+				model: this.model
+			}).render();
+			this.$el.append(this.form_element.el);
 			this.ui.save.hide();
 			this.ui.hiddenInputs.on('click',function(e){
 				$(this).find('.value').hide();

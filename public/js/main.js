@@ -15,7 +15,8 @@ require.config({
 		'bootstrap-multiselect':'lib/bootstrap-multiselect/bootstrap-multiselect',
 		'bootstrap-datepicker':'lib/bootstrap-datepicker/bootstrap-datepicker.min',
 		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
-		'config':'config'
+		'config':'config',
+		'backbone-forms': 'lib/backbone-forms/backbone-forms.min'
 	},
 	shim:{
 		'leaflet':{
@@ -32,6 +33,9 @@ require.config({
 		},
 		'bootstrap-datepicker':{
 			deps:['jquery']
+		},
+		'backbone-forms': {
+			deps: ['backbone']
 		}
 	}
 });
@@ -40,6 +44,7 @@ require([
 		'jquery',
 		'underscore',
 		'marionette',
+		'backbone-forms',
 		'backbone',
 		'leaflet',
 		'd3',
@@ -51,6 +56,7 @@ require([
 		_,
 		Marionette,
 		Backbone,
+		backboneforms,
 		L,
 		d3,
 
