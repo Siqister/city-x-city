@@ -10,7 +10,7 @@ define([
 			contact: 'Text',
 			investmentType: { type: 'Select', options: ['equity', 'private'] },
 			value: 'Text',
-			comments: 'TextArea'
+			comment: 'TextArea'
 		},
 		urlRoot:'/investment',
 		idAttribute:'cartodb_id',

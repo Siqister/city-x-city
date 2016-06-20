@@ -74,7 +74,7 @@ router
 		+ req.body.value + ", type='"
 		+ req.body.investmentType + "' " +
 		" WHERE cartodb_id=" + req.params.id;
-
+		console.log(query);
 	cartodbClient.query(query,{table:'tdi_investments'},function(err,data){
 		if(err){
 			console.log('ERROR UPDATE TO  INVESTMENT');

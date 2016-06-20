@@ -22,6 +22,9 @@ define([
 			cancel:'.close',
 			save:'.save',
 			delete:'.delete',
+			edit: '.edit-data',
+			form: '.form-edit',
+			show: '.form-show',
 			hiddenInputs:'.attr-list-item-hide-input'
 		},
 		events:{
@@ -35,7 +38,12 @@ define([
 			'click @ui.cancel': function(){
 				vent.trigger('ui:hide:detail');
 			},
-			'input': 'onAttrChange'
+			'click @ui.edit': function() {
+				this.ui.show.hide();
+				this.ui.form.show();
+			},
+			'input': 'onAttrChange',
+			'click input[type=checkbox]': 'onAttrChange'
 		},
 
 		initialize:function(){
@@ -47,7 +55,7 @@ define([
 			this.form_element = new Backbone.Form({
 				model: this.model
 			}).render();
-			this.$el.append(this.form_element.el);
+			this.$el.find(".form-edit").append(this.form_element.el).hide();
 			this.ui.save.hide();
 			this.ui.hiddenInputs.on('click',function(e){
 				$(this).find('.value').hide();
