@@ -35,7 +35,8 @@ define([
 			'click @ui.delete': function(){
 				this.model.destroy();
 			},
-			'input': 'onAttrChange'
+			'input': 'onAttrChange',
+			'click input[type=checkbox]': 'onAttrChange'
 		},
 
 		initialize:function(){
@@ -47,12 +48,12 @@ define([
 			this.form_element = new Backbone.Form({
 				model: this.model
 			}).render();
-			this.$el.append(this.form_element.el);
 			this.ui.save.hide();
 			this.ui.hiddenInputs.on('click',function(e){
 				$(this).find('.value').hide();
 				$(this).find('.form-control').show();
-			})
+			});
+			this.$el.append(this.form_element.el);
 		},
 		onAttrChange:function(){
 			var that = this;
