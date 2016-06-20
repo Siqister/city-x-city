@@ -26,6 +26,7 @@ define([
 		},
 		events:{
 			'click @ui.save': function(){
+				this.form_element.commit();
 				this.model.save(); //Issues a PUT request
 			},
 			'click @ui.cancel': function(){
