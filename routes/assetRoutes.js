@@ -78,8 +78,10 @@ router
 		+ req.body.address + "', contact='"
 		+ req.body.contact + "', employee="
 		+ req.body.employee + ", parking="
-		+ req.body.parking +
-		" WHERE cartodb_id=" + req.params.id;
+		+ req.body.parking + ", type='"
+		+ req.body.assetType + "', subtype='"
+		+ req.body.subtype +
+		"' WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(query,{table:'tdi_assets'},function(err,data){
 		if(err){
