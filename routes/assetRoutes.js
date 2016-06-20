@@ -80,7 +80,8 @@ router
 		+ req.body.employee + ", parking="
 		+ req.body.parking + ", type='"
 		+ req.body.assetType + "', subtype='"
-		+ req.body.subtype +
+		+ req.body.subtype + "', name='"
+		+ req.body.name +
 		"' WHERE cartodb_id=" + req.params.id;
 
 	cartodbClient.query(query,{table:'tdi_assets'},function(err,data){
