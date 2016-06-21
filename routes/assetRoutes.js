@@ -7,7 +7,7 @@ router
 	console.log(req.method)
 })
 .get('/',function(req,res,next){
-	var query = "SELECT * FROM {table}";
+	var query = "SELECT * FROM {table} WHERE (now() > closedate OR closedate IS NULL)";
 
 	cartodbClient.query(query,
 		{table:'tdi_assets'},function(err,data){
@@ -35,7 +35,7 @@ router
 
 	console.log(typeof req.body.subtype);
 
-	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at,address,contact, subtype, activating) "
+	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at,address, opendate, closedate, contact, subtype, activating) "
 		+"VALUES ('"
 		+ req.body.city + "',"
 		+ "ST_GeomFromText('POINT("+loc[0]+" "+loc[1]+")',4326)" + ",'"
@@ -47,6 +47,8 @@ router
 		+ req.body.parking + ",'"
 		+ (new Date()).toISOString() + "','"
 		+ req.body.address + "','"
+		+ req.body.opendate + "','"
+		+ req.body.closedate + "','"
 		+ req.body.contact + "','" 
 		+ req.body.subtype + "'," 
 		+ req.body.activating +
@@ -81,7 +83,9 @@ router
 		+ req.body.parking + ", type='"
 		+ req.body.assetType + "', subtype='"
 		+ req.body.subtype + "', name='" 
-		+ req.body.name +"', employer="
+		+ req.body.name +"', opendate='"
+		+ req.body.opendate +"', closedate='"
+		+ req.body.closedate +"', employer="
 		+ req.body.employer  + ", activating="
 		+ req.body.activating +
 		" WHERE cartodb_id=" + req.params.id;

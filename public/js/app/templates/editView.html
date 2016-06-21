@@ -51,6 +51,17 @@
 		<input type="checkbox" name="activating" id="activating" <% if(activating==true){ %>checked<% } %>>
 	</li>
 
+	<div class="form-group date-feature attr-list-item">
+		<label for="date">Open Date</label>
+		<input type='text' class="date-picker form-control" id="opendate"></input>
+		<span class="error-msg"></span>
+	</div>
+
+	<div class="form-group date-feature attr-list-item">
+		<label for="date">Close Date</label>
+		<input type='text' class="date-picker form-control" id="closedate"></input>
+		<span class="error-msg"></span>
+	</div>
 	<% } %>
 
 	<% if(type=="investment"){ %>

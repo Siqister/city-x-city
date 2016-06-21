@@ -176,6 +176,9 @@ define([
 				format:'mm/yyyy'
 			});
 
+			this.$('.date-feature input').datepicker({
+				format:'yyyy-mm-dd'
+			});
 
 			//Hide/show logic
 			this.ui.employer.on('switchChange.bootstrapSwitch',function(e,state){

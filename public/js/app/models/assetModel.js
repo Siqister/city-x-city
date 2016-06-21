@@ -80,7 +80,9 @@ define([
 																						  { "group": "Public Transit",
 																						"options": [] 
 																					}]},
-      comment: 'TextArea'
+      comment: 'TextArea',
+      opendate: 'Date',
+      closedate: 'Date'
 		},
 		urlRoot:'/asset',
 		idAttribute:'cartodb_id',
