@@ -495,3 +495,9 @@ h3{
 		font-size:.75em;
 		display:block;
 	}
+
+
+button, input, optgroup, select, textarea {
+	color: black;
+}
+	
