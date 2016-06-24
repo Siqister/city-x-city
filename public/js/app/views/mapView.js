@@ -186,6 +186,10 @@ define([
 			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
+			this.clusterGroup = L.markerClusterGroup();
+
+			map.addLayer(this.clusterGroup);
+
 			//upon mapView:show and map initialization, add 3D building overlay
 			L.imageOverlay(
 				'../assets/brockton_App overlay.svg', //imageUrl
@@ -562,7 +566,8 @@ define([
 				],{
 					icon:returnCorrectIcon()
 				});
-			marker.addTo(map);
+			// marker.addTo(map);
+			this.clusterGroup.addLayer(marker);
 
 			//Add marker to correct icon hash
 			if(model.get('type')=='asset'){

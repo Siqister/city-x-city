@@ -16,7 +16,8 @@ require.config({
 		'bootstrap-datepicker':'lib/bootstrap-datepicker/bootstrap-datepicker.min',
 		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
 		'config':'config',
-		'backbone-forms': 'lib/backbone-forms/backbone-forms.min'
+		'backbone-forms': 'lib/backbone-forms/backbone-forms.min',
+		'leaflet-marker-cluster': 'lib/leaflet-marker-cluster/leaflet.markercluster'
 	},
 	shim:{
 		'leaflet':{
@@ -36,6 +37,9 @@ require.config({
 		},
 		'backbone-forms': {
 			deps: ['backbone']
+		},
+		'leaflet-marker-cluster': {
+			deps: ['leaflet']
 		}
 	}
 });
@@ -48,7 +52,7 @@ require([
 		'backbone',
 		'leaflet',
 		'd3',
-
+		'leaflet-marker-cluster',
 		'app/app',
 		'app/ui'
 	],function(
@@ -59,7 +63,7 @@ require([
 		backboneforms,
 		L,
 		d3,
-
+		leafletMarkerCluster,
 		app,
 		ui
 	){
