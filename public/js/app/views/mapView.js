@@ -186,7 +186,7 @@ define([
 			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
-			clusterGroup = L.markerClusterGroup();
+			clusterGroup = L.markerClusterGroup({disableClusteringAtZoom: 17});
 
 			map.addLayer(clusterGroup);
 
