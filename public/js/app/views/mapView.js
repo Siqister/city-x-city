@@ -34,7 +34,7 @@ define([
 ){
 
 	//module internal variables for keeping leaflet+d3
-	var map, svg, g, features, editMarker, parcelMarker;
+	var map, svg, g, features, editMarker, parcelMarker, clusterGroup;
 	var mapBackground = {};
 
 	var cityIcon = L.icon({
@@ -186,9 +186,9 @@ define([
 			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 
-			this.clusterGroup = L.markerClusterGroup();
+			clusterGroup = L.markerClusterGroup();
 
-			map.addLayer(this.clusterGroup);
+			map.addLayer(clusterGroup);
 
 			//upon mapView:show and map initialization, add 3D building overlay
 			L.imageOverlay(
@@ -263,7 +263,7 @@ define([
 
 					//create a new parcelMarker and add it to parcel centroid
 					var parcelCentroid = d3.geo.centroid(d);
-					if(parcelMarker){ map.removeLayer(parcelMarker); }
+					if(parcelMarker){ that.map.removeLayer(parcelMarker); }
 					parcelMarker = L.marker([
 							parcelCentroid[1],
 							parcelCentroid[0]
@@ -567,7 +567,7 @@ define([
 					icon:returnCorrectIcon()
 				});
 			// marker.addTo(map);
-			this.clusterGroup.addLayer(marker);
+			clusterGroup.addLayer(marker);
 
 			//Add marker to correct icon hash
 			if(model.get('type')=='asset'){
@@ -624,7 +624,7 @@ define([
 
 	vent.on('asset:delete',function(modelID){
 		var assetMarker = assetMarkerHash.get(modelID);
-		map.removeLayer(assetMarker);
+		clusterGroup.removeLayer(assetMarker);
 	})
 
 	vent.on('asset:toggle:activating', function(c) {
@@ -637,7 +637,7 @@ define([
 		// remove everything for a redraw
 		var values = assetMarkerHash.values();
 		values.forEach(function(key) {
-			map.removeLayer(key);
+			clusterGroup.removeLayer(key);
 		});
 
 		// after removal, reset
@@ -651,7 +651,7 @@ define([
 
 	vent.on('investment:delete',function(modelID){
 		var investmentMarker = investmentMarkerHash.get(modelID);
-		map.removeLayer(investmentMarker);
+		clusterGroup.removeLayer(investmentMarker);
 	})
 
 
