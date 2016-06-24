@@ -189,7 +189,7 @@ define([
 			clusterGroup = L.markerClusterGroup({disableClusteringAtZoom: 17});
 
 			map.addLayer(clusterGroup);
-
+			map.addControl(new L.Control.Zoomslider({position: 'topright'}));
 			//upon mapView:show and map initialization, add 3D building overlay
 			L.imageOverlay(
 				'../assets/brockton_App overlay.svg', //imageUrl

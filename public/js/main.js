@@ -17,7 +17,8 @@ require.config({
 		'bootstrap':'lib/bootstrap/dist/js/bootstrap.min',
 		'config':'config',
 		'backbone-forms': 'lib/backbone-forms/backbone-forms.min',
-		'leaflet-marker-cluster': 'lib/leaflet-marker-cluster/leaflet.markercluster'
+		'leaflet-marker-cluster': 'lib/leaflet-marker-cluster/leaflet.markercluster',
+		'leaflet-zoom-slider': 'lib/leaflet-zoom-slider/L.Control.Zoomslider'
 	},
 	shim:{
 		'leaflet':{
@@ -40,6 +41,9 @@ require.config({
 		},
 		'leaflet-marker-cluster': {
 			deps: ['leaflet']
+		},
+		'leaflet-zoom-slider': {
+			deps: ['leaflet']
 		}
 	}
 });
@@ -53,6 +57,7 @@ require([
 		'leaflet',
 		'd3',
 		'leaflet-marker-cluster',
+		'leaflet-zoom-slider',
 		'app/app',
 		'app/ui'
 	],function(
@@ -64,6 +69,7 @@ require([
 		L,
 		d3,
 		leafletMarkerCluster,
+		leafletZoomSlider,
 		app,
 		ui
 	){

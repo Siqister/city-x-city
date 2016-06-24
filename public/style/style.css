@@ -496,6 +496,13 @@ h3{
 		display:block;
 	}
 
+.leaflet-control-zoomslider-body {
+	border: solid #000 1px;
+}
+
+.leaflet-top {
+	top: 30%;
+}
 
 button, input, optgroup, select, textarea {
 	color: black;
