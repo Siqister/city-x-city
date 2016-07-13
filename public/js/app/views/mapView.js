@@ -190,36 +190,7 @@ define([
 
 			map.addLayer(clusterGroup);
 			map.addControl(new L.Control.Zoomslider({position: 'topright'}));
-			//upon mapView:show and map initialization, add 3D building overlay
-			L.imageOverlay(
-				'../assets/brockton_App overlay.svg', //imageUrl
-				L.latLngBounds([[42.07924,-71.0226],[42.08682,-71.01443]]) //SW and NE
-			)
-				.addTo(map);
-				
-			L.imageOverlay(
-				'../assets/springfield_App overlay.svg', //imageUrl
-				L.latLngBounds([[42.10155381,-72.59665675],[42.10856358,-72.58559589]]) //SW and NE
-			)
-				.addTo(map);
 
-			L.imageOverlay(
-				'../assets/lynn_raster.png', //imageUrl
-				L.latLngBounds([[42.4616537098401849,-70.9495558575365521],[42.4657603870983564, -70.9402473890846892]]) //SW and NE
-			)
-				.addTo(map);
-
-			L.imageOverlay(
-				'../assets/revere_raster.png', //imageUrl
-				L.latLngBounds([[42.4043493490063739,-70.9969339679200999],[42.4090765020624758,-70.9909995396794073]]) //SW and NE
-			)
-				.addTo(map);
-
-			L.imageOverlay(
-				'../assets/haverhill_raster.png', //imageUrl
-				L.latLngBounds([[42.7729823689840956,-71.0824799701656218],[42.7763740561438226,-71.0765482287125963]]) //SW and NE
-			)
-				.addTo(map);
 
 			//overlay for D3 drawing --> after 3D building in terms of z-index
 			svg = d3.select(map.getPanes().overlayPane).append('svg');
@@ -244,6 +215,42 @@ define([
 
 			this.listenTo(investmentCollection,'reset',this.drawInvestmentMarkers,this);
 			investmentCollection.fetch({reset:true});
+
+			//upon mapView:show and map initialization, add 3D building overlay
+			L.imageOverlay(
+				'../assets/brockton_App overlay.svg', //imageUrl
+				L.latLngBounds([[42.07924,-71.0226],[42.08682,-71.01443]]),
+				{ opacity: 0.5 } //SW and NE
+			)
+				.addTo(map);
+				
+			L.imageOverlay(
+				'../assets/springfield_App overlay.svg', //imageUrl
+				L.latLngBounds([[42.10155381,-72.59665675],[42.10856358,-72.58559589]]),
+				{ opacity: 0.5 } //SW and NE
+			)
+				.addTo(map);
+
+			L.imageOverlay(
+				'../assets/lynn_raster.png', //imageUrl
+				L.latLngBounds([[42.4616537098401849,-70.9495558575365521],[42.4657603870983564, -70.9402473890846892]]),
+				{ opacity: 0.5 } //SW and NE
+			)
+				.addTo(map);
+
+			L.imageOverlay(
+				'../assets/revere_raster.png', //imageUrl
+				L.latLngBounds([[42.4043493490063739,-70.9969339679200999],[42.4090765020624758,-70.9909995396794073]]),
+				{ opacity: 0.5 } //SW and NE
+			)
+				.addTo(map);
+
+			L.imageOverlay(
+				'../assets/haverhill_raster.png', //imageUrl
+				L.latLngBounds([[42.7729823689840956,-71.0824799701656218],[42.7763740561438226,-71.0765482287125963]]),
+				{ opacity: 0.5 } //SW and NE
+			)
+				.addTo(map);
 		},
 
 		drawParcels:function(){
