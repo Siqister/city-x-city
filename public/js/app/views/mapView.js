@@ -84,67 +84,67 @@ define([
 
 	var assetIconClasses = { business: L.icon({
 		iconUrl:'../style/assets/business.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 	parking: L.icon({
 		iconUrl:'../style/assets/parking.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		community: L.icon({
 		iconUrl:'../style/assets/community.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		culture: L.icon({
 		iconUrl:'../style/assets/culture.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		education: L.icon({
 		iconUrl:'../style/assets/education.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		food: L.icon({
 		iconUrl:'../style/assets/food.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		government: L.icon({
 		iconUrl:'../style/assets/government.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		health: L.icon({
 		iconUrl:'../style/assets/health.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		park: L.icon({
 		iconUrl:'../style/assets/park.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 		retail: L.icon({
 		iconUrl:'../style/assets/retail.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}),
 
 	temporary: L.icon({
 		iconUrl:'../style/assets/temporary.png',
-		iconSize:[31,31],
+		iconSize:[40,40],
 		iconAnchor:[15,15]
 	}) };
 
