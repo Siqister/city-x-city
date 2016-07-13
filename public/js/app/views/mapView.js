@@ -183,7 +183,7 @@ define([
 			map = L.map(this.el).setView([42.3, -71.8], 9);
 			mapBackground.satellite = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.nok599k9/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
-			mapBackground.street = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.1375d69e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
+			mapBackground.street = L.tileLayer('https://api.mapbox.com/styles/v1/nmonani/ciq9iw3fg00b0cam12nj4wieq/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibm1vbmFuaSIsImEiOiJjaXE5aW5kbWMwMWpiZm5ra253bzJvcndqIn0.hZ_VvUXgZ2XWZ58CM60Y0Q')
 				.addTo(map);
 
 			clusterGroup = L.markerClusterGroup({disableClusteringAtZoom: 17});
