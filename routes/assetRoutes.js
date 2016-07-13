@@ -35,6 +35,18 @@ router
 
 	console.log(typeof req.body.subtype);
 
+	if (req.body.opendate == "") {
+		req.body.opendate = null;
+	} else {
+		req.body.opendate = '\'' + req.body.opendate + '\'';
+	}
+
+	if (req.body.closedate == "") {
+		req.body.closedate = null;
+	} else {
+		req.body.closedate = '\'' + req.body.closedate + '\'';
+	}
+
 	var query = "INSERT INTO tdi_assets (city,the_geom,name,comment,type,employer,employee,parking,updated_at,address, opendate, closedate, contact, subtype, activating) "
 		+"VALUES ('"
 		+ req.body.city + "',"
@@ -46,9 +58,9 @@ router
 		+ req.body.employee + ","
 		+ req.body.parking + ",'"
 		+ (new Date()).toISOString() + "','"
-		+ req.body.address + "','"
-		+ req.body.opendate + "','"
-		+ req.body.closedate + "','"
+		+ req.body.address + "',"
+		+ req.body.opendate + ","
+		+ req.body.closedate + ",'"
 		+ req.body.contact + "','" 
 		+ req.body.subtype + "'," 
 		+ req.body.activating +

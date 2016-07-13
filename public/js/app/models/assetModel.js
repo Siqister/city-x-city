@@ -81,8 +81,12 @@ define([
 																						"options": [] 
 																					}]},
       comment: 'TextArea',
-      opendate: 'Date',
-      closedate: 'Date'
+      opendate: { type: 'Date', 'default': null},
+      closedate: { type: 'Date', 'default': null},
+			data: {
+				opendate: 'null',
+				closedate: 'null'
+			}
 		},
 		urlRoot:'/asset',
 		idAttribute:'cartodb_id',
@@ -93,7 +97,13 @@ define([
 			employee:0,
 			parking:0,
 			activating: false,
-			subtype: ''
+			subtype: '',
+			opendate: 'null',
+			closedate: 'null'
+		},
+		data: {
+			opendate: 'null',
+			closedate: 'null'
 		},
 		validate:function(attr,options){
 			var errors = [];
