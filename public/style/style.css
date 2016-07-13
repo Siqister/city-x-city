@@ -507,4 +507,8 @@ h3{
 button, input, optgroup, select, textarea {
 	color: black;
 }
+
+img {
+  image-rendering: auto;
+}
 	
