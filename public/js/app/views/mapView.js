@@ -142,6 +142,12 @@ define([
 		iconAnchor:[15,15]
 	}),
 
+	// 	bank: L.icon({
+	// 	iconUrl:'../style/assets/bank.png',
+	// 	iconSize:[40,40],
+	// 	iconAnchor:[15,15]
+	// }),
+
 	temporary: L.icon({
 		iconUrl:'../style/assets/temporary.png',
 		iconSize:[40,40],
