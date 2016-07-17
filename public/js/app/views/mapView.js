@@ -166,7 +166,9 @@ define([
 		className:'map-inner',
 		template:false,
 		currentLayer:undefined,
-		filterObject: {},
+		filterObject: {
+			activating: true
+		},
 		collection:parcelsCollection, //use itemView to render a collection
 
 		initialize:function(){

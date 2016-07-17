@@ -92,7 +92,8 @@ define([
 			toggle.append("input").attr("type", "checkbox")
 						.attr("class", "toggleActivating")
 						.attr("name", "activating")
-						.attr("id", "activating");
+						.attr("id", "activating")
+						.attr("checked", "");
 		},
 
 		addItem:function(e){
