@@ -512,3 +512,10 @@ img {
   image-rendering: auto;
 }
 	
+.leaflet-overlay-pane img {
+	pointer-events: none;
+}
+
+.leaflet-overlay-pane .leaflet-zoom-animated {
+	pointer-events: none;
+}

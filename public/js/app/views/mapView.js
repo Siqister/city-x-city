@@ -190,9 +190,6 @@ define([
 
 			clusterGroup = L.markerClusterGroup({disableClusteringAtZoom: 17});
 
-			map.addLayer(clusterGroup);
-			map.addControl(new L.Control.Zoomslider({position: 'topright'}));
-
 
 			//overlay for D3 drawing --> after 3D building in terms of z-index
 			svg = d3.select(map.getPanes().overlayPane).append('svg');
@@ -210,13 +207,19 @@ define([
 
 
 			//ask parcels collection to sync
-			this.collection.fetch();
+			this.collection.fetch({ success: function() {
+				map.addLayer(clusterGroup);
+			} });
 			//ask assetCollection to sync
 			this.listenTo(assetCollection,'reset',this.drawAssetMarkers,this);
 			assetCollection.fetch({reset:true});
 
 			this.listenTo(investmentCollection,'reset',this.drawInvestmentMarkers,this);
 			investmentCollection.fetch({reset:true});
+
+
+			
+			map.addControl(new L.Control.Zoomslider({position: 'topright'}));
 
 			//upon mapView:show and map initialization, add 3D building overlay
 			L.imageOverlay(
@@ -272,7 +275,7 @@ define([
 
 					//create a new parcelMarker and add it to parcel centroid
 					var parcelCentroid = d3.geo.centroid(d);
-					if(parcelMarker){ that.map.removeLayer(parcelMarker); }
+					if(parcelMarker){ map.removeLayer(parcelMarker); }
 					parcelMarker = L.marker([
 							parcelCentroid[1],
 							parcelCentroid[0]
