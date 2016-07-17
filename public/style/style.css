@@ -519,3 +519,31 @@ img {
 .leaflet-overlay-pane .leaflet-zoom-animated {
 	pointer-events: none;
 }
+
+.marker-cluster-medium {
+	background-color: rgba(181, 226, 140, 0.6);
+}
+
+.marker-cluster-medium div {
+	background-color: rgba(110, 204, 57, 0.6);
+}
+
+.marker-cluster-large {
+	background-color: rgba(181, 226, 140, 0.6);
+}
+
+.marker-cluster-medium div {
+	background-color: rgba(110, 204, 57, 0.6);
+}
+
+.city {
+	pointer-events: none;
+}
+
+.city-list {
+	pointer-events: none;
+}
+
+.city-list-item {
+	pointer-events: all;
+}
