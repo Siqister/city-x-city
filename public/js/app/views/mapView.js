@@ -142,12 +142,6 @@ define([
 		iconAnchor:[15,15]
 	}),
 
-	// 	bank: L.icon({
-	// 	iconUrl:'../style/assets/bank.png',
-	// 	iconSize:[40,40],
-	// 	iconAnchor:[15,15]
-	// }),
-
 	temporary: L.icon({
 		iconUrl:'../style/assets/temporary.png',
 		iconSize:[40,40],
@@ -188,7 +182,7 @@ define([
 			console.log('mapView:show');
 
 			//upon mapView:show, initialize leaflet map
-			map = L.map(this.el).setView([42.3, -71.8], 9);
+			map = L.map(this.el, { maxBounds: [[41.253,-73.5081],[42.8867,-69.8621]], minZoom: 9 }).setView([42.3, -71.8], 9);
 			mapBackground.satellite = L.tileLayer('https://a.tiles.mapbox.com/v4/siqizhu01.nok599k9/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2lxaXpodTAxIiwiYSI6ImNiY2E2ZTNlNGNkNzY4YWYzY2RkMzExZjhkODgwMDc5In0.3PodCA0orjhprHrW6nsuVw')
 				.addTo(map);
 			mapBackground.street = L.tileLayer('https://api.mapbox.com/styles/v1/nmonani/ciq9iw3fg00b0cam12nj4wieq/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibm1vbmFuaSIsImEiOiJjaXE5aW5kbWMwMWpiZm5ra253bzJvcndqIn0.hZ_VvUXgZ2XWZ58CM60Y0Q')
