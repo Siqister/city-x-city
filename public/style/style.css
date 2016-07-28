@@ -36,7 +36,7 @@ body .btn{
 		background:green;
 	}
 	.content .detail{
-		background:#2fdf9e;
+		background:rgb(139,193,180);
 		position:absolute;
 		left:280px;
 		top:50px;
@@ -521,19 +521,19 @@ img {
 }
 
 .marker-cluster-medium {
-	background-color: rgba(181, 226, 140, 0.6);
+	background-color: rgba(119,119,119, 0.6);
 }
 
 .marker-cluster-medium div {
-	background-color: rgba(110, 204, 57, 0.6);
+	background-color: rgba(85,85,85, 0.6);
 }
 
 .marker-cluster-large {
-	background-color: rgba(181, 226, 140, 0.6);
+	background-color: rgba(119,119,119, 0.6);
 }
 
 .marker-cluster-medium div {
-	background-color: rgba(110, 204, 57, 0.6);
+	background-color: rgba(85,85,85, 0.6);
 }
 
 .city {
