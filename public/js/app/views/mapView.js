@@ -269,6 +269,12 @@ define([
 				{ opacity: 0.5 } //SW and NE
 			)
 				.addTo(map);
+
+			L.imageOverlay(
+				'../assets/2016-07-27 Holyoke Buildings 3D.png',
+				L.latLngBounds([[42.2087310719534301,-72.5998351767299255],[42.2002863600326776,-72.6134405459355889]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
 		},
 
 		drawParcels:function(){
@@ -468,14 +474,14 @@ define([
 		},
 		drawInvestmentMarkers:function(filterObject){
 			var that = this;
-
+			var filteredInvestmentCollection = investmentCollection.where({});	
 			if (that.filterObject.on == true) {
 				var filteredInvestmentCollection = investmentCollection.where(that.filterObject);
 			} else {
 				var filteredInvestmentCollection = investmentCollection.where({});
 			}
 
-			filteredInvestmentCollection.each(function(investmentModel){
+			investmentCollection.each(function(investmentModel){
 				that.addItem(investmentModel);
 			});
 		},
