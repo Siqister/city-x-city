@@ -42,6 +42,19 @@ define([
 		iconSize:[20,46],
 		iconAnchor:[10,46]
 	});
+
+	var fellowsIcon = L.icon({
+		iconUrl:'../style/assets/fellow.png',
+		iconSize:[40,40],
+		iconAnchor:[15,15]
+	});
+
+	var nonFellowsIcon = L.icon({
+		iconUrl:'../style/assets/nofellow.png',
+		iconSize:[40,40],
+		iconAnchor:[15,15]
+	});
+
 	var cityIconHighlight = L.icon({
 		iconUrl:'../style/assets/pin-03.png',
 		iconSize:[20,46],
@@ -404,19 +417,35 @@ define([
 		drawCityMarkers:function(cityCollection){
 
 			cityCollection.forEach(function(cityModel){
+				var city = cityModel.get('city');
+				if (city == "BROCKTON" || 
+						city == "HAVERHILL" || 
+						city == "LYNN" || 
+						city == "NEW BEDFORD" || 
+						city == "PITTSFIELD" || 
+						city == "SPRINGFIELD") {
+
+							cityIcon = fellowsIcon;
+						} else {
+							cityIcon = nonFellowsIcon;
+						}
+
 				var marker = L.marker([
 					cityModel.get('geometry').coordinates[1],
 					cityModel.get('geometry').coordinates[0]
 				],{icon:cityIcon})
-					// .addTo(map)
+					.addTo(map)
 					.on('mouseover',function(){
 						vent.trigger('city:hover',cityModel.get('city'));
+
 					})
 					.on('mouseout',function(){
 						vent.trigger('city:unhover',cityModel.get('city'));
 					})
 					.on('click',function(){
 						vent.trigger('map:pan:city',cityModel);
+						map.zoomIn(8);
+						console.log("change zoom");
 					})
 
 				cityIconHash[cityModel.get('city')] = marker;
@@ -437,10 +466,16 @@ define([
 				that.addItem(assetModel)
 			});
 		},
-		drawInvestmentMarkers:function(){
+		drawInvestmentMarkers:function(filterObject){
 			var that = this;
 
-			investmentCollection.each(function(investmentModel){
+			if (that.filterObject.on == true) {
+				var filteredInvestmentCollection = investmentCollection.where(that.filterObject);
+			} else {
+				var filteredInvestmentCollection = investmentCollection.where({});
+			}
+
+			filteredInvestmentCollection.each(function(investmentModel){
 				that.addItem(investmentModel);
 			});
 		},
@@ -607,8 +642,8 @@ define([
 
 	var mapView = new MapView();
 
-	vent.on('city:hover', mapView.highlightMarker);
-	vent.on('city:unhover',mapView.unHighlightMarker);
+	// vent.on('city:hover', mapView.highlightMarker);
+	// vent.on('city:unhover',mapView.unHighlightMarker);
 
 	vent.on('map:pan:parcel',mapView.panToParcel);
 	vent.on('map:pan:city',mapView.panToCity);

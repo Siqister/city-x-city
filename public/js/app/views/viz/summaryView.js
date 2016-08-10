@@ -33,11 +33,13 @@ define([
 
 		ui:{
 			addItem:'.add-btn',
-			toggleActivating: '.toggleActivating'
+			toggleActivating: '.toggleActivating',
+			toggleInvestments: '.toggleInvestments'
 		},
 		events:{
 			'click @ui.addItem':'addItem',
-			'click @ui.toggleActivating': 'toggleActivating'
+			'click @ui.toggleActivating': 'toggleActivating',
+			'click @ui.toggleInvestments': 'toggleInvestments'
 		},
 
 		initialize:function(){
@@ -94,6 +96,14 @@ define([
 						.attr("name", "activating")
 						.attr("id", "activating")
 						.attr("checked", "");
+
+			var toggle = list.append("li").attr("class", "add form-group investments attr-list-item");
+			toggle.append("label").attr("for", "activating").text("Show only investments?: ");
+			toggle.append("input").attr("type", "checkbox")
+						.attr("class", "toggleInvestments")
+						.attr("name", "investments")
+						.attr("id", "investments")
+						.attr("checked", "");
 		},
 
 		addItem:function(e){
@@ -120,6 +130,19 @@ define([
 			}
 			
 			vent.trigger("asset:toggle:activating", { activating: this.activatingToggle });
+			this.redraw();
+		},
+
+		toggleInvestments: function(e) {
+			e.stopPropagation();
+
+			if (this.investmentsToggle) {
+				this.investmentsToggle = false;
+			} else {
+				this.investmentsToggle = true;
+			}
+			
+			vent.trigger("asset:toggle:activating", { activating: this.investmentsToggle });
 			this.redraw();
 		},
 

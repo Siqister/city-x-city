@@ -201,7 +201,7 @@ h3{
 		color:rgb(100,100,100);
 		font-size:1.1em;
 		padding:10px 15px;
-		background:white;
+		background: rgb(139,193,180);
 		position:absolute;
 		width:100%;
 		box-shadow:0px 1px 12px rgba(100,100,100,.2);
@@ -473,7 +473,7 @@ h3{
 		background:rgb(80,80,80);
 	}
 
-	.summary .toggleActivating  {
+	.summary .toggleActivating, .summary .toggleInvestments  {
 		background:rgb(200,200,200);
 		width:22px;
 		height:22px;
