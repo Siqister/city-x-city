@@ -275,6 +275,36 @@ define([
 				L.latLngBounds([[42.2087310719534301,-72.5998351767299255],[42.2002863600326776,-72.6134405459355889]]),
 				{ opacity: 0.5 } )
 			.addTo(map);
+
+			L.imageOverlay(
+				'../assets/2016-07-27 New Bedford Buildings 3D.png',
+				L.latLngBounds([[41.6294464440576633, -70.9320173206369304],[41.6385875663446896, -70.9196354581747954]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
+
+			L.imageOverlay(
+				'../assets/2016-07-27 Peabody Buildings 3D.png',
+				L.latLngBounds([[42.5215858041282289, -70.9307511180675476],[42.5304742344944842, -70.9187153802456010]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
+
+			L.imageOverlay(
+				'../assets/2016-07-27 Pittsfield Buildings 3D.png',
+				L.latLngBounds([[42.4493769886143895, -73.2542122745272337],[42.4647951807147592, -73.2287376243514103]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
+
+			L.imageOverlay(
+				'../assets/2016-07-27 Worcester Buildings 3D.png',
+				L.latLngBounds([[42.2568342177240268, -71.8078326384474082],[42.2658745990254303, -71.7953080640964174]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
+
+
+
+
+
+
 		},
 
 		drawParcels:function(){
