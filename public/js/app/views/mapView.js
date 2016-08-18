@@ -272,33 +272,33 @@ define([
 
 			// L.imageOverlay(
 			// 	'../assets/2016-07-27 Holyoke Buildings 3D.png',
-			// 	L.latLngBounds([[42.2087310719534301,-72.5998351767299255],[42.2002863600326776,-72.6134405459355889]]),
+			// 	L.latLngBounds([[42.200294,-72.614125],[42.208706,-72.599686]]),
 			// 	{ opacity: 0.5 } )
 			// .addTo(map);
 
-			// L.imageOverlay(
-			// 	'../assets/2016-07-27 New Bedford Buildings 3D.png',
-			// 	L.latLngBounds([[41.6294464440576633, -70.9320173206369304],[41.6385875663446896, -70.9196354581747954]]),
-			// 	{ opacity: 0.5 } )
-			// .addTo(map);
+			L.imageOverlay(
+				'../assets/2016-07-27 New Bedford Buildings 3D.png',
+				L.latLngBounds([[41.6304211125781265, -70.9326907504480459],[41.6377454510373894, -70.9190535297929330]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
 
-			// L.imageOverlay(
-			// 	'../assets/2016-07-27 Peabody Buildings 3D.png',
-			// 	L.latLngBounds([[42.5215858041282289, -70.9307511180675476],[42.5304742344944842, -70.9187153802456010]]),
-			// 	{ opacity: 0.5 } )
-			// .addTo(map);
+			L.imageOverlay(
+				'../assets/2016-07-27 Peabody Buildings 3D.png',
+				L.latLngBounds([[42.522407, -70.93179],[42.52980, -70.91793]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
 
 			// L.imageOverlay(
 			// 	'../assets/2016-07-27 Pittsfield Buildings 3D.png',
-			// 	L.latLngBounds([[42.4493769886143895, -73.2542122745272337],[42.4647951807147592, -73.2287376243514103]]),
+			// 	L.latLngBounds([[42.45171, -73.25388],[42.46205, -73.22892]]),
 			// 	{ opacity: 0.5 } )
 			// .addTo(map);
 
-			// L.imageOverlay(
-			// 	'../assets/2016-07-27 Worcester Buildings 3D.png',
-			// 	L.latLngBounds([[42.2568342177240268, -71.8078326384474082],[42.2658745990254303, -71.7953080640964174]]),
-			// 	{ opacity: 0.5 } )
-			// .addTo(map);
+			L.imageOverlay(
+				'../assets/2016-07-27 Worcester Buildings 3D.png',
+				L.latLngBounds([[42.257645, -71.808530], [42.265083, -71.794659]]),
+				{ opacity: 0.5 } )
+			.addTo(map);
 
 
 
