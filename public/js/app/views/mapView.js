@@ -292,7 +292,7 @@ define([
 
 			L.imageOverlay(
 				'../assets/2016-08-18 Pittsfield Buildings 3D.png',
-				L.latLngBounds([[42.454105, -73.249722],[42.460216, -73.23324]]),
+				L.latLngBounds([[42.454019507530624, -73.24975490570068], [42.46019363789803, -73.23327541351318]]),
 				{ opacity: 0.5 } )
 			.addTo(map);
 
