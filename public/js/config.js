@@ -84,6 +84,7 @@ define([],function(){
 											    "Convenience ",
 											    "Pharmacy",
 											    "Household Goods",
+											    "Services",
 											    "Other Retail"]},
 											    {"category": "Community",
 					    								"css": "Community",
@@ -98,6 +99,7 @@ define([],function(){
 											  ["Museum",
 											    "Theatre",
 											    "Indoor Recreation ",
+											    "Museum",
 											    "Art Center / Gallery"]},
 											    {"category": "Health Care",
 					    								"css": "Health",
@@ -125,6 +127,7 @@ define([],function(){
 					    								"css": "Temporary",
 											"subcategories": 
 											  ["Placemaking Initiative",
+											  	"Pop-Up",
 											    "Farmers Market",
 											    "Event Location"]},
 											    {"category": "Park / Open Space",

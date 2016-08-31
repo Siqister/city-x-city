@@ -28,6 +28,7 @@ define([
 		className:'summary viz-inner',
 		template:false,
 		activatingToggle: false,
+		investmentsToggle: true,
 		tooltip:null,
 		svg:null,
 
@@ -142,7 +143,7 @@ define([
 				this.investmentsToggle = true;
 			}
 			
-			vent.trigger("asset:toggle:activating", { activating: this.investmentsToggle });
+			vent.trigger("asset:toggle:investments", { investments: this.investmentsToggle });
 			this.redraw();
 		},
 

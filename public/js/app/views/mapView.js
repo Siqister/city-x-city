@@ -736,6 +736,35 @@ define([
 
 	});
 
+	vent.on('asset:toggle:investments', function(c) {
+		console.log("Getting the toggle", c);
+		var values = investmentMarkerHash.values();
+		if(c.investments) {
+			investmentCollection.trigger("reset");
+			investmentCollection.trigger("sync");
+		} else {
+			values.forEach(function(key) {
+				clusterGroup.removeLayer(key);
+			});
+		}
+		// if (mapView.filterObject.activating) {
+		// 	mapView.filterObject.activating = false;
+		// } else {
+		// 	mapView.filterObject.activating = true;
+		// }
+
+		// // remove everything for a redraw
+
+
+
+		// // after removal, reset
+		// assetCollection.trigger("reset");
+		// get models ids from the filter
+		// call the assetMarkerHash and get the model ids. 
+
+
+	});
+
 	vent.on('investment:delete',function(modelID){
 		var investmentMarker = investmentMarkerHash.get(modelID);
 		clusterGroup.removeLayer(investmentMarker);
